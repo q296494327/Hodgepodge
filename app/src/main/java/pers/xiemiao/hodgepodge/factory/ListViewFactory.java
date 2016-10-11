@@ -2,6 +2,7 @@ package pers.xiemiao.hodgepodge.factory;
 
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.View;
 
 import com.markmao.pulltorefresh.widget.XListView;
 
@@ -22,6 +23,7 @@ public class ListViewFactory {
         listView.setCacheColorHint(Color.TRANSPARENT);//缓存颜色
         listView.setAutoLoadEnable(true);//自动加载更多
         listView.setSelector(new BitmapDrawable());//选择器背景
+        listView.setOverScrollMode(View.OVER_SCROLL_NEVER);//去除下拉时的蓝色阴影
         return listView;
     }
 }

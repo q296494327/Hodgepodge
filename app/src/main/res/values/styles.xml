@@ -15,4 +15,10 @@
         <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
 
+    <!--popupwindow的动画-->
+    <style name="style_popupwindow_audio">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_show</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_hint</item>
+    </style>
+
 </resources>

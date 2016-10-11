@@ -21,6 +21,6 @@ public class NewestJokeAdapter extends SuperBaseAdapter<NewestJokeBean.ResultEnt
 
     @Override
     protected BaseHolder getSpecialHolder(int position) {
-        return new NewestJokeHolder();
+        return  new NewestJokeHolder();
     }
 }

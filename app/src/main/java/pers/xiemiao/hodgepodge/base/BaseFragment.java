@@ -17,7 +17,7 @@ import java.util.List;
  */
 public abstract class BaseFragment extends Fragment {
 
-    private LoaddingPager mLoaddingPager;
+    public LoaddingPager mLoaddingPager;
 
     @Nullable
     @Override

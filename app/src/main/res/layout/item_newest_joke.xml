@@ -6,6 +6,7 @@
     >
 
     <RelativeLayout
+        android:id="@+id/rl_item_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
@@ -23,7 +24,7 @@
                 android:id="@+id/iv_head"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@mipmap/ic_meinv"/>
+                android:src="@mipmap/m1"/>
 
             <TextView
                 android:id="@+id/tv_time"
@@ -40,8 +41,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="50dp"
-                android:background="@drawable/anim_audio"/>
+                android:layout_marginLeft="30dp"
+                />
         </LinearLayout>
 
         <TextView
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_head"
             android:text="  笑话的实体内容:第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬"
-            android:textColor="#6c4d4d"/>
+            android:textColor="#302323"/>
 
     </RelativeLayout>
 </RelativeLayout>

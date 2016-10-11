@@ -88,6 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 mPreTimeMillis = System.currentTimeMillis();
                 return;//间隔在2秒之外就直接return,不执行下面的销毁
             }else {
+                finish();
                 System.exit(0);
             }
         }

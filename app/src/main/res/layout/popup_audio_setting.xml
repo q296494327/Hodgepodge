@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#0fff"
+              android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_xiaoxin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_autio_set"
+        android:text="蜡笔小新"
+        android:textColor="#61075e"/>
+
+    <Button
+        android:id="@+id/btn_xiaoya"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_autio_set"
+        android:text="水笔小雅"
+        android:textColor="#a2f90c"/>
+
+    <Button
+        android:id="@+id/btn_xiaoyu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_autio_set"
+        android:text="铅笔小宇"
+        android:textColor="#2e1c07"/>
+
+    <Button
+        android:id="@+id/btn_xiaoyue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_autio_set"
+        android:text="彩笔小月"
+        android:textColor="#f41365"/>
+
+    <Button
+        android:id="@+id/btn_xiaosi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_autio_set"
+        android:text="钢笔小思"
+        android:layout_marginBottom="50dp"
+        android:textColor="#06f19b"/>
+
+</LinearLayout>

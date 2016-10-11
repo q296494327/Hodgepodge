@@ -44,5 +44,14 @@ public class ToastUtils {
         });
     }
 
+    public static void showToast(String id) {
+        if (toast == null) {
+            toast = Toast.makeText(UIUtils.getContext(), id, Toast.LENGTH_SHORT);
+        } else {
+            toast.setText(id);
+        }
+        toast.show();
+    }
+
 
 }
