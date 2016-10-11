@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_item_background"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/ll_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <pers.xiemiao.hodgepodge.views.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_meinv"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="更新时间:2014-12-17 19:23:59"
+                android:textColor="#101010"
+                android:textSize="12sp"/>
+
+            <ImageButton
+                android:id="@+id/ib_audio"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/anim_audio"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_head"
+            android:text="  笑话的实体内容:第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬"
+            android:textColor="#6c4d4d"/>
+
+    </RelativeLayout>
+</RelativeLayout>

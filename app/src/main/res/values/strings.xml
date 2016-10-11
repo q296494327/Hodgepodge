@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">动感大杂烩</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <!--笑话相关-->
+    <string-array name="joke_titles">
+        <item>动感笑话</item>
+        <item>动感趣图</item>
+        <item>随机笑话</item>
+        <item>随机趣图</item>
+    </string-array>
+</resources>

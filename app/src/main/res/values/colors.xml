@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#706baf</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--tab滑动指示器的颜色-->
+    <color name="tab_indicator_selected">#706BAF</color><!--下方指示横条的颜色-->
+    <color name="tab_text_normal">#000</color>//tab文本默认颜色
+    <color name="tab_text_selected">#706BAF</color>//tab文本被选中颜色
+
+</resources>
