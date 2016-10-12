@@ -19,8 +19,9 @@ public class NewestJokeAdapter extends SuperBaseAdapter<NewestJokeBean.ResultEnt
         super(dataSources);
     }
 
+
     @Override
     protected BaseHolder getSpecialHolder(int position) {
-        return  new NewestJokeHolder();
+        return new NewestJokeHolder();
     }
 }

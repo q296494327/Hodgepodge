@@ -24,6 +24,11 @@ public class Constants {
      * 请求链接相关
      */
     public static final class URLS {
-        public static final String BASEJOKEURL = "http://japi.juhe.cn/joke/";
+        //笑话相关的APPKEY
+        public static final String JOKEAPPKEY = "6682314439831e05070d10c5e6e36b23";
+        //常规的笑话URL
+        public static final String JOKECOMMONURL = "http://japi.juhe.cn/joke/";
+        //随机的笑话URL
+        public static final String JOKERANDOMURL = "http://v.juhe.cn/joke/";
     }
 }

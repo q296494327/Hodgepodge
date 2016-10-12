@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,10 +18,11 @@ import java.util.Random;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseHolder;
-import pers.xiemiao.hodgepodge.bean.NewestJokeBean;
+import pers.xiemiao.hodgepodge.bean.RandomJokeBean;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.DrawableUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
+import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.CircleImageView;
 
@@ -30,13 +30,12 @@ import pers.xiemiao.hodgepodge.views.CircleImageView;
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 22:49
- * Desc: 最新笑话的item  holder
+ * Desc: 随机笑话的item  holder
  */
-public class NewestJokeHolder extends BaseHolder<NewestJokeBean.ResultEntity.JokeDate> implements
+public class RandomJokeHolder extends BaseHolder<RandomJokeBean.RandomJokeData> implements
         View.OnClickListener {
 
     public TextView mTvContent;
-    public LinearLayout mLlHead;
     public CircleImageView mIvHead;
     public TextView mTvTime;
     public ImageButton mIbAudio;
@@ -64,9 +63,11 @@ public class NewestJokeHolder extends BaseHolder<NewestJokeBean.ResultEntity.Jok
 
 
     @Override
-    protected void refreshHolderView(NewestJokeBean.ResultEntity.JokeDate data) {
+    protected void refreshHolderView(RandomJokeBean.RandomJokeData data) {
         mTvContent.setText(data.content);
-        mTvTime.setText("更新时间: " + data.updatetime);
+        long unixtime = Long.parseLong(data.unixtime);
+        mTvTime.setText("更新时间: " + TimeUtils.getTime(unixtime * 1000));
+
     }
 
     /**
@@ -108,8 +109,8 @@ public class NewestJokeHolder extends BaseHolder<NewestJokeBean.ResultEntity.Jok
 
                 break;
             case R.id.ib_audio://点击声音
-                    mAnimAudio.start();
-                    read(mData.content);
+                mAnimAudio.start();
+                read(mData.content);
                 break;
         }
     }

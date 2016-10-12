@@ -44,6 +44,22 @@ public class ToastUtils {
         });
     }
 
+
+    public static void showSafeToast(final String id, final int gravity) {
+        UIUtils.postSafeTask(new Runnable() {
+            @Override
+            public void run() {
+                if (toast == null) {
+                    toast = Toast.makeText(UIUtils.getContext(), id, Toast.LENGTH_SHORT);
+                } else {
+                    toast.setText(id);
+                }
+                toast.setGravity(gravity, 0, DensityUtils.dp2px(UIUtils.getContext(), 80));
+                toast.show();
+            }
+        });
+    }
+
     public static void showToast(String id) {
         if (toast == null) {
             toast = Toast.makeText(UIUtils.getContext(), id, Toast.LENGTH_SHORT);

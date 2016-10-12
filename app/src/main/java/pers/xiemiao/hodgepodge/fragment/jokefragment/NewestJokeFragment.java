@@ -1,6 +1,7 @@
 package pers.xiemiao.hodgepodge.fragment.jokefragment;
 
 import android.graphics.drawable.ColorDrawable;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,6 +188,14 @@ public class NewestJokeFragment extends BaseFragment implements XListView.IXList
                 });
             } catch (Exception e) {
                 e.printStackTrace();
+                SystemClock.sleep(2000);
+                ToastUtils.showSafeToast("网络异常,请检查网络连接", Gravity.TOP);
+                UIUtils.postSafeTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        mXListView.stopRefresh();
+                    }
+                });
             }
         }
     }
@@ -229,7 +238,14 @@ public class NewestJokeFragment extends BaseFragment implements XListView.IXList
                 mLoadMoreTask = null;
             } catch (Exception e) {
                 e.printStackTrace();
+                SystemClock.sleep(2000);
                 ToastUtils.showSafeToast(UIUtils.getContext(), "网络异常,并且缓存期限已到,请检查网络连接");
+                UIUtils.postSafeTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        mXListView.stopLoadMore();
+                    }
+                });
             }
         }
     }

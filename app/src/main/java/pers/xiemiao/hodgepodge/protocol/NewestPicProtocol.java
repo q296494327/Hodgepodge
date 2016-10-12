@@ -1,15 +1,15 @@
 package pers.xiemiao.hodgepodge.protocol;
 
-import pers.xiemiao.hodgepodge.bean.NewestJokeBean;
+import pers.xiemiao.hodgepodge.bean.NewestPicBean;
 import pers.xiemiao.hodgepodge.conf.Constants;
 
 /**
  * User: xiemiao
- * Date: 2016-10-10
- * Time: 21:27
- * Desc: 最新笑话网络协议
+ * Date: 2016-10-12
+ * Time: 15:48
+ * Desc: 最新图片网络协议
  */
-public class NewestJokeProtocol extends BaseProtocol<NewestJokeBean> {
+public class NewestPicProtocol extends BaseProtocol<NewestPicBean> {
 
     @Override
     protected String getAppKey() {
@@ -18,6 +18,6 @@ public class NewestJokeProtocol extends BaseProtocol<NewestJokeBean> {
 
     @Override
     protected String getInterfaceKey() {
-        return Constants.URLS.JOKECOMMONURL + "content/text.from";//笑话内容
+        return Constants.URLS.JOKECOMMONURL + "img/text.from";
     }
 }

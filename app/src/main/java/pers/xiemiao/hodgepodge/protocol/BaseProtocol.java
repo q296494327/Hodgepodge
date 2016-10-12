@@ -37,7 +37,7 @@ public abstract class BaseProtocol<T> {
         if (!isRefresh) {
             //1先去获取本地缓存
             T localBean = getDataFromLocal(index);
-            LogUtils.sf("现在不是下拉刷新,直接从本地去获取缓存数据");
+            LogUtils.sf("现在不是下拉刷新,先去看本地有没有缓存数据");
             if (localBean != null) {
                 return localBean;
             }
@@ -79,17 +79,17 @@ public abstract class BaseProtocol<T> {
     /**
      * 从网络获取数据
      *
-     * @param index 所加载的第几条数据
+     * @param page 所加载的第几条数据
      * @throws IOException
      */
-    private T getDataFromNet(int index) throws IOException {
-        String url = Constants.URLS.BASEJOKEURL + getInterfaceKey() +
-                "?key=6682314439831e05070d10c5e6e36b23";
+    private T getDataFromNet(int page) throws IOException {
+        String url = getInterfaceKey() +
+                "?key=" + getAppKey();
         GetBuilder params = OkHttpUtils.get().url(url);
         Map<String, String> extraParams = getExtraParams();
         if (extraParams == null) {
             //如果额外的参数是空,那就直接添加index参数
-            params.addParams("page", index + "");
+            params.addParams("page", page + "");
             params.addParams("pagesize", "20");
         } else {
             //否则遍历额外的参数集合,添加额外的参数
@@ -104,12 +104,17 @@ public abstract class BaseProtocol<T> {
         if (!StringUtils.isEmpty(jsonString)) {
             LogUtils.sf("写缓存");
             //将json进行缓存
-            FileUtils.writeFile(jsonString, getCacheFile(index).getAbsolutePath(), false);
+            FileUtils.writeFile(jsonString, getCacheFile(page).getAbsolutePath(), false);
             //解析json,由子类去实现
             return parseJson(jsonString);
         }
         return null;
     }
+
+    /**
+     * 协议模块的网络请求APPKEY子类必须实现
+     */
+    protected abstract String getAppKey();
 
 
     /**
@@ -130,10 +135,11 @@ public abstract class BaseProtocol<T> {
         Map<String, String> extraParams = getExtraParams();
         if (extraParams == null) {
             //以接口key和index为文件名
-            name = getInterfaceKey().replace("/","") + "." + index;
+            name = getInterfaceKey().replace("/", "").replace(":", "") + "." + index;
         } else {
-            //以接口key和包名为文件名
-            name = getInterfaceKey() + extraParams.get("packageName");
+            //以接口key和type为文件名
+            name = getInterfaceKey().replace("/", "").replace(":", "") + extraParams.get
+                    ("type");
         }
         return new File(cacheDir, name);
     }

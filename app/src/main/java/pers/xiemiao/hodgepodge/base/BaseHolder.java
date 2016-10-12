@@ -22,7 +22,7 @@ public abstract class BaseHolder<T> {
         mHolderView.setTag(this);
     }
 
-    public View getHolderView(){
+    public View getHolderView() {
         return mHolderView;
     }
 
