@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="bottom">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="bottom"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/header_content"
@@ -20,10 +20,10 @@
 
             <TextView
                 android:id="@+id/header_hint_text"
-                android:textColor="#000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/header_hint_refresh_normal" />
+                android:text="@string/header_hint_refresh_normal"
+                android:textColor="#000"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -33,16 +33,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000"
                     android:text="@string/header_hint_refresh_time"
-                    android:textSize="12sp" />
+                    android:textColor="#000"
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/header_hint_time"
-                    android:textColor="#287a8c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:textColor="#287a8c"
+                    android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -50,20 +50,20 @@
             android:id="@+id/header_progressbar"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_toLeftOf="@id/header_text_layout"
-            android:layout_marginRight="30dp"
             android:layout_centerVertical="true"
-            android:visibility="gone" />
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/header_text_layout"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/header_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/header_text_layout"
-            android:layout_marginRight="30dp"
+            android:layout_width="30dp"
+            android:layout_height="80dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/header_text_layout"
             android:contentDescription="@null"
-            android:src="@drawable/arrow_down" />
+            android:src="@drawable/arrow_down"/>
 
     </RelativeLayout>
 

@@ -13,9 +13,9 @@ import java.util.List;
  * User: xiemiao
  * Date: 2016-10-05
  * Time: 18:02
- * Desc: 基类fragment，封装共性内容
+ * Desc: 基类笑话fragment，封装共性内容
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseJokeFragment extends Fragment {
 
     public LoaddingPager mLoaddingPager;
 
@@ -29,12 +29,12 @@ public abstract class BaseFragment extends Fragment {
             mLoaddingPager = new LoaddingPager(getContext()) {
                 @Override
                 public LoadResult initData() {
-                    return BaseFragment.this.initData();
+                    return BaseJokeFragment.this.initData();
                 }
 
                 @Override
                 public View initSuccessView() {
-                    return BaseFragment.this.initSuccessView();
+                    return BaseJokeFragment.this.initSuccessView();
                 }
             };
         }

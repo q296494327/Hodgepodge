@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.holder;
+package pers.xiemiao.hodgepodge.holder.jokeholder;
 
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -53,6 +53,7 @@ public class RandomJokeHolder extends BaseHolder<RandomJokeBean.RandomJokeData> 
         mIbAudio = (ImageButton) view.findViewById(R.id.ib_audio);
         mIbAudio.setBackgroundResource(R.drawable.anim_audio);//设置播放按钮背景
         mAnimAudio = (AnimationDrawable) mIbAudio.getBackground();//取得动画背景
+
         showItemRandomBg();//展示条目随机背景
         initHeadIcon();
         //设置按钮点击事件
@@ -64,6 +65,10 @@ public class RandomJokeHolder extends BaseHolder<RandomJokeBean.RandomJokeData> 
 
     @Override
     protected void refreshHolderView(RandomJokeBean.RandomJokeData data) {
+        //每次刷新视图的时候,都将播放图标的动画复原
+        mAnimAudio.selectDrawable(0);
+        mAnimAudio.stop();
+
         mTvContent.setText(data.content);
         long unixtime = Long.parseLong(data.unixtime);
         mTvTime.setText("更新时间: " + TimeUtils.getTime(unixtime * 1000));

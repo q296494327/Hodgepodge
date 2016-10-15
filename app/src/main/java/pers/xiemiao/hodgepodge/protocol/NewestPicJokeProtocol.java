@@ -9,7 +9,7 @@ import pers.xiemiao.hodgepodge.conf.Constants;
  * Time: 15:48
  * Desc: 最新图片网络协议
  */
-public class NewestPicProtocol extends BaseProtocol<NewestPicBean> {
+public class NewestPicJokeProtocol extends BaseJokeProtocol<NewestPicBean> {
 
     @Override
     protected String getAppKey() {

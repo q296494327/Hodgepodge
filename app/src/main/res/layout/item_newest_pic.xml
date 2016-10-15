@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -46,21 +47,34 @@
             android:text="脑的东西要和大家分享：用一个高度为1格的梯子，从左下那里爬到顶端旗子处..."
             android:textColor="#302323"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/selector_item_jokepic_bg"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_below="@id/tv_content">
 
-            <ImageView
-                android:id="@+id/joke_pic"
+            <lib.lhh.fiv.library.FrescoZoomImageView
+                android:id="@+id/fiv"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:fadeDuration="1000"
+                fresco:progressBarAutoRotateInterval="5000"
+                fresco:progressBarImage="@drawable/spinner_big_outer"
+                fresco:progressBarImageScaleType="centerInside"
+                fresco:roundedCornerRadius="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_tishi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/mm"/>
-        </LinearLayout>
-
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="#8000"
+                android:padding="10dp"
+                android:text="↑ 点击图片全屏查看,可手势缩放← →"/>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -16,12 +16,12 @@ import java.util.List;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.NewestJokeAdapter;
-import pers.xiemiao.hodgepodge.base.BaseFragment;
+import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.NewestJokeBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
-import pers.xiemiao.hodgepodge.protocol.NewestJokeProtocol;
+import pers.xiemiao.hodgepodge.protocol.NewestJokeJokeProtocol;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
@@ -35,11 +35,11 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  * Time: 20:55
  * Desc: 笑话选项卡---最新笑话
  */
-public class NewestJokeFragment extends BaseFragment implements XListView.IXListViewListener,
+public class NewestJokeJokeFragment extends BaseJokeFragment implements XListView.IXListViewListener,
         View.OnClickListener {
 
     private List<NewestJokeBean.ResultEntity.JokeDate> mDatas;
-    private NewestJokeProtocol mProtocol;
+    private NewestJokeJokeProtocol mProtocol;
     private LoadMoreTask mLoadMoreTask;
     private RefreshTask mRefreshTask;
     private NewestJokeAdapter mJokeAdapter;
@@ -55,7 +55,7 @@ public class NewestJokeFragment extends BaseFragment implements XListView.IXList
     @Override//初始化数据在子线程,所以可以直接请求网络
     public LoaddingPager.LoadResult initData() {
         try {
-            mProtocol = new NewestJokeProtocol();
+            mProtocol = new NewestJokeJokeProtocol();
             NewestJokeBean newestJokeBean = mProtocol.loadData(1);
             mDatas = newestJokeBean.result.data;
 

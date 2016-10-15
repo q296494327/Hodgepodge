@@ -3,11 +3,26 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
-    <!--笑话相关-->
+    <!--轻松一刻相关-->
     <string-array name="joke_titles">
-        <item>动感笑话</item>
-        <item>动感趣图</item>
-        <item>随机笑话</item>
-        <item>随机趣图</item>
+        <item>精品笑话</item>
+        <item>精品趣图</item>
+        <item>最新笑话</item>
+        <item>最新趣图</item>
     </string-array>
+
+    <!--新闻5分钟相关-->
+    <string-array name="news_titles">
+        <item>头条</item>
+        <item>社会</item>
+        <item>娱乐</item>
+        <item>军事</item>
+        <item>国内</item>
+        <item>国际</item>
+        <item>体育</item>
+        <item>科技</item>
+        <item>财经</item>
+        <item>时尚</item>
+    </string-array>
+
 </resources>

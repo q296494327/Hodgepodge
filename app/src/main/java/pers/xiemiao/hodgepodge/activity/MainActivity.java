@@ -17,7 +17,6 @@ import pers.xiemiao.hodgepodge.base.BaseActivity;
 import pers.xiemiao.hodgepodge.dialog.QuickOptionDialog;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
-import pers.xiemiao.hodgepodge.views.MainTab;
 import pers.xiemiao.hodgepodge.views.MyFragmentTabHost;
 
 public class MainActivity extends BaseActivity {
@@ -52,9 +51,9 @@ public class MainActivity extends BaseActivity {
     public void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setLogo(R.mipmap.ic_launcher);
+        //        actionBar.setDisplayShowHomeEnabled(true);
+        //        actionBar.setDisplayUseLogoEnabled(true);
+        //        actionBar.setLogo(R.mipmap.ic_launcher);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string
                 .open, R.string.close);
         mDrawerLayout.setDrawerListener(mToggle);//设置拖拽监听给开关

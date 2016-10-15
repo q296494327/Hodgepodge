@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.holder;
+package pers.xiemiao.hodgepodge.holder.jokeholder;
 
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -65,8 +65,13 @@ public class NewestJokeHolder extends BaseHolder<NewestJokeBean.ResultEntity.Jok
 
     @Override
     protected void refreshHolderView(NewestJokeBean.ResultEntity.JokeDate data) {
+        //每次刷新视图的时候,都将播放图标复原
+        mAnimAudio.selectDrawable(0);
+        mAnimAudio.stop();
+
         mTvContent.setText(data.content);
         mTvTime.setText("更新时间: " + data.updatetime);
+
     }
 
     /**
@@ -108,8 +113,9 @@ public class NewestJokeHolder extends BaseHolder<NewestJokeBean.ResultEntity.Jok
 
                 break;
             case R.id.ib_audio://点击声音
-                    mAnimAudio.start();
-                    read(mData.content);
+                mIbAudio.setTag(mData.hashId);
+                mAnimAudio.start();
+                read(mData.content);
                 break;
         }
     }

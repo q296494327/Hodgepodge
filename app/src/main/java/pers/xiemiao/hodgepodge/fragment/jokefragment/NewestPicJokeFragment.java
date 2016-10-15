@@ -9,12 +9,12 @@ import com.markmao.pulltorefresh.widget.XListView;
 import java.util.List;
 
 import pers.xiemiao.hodgepodge.adapter.NewestPicAdapter;
-import pers.xiemiao.hodgepodge.base.BaseFragment;
+import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.NewestPicBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
-import pers.xiemiao.hodgepodge.protocol.NewestPicProtocol;
+import pers.xiemiao.hodgepodge.protocol.NewestPicJokeProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
@@ -26,9 +26,9 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  * Time: 23:04
  * Desc: 笑话选项卡---最新趣图fragment
  */
-public class NewestPicFragment extends BaseFragment implements XListView.IXListViewListener {
+public class NewestPicJokeFragment extends BaseJokeFragment implements XListView.IXListViewListener {
 
-    private NewestPicProtocol mProtocol;
+    private NewestPicJokeProtocol mProtocol;
     private List<NewestPicBean.ResultEntity.NewestPicData> mDatas;
     private LoadMoreTask mLoadMoreTask;
     private RefreshTask mRefreshTask;
@@ -38,7 +38,7 @@ public class NewestPicFragment extends BaseFragment implements XListView.IXListV
     @Override
     public LoaddingPager.LoadResult initData() {
         try {
-            mProtocol = new NewestPicProtocol();
+            mProtocol = new NewestPicJokeProtocol();
             NewestPicBean newestPicBean = mProtocol.loadData(1);
             mDatas = newestPicBean.result.data;
         } catch (Exception e) {

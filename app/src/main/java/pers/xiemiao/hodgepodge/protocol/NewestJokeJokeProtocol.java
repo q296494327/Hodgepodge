@@ -9,7 +9,7 @@ import pers.xiemiao.hodgepodge.conf.Constants;
  * Time: 21:27
  * Desc: 最新笑话网络协议
  */
-public class NewestJokeProtocol extends BaseProtocol<NewestJokeBean> {
+public class NewestJokeJokeProtocol extends BaseJokeProtocol<NewestJokeBean> {
 
     @Override
     protected String getAppKey() {

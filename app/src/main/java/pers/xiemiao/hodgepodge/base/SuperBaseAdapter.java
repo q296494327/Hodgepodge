@@ -43,7 +43,7 @@ public abstract class SuperBaseAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         BaseHolder holder = null;
         if (convertView == null) {
             holder = getSpecialHolder(position);//基类的holder由子类去实现
@@ -51,19 +51,6 @@ public abstract class SuperBaseAdapter<T> extends BaseAdapter {
             holder = (BaseHolder) convertView.getTag();
         }
         holder.setDataAndRefreshHolderView(getItem(position));
-
-        /*----------------------------------------*/
-//        if (holder instanceof NewestJokeHolder) {
-//            NewestJokeHolder newHolder = (NewestJokeHolder) holder;
-//            T t = mDataSources.get(position);
-//            if (t instanceof NewestJokeBean.RandomJokeData.JokeDate) {
-//                NewestJokeBean.RandomJokeData.JokeDate jokeDate = (NewestJokeBean.RandomJokeData
-//                        .JokeDate) t;
-//                newHolder.mIbAudio.setTag(jokeDate.hashId);
-//
-//            }
-//        }
-        /*----------------------------------------*/
 
         return holder.mHolderView;
     }

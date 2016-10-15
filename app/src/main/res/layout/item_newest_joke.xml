@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_head"
             android:text="  笑话的实体内容:第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬笑话的实体内容第三方斯蒂芬斯蒂芬"
-            android:textColor="#302323"/>
+            android:textColor="#000"/>
 
     </RelativeLayout>
 </RelativeLayout>

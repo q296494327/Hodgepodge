@@ -16,12 +16,12 @@ import java.util.List;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.RandomJokeAdapter;
-import pers.xiemiao.hodgepodge.base.BaseFragment;
+import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.RandomJokeBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
-import pers.xiemiao.hodgepodge.protocol.RandomJokeProtocol;
+import pers.xiemiao.hodgepodge.protocol.RandomJokeJokeProtocol;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
@@ -35,10 +35,11 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  * Time: 23:04
  * Desc: 笑话选项卡---随机趣图fragment
  */
-public class RandomJokeFragment extends BaseFragment implements XListView.IXListViewListener,
+public class RandomJokeJokeFragment extends BaseJokeFragment implements XListView
+        .IXListViewListener,
         View.OnClickListener {
 
-    private RandomJokeProtocol mProtocol;
+    private RandomJokeJokeProtocol mProtocol;
     private List<RandomJokeBean.RandomJokeData> mDatas;
     private RefreshTask mRefreshTask;
     private RandomJokeAdapter mRandomJokeAdapter;
@@ -54,7 +55,7 @@ public class RandomJokeFragment extends BaseFragment implements XListView.IXList
     @Override
     public LoaddingPager.LoadResult initData() {
         try {
-            mProtocol = new RandomJokeProtocol();
+            mProtocol = new RandomJokeJokeProtocol();
             mDatas = mProtocol.loadData(0).result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +67,7 @@ public class RandomJokeFragment extends BaseFragment implements XListView.IXList
     public View initSuccessView() {
         mXListView = ListViewFactory.createXListView();
         mXListView.setXListViewListener(this);//设置刷新监听
-        mXListView.setPullLoadEnable(false);//设置不能加载更多
+        mXListView.setAutoLoadEnable(false);
         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
         //添加一个设置笑话语音的按钮
         View audioView = View.inflate(UIUtils.getContext(), R.layout.head_audio_setting, null);
@@ -166,7 +167,11 @@ public class RandomJokeFragment extends BaseFragment implements XListView.IXList
 
     @Override
     public void onLoadMore() {
-        //没有下拉
+        mRefreshTask = new RefreshTask();
+        mProtocol.isRefresh = true;
+        ThreadPoolFactory.getNormalThreadPool().execute(mRefreshTask);
+        mXListView.setSelection(0);
+        mXListView.stopLoadMore();
     }
 
     class RefreshTask implements Runnable {
@@ -183,7 +188,7 @@ public class RandomJokeFragment extends BaseFragment implements XListView.IXList
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.showToast(UIUtils.getContext(), "拉我刷新下一批", Gravity.TOP);
+                        ToastUtils.showToast(UIUtils.getContext(), "随机更新10篇", Gravity.TOP);
                         mRandomJokeAdapter.notifyDataSetChanged();
                         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
                         mXListView.stopRefresh();

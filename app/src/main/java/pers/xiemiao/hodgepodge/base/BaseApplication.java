@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Process;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -46,9 +47,10 @@ public class BaseApplication extends Application {
         mMainThreadId = Process.myTid();
         //获取消息对象
         mHandler = new Handler();
-
+        //初始化Fresco
+        Fresco.initialize(this);
         //初始化讯飞语音
-        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=57fc6d18");
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=57fc6d18");
         super.onCreate();
     }
 

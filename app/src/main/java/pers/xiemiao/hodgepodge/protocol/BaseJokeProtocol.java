@@ -24,7 +24,7 @@ import pers.xiemiao.hodgepodge.utils.StringUtils;
  * Time: 12:58
  * Desc: 基类网络协议，抽取共性、json的缓存与读取
  */
-public abstract class BaseProtocol<T> {
+public abstract class BaseJokeProtocol<T> {
 
     public boolean isRefresh = false;//定义一个常量记录是否是下拉刷新
 
@@ -139,7 +139,7 @@ public abstract class BaseProtocol<T> {
         } else {
             //以接口key和type为文件名
             name = getInterfaceKey().replace("/", "").replace(":", "") + extraParams.get
-                    ("type");
+                    ("type") + index;
         }
         return new File(cacheDir, name);
     }

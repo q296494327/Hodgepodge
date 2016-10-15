@@ -5,7 +5,7 @@ import java.util.List;
 import pers.xiemiao.hodgepodge.base.BaseHolder;
 import pers.xiemiao.hodgepodge.base.SuperBaseAdapter;
 import pers.xiemiao.hodgepodge.bean.NewestPicBean;
-import pers.xiemiao.hodgepodge.holder.NewestPicHolder;
+import pers.xiemiao.hodgepodge.holder.jokeholder.NewestPicHolder;
 
 /**
  * User: xiemiao

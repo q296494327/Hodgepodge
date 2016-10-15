@@ -13,16 +13,17 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.base.BaseFragment;
-import pers.xiemiao.hodgepodge.factory.FragmentFactory;
+import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
+import pers.xiemiao.hodgepodge.factory.JokeFragmentFactory;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
+import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
 
 /**
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 18:21
- * Desc: 笑话选项卡的fragment
+ * Desc: 轻松一刻选项卡的fragment
  */
 public class JokeFragment extends Fragment {
 
@@ -39,6 +40,8 @@ public class JokeFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_joke, container, false);
             mJokeTabs = (PagerSlidingTabStrip) view.findViewById(R.id.joke_tabs);
             mJokeViewpager = (ViewPager) view.findViewById(R.id.joke_viewpager);
+            //设置缩放旋转
+            mJokeViewpager.setPageTransformer(true, new ScalePageTransformer());
             initData();
         }
         return view;
@@ -68,7 +71,7 @@ public class JokeFragment extends Fragment {
             public void onPageSelected(int position) {
                 LogUtils.sf("onPageSelected加载数据");
                 //当viewpager被选中的时候,触发加载数据
-                BaseFragment fragment = FragmentFactory.getFragment(position);
+                BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
                 fragment.getLoaddingPager().loadData();
 
             }
@@ -90,9 +93,9 @@ public class JokeFragment extends Fragment {
         }
 
         @Override//返回fragment对象
-        public Fragment getItem(int position) {
+        public BaseJokeFragment getItem(int position) {
             //使用fragment工厂实现
-            Fragment fragment = FragmentFactory.getFragment(position);
+            BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
             return fragment;
         }
 

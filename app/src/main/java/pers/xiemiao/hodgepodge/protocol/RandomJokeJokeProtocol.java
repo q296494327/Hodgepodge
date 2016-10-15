@@ -12,7 +12,7 @@ import pers.xiemiao.hodgepodge.conf.Constants;
  * Time: 13:16
  * Desc: 随机笑话网络协议
  */
-public class RandomJokeProtocol extends BaseProtocol<RandomJokeBean> {
+public class RandomJokeJokeProtocol extends BaseJokeProtocol<RandomJokeBean> {
     @Override
     protected String getAppKey() {
         return Constants.URLS.JOKEAPPKEY;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="135dp">
+
+    <!-- 轮播图 -->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/item_news_picture_pager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+    <!-- 指针容器 -->
+
+    <LinearLayout
+        android:id="@+id/item_news_picture_container_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:padding="8dp">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_miniTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/item_news_picture_container_indicator"
+        android:background="#9000"
+        android:text="袁隆平青岛研发海水稻：稻米不咸，盐碱地变良田可养活2亿人"
+        android:textColor="#fff"/>
+
+</RelativeLayout>
