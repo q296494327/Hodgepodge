@@ -13,7 +13,6 @@ import android.view.View;
 public abstract class BaseHolder<T> {
     public View mHolderView;
     public T mData;
-
     /*================1界面的展示=================*/
     public BaseHolder() {
         //通过构造方法，去初始化界面的根部局，需要子类去实现
@@ -30,8 +29,6 @@ public abstract class BaseHolder<T> {
      * 初始化根部局，子类必须实现
      */
     protected abstract View initHolderView();
-
-
 
     /*================2界面数据的刷新=================*/
 

@@ -32,6 +32,9 @@ public class JokeFragmentFactory {
         if (fragment == null) {
             //2如果集合里取出的是空的，就根据索引去创建不同的fragment
             switch (position) {
+//                case 0:
+//                    fragment = new FunnyVideoFragment();
+//                    break;
                 case 0:
                     fragment = new RandomJokeJokeFragment();
                     break;

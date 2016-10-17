@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical">
+
+    <lib.lhh.fiv.library.FrescoZoomImageView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fiv_pagerpic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:fadeDuration="1000"
+        fresco:progressBarAutoRotateInterval="5000"
+        fresco:progressBarImage="@mipmap/icon_progress_bar"
+        fresco:progressBarImageScaleType="centerInside"/>
+
+</RelativeLayout>

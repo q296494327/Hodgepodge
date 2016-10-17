@@ -3,6 +3,7 @@ package pers.xiemiao.hodgepodge.activity;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.fragment.DefauleFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.BeautyFragment;
 import pers.xiemiao.hodgepodge.fragment.jokefragment.JokeFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.NewsFragment;
 
@@ -15,7 +16,7 @@ public enum MainTab {
     JOKE(0, "轻松一刻", R.drawable.selector_maintab_icon_joke, JokeFragment.class),
     News(1, "新闻5分钟", R.drawable.selector_maintab_icon_news, NewsFragment.class),
     QUICK(2, "快速启动", R.drawable.selector_maintab_icon_joke, null),
-    THREE(3, "待开发2", R.drawable.selector_maintab_icon_joke, DefauleFragment.class),
+    BEAUTY(3, "动感萌妹子", R.drawable.selector_maintab_icon_beauty, BeautyFragment.class),
     FOUR(4, "待开发3", R.drawable.selector_maintab_icon_joke, DefauleFragment.class);
 
     public int idx;

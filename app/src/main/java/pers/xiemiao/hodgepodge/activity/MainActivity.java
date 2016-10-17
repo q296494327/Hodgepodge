@@ -39,12 +39,6 @@ public class MainActivity extends BaseActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.tabContent);
         mTabHost.getTabWidget().setShowDividers(0);//设置无分割线
         initTabSpec();//初始化tab标签
-        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-
-            }
-        });
     }
 
     @Override

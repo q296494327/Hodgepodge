@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         init();//最先的初始化
         initView();//初始化布局控件等
         initActionBar();//初始化actionbar
@@ -87,11 +88,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Toast.makeText(BaseActivity.this, "再按一次,退出大杂烩", Toast.LENGTH_SHORT).show();
                 mPreTimeMillis = System.currentTimeMillis();
                 return;//间隔在2秒之外就直接return,不执行下面的销毁
-            }else {
+            } else {
                 finish();
                 System.exit(0);
             }
         }
+
         //不是入口,就直接执行销毁
         super.onBackPressed();//finish
     }

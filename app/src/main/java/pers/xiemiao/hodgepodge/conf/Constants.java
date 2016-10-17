@@ -30,5 +30,14 @@ public class Constants {
         public static final String JOKECOMMONURL = "http://japi.juhe.cn/joke/";
         //随机的笑话URL
         public static final String JOKERANDOMURL = "http://v.juhe.cn/joke/";
+        //美女图片分类URL
+        public static final String GIRLCATEGORYURL = "https://route.showapi" +
+                ".com/959-1?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //美女图片组图URL
+        public static final String GIRLDETAILURL = "https://route.showapi" +
+                ".com/959-2?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //百思不得姐URL
+        public static final String BAISIURL = "http://route.showapi" +
+                ".com/255-1?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
     }
 }

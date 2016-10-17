@@ -8,7 +8,6 @@ import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseHolder;
 import pers.xiemiao.hodgepodge.bean.NewsBean;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
-import pers.xiemiao.hodgepodge.utils.StringUtils;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
@@ -45,12 +44,8 @@ public class LeftNewsHolder extends BaseHolder<NewsBean.ResultEntity.NewsData> {
         mTvDate.setText(data.date);
         mTvType.setText(data.realtype);
         //转换间隔时间
-        if (StringUtils.isEquals(data.category, "社会")) {
-            mTvTimeAgo.setText("");
-        } else {
-            String timeAgo = parseSpaceTime(data);
-            mTvTimeAgo.setText(timeAgo);
-        }
+        String timeAgo = parseSpaceTime(data);
+        mTvTimeAgo.setText(timeAgo);
         mFivNewsPic.setImageURI(data.thumbnail_pic_s03);
 
         //刷新视图的时候根据sp里存的状态,去改变已读颜色

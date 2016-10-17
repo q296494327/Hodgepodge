@@ -38,7 +38,6 @@ public class BaseApplication extends Application {
                 //其他配置
                 .build();
         OkHttpUtils.initClient(okHttpClient);
-
         //获取上下文
         mContext = getApplicationContext();
         //获取主线程
