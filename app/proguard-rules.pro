@@ -28,3 +28,5 @@
 
 -keep class com.iflytek.**{*;}
 -keepattributes Signature
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**

@@ -3,6 +3,7 @@ package pers.xiemiao.hodgepodge.factory;
 import android.support.v4.util.SparseArrayCompat;
 
 import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
+import pers.xiemiao.hodgepodge.fragment.jokefragment.FunnyVideoFragment;
 import pers.xiemiao.hodgepodge.fragment.jokefragment.NewestJokeJokeFragment;
 import pers.xiemiao.hodgepodge.fragment.jokefragment.NewestPicJokeFragment;
 import pers.xiemiao.hodgepodge.fragment.jokefragment.RandomJokeJokeFragment;
@@ -32,19 +33,19 @@ public class JokeFragmentFactory {
         if (fragment == null) {
             //2如果集合里取出的是空的，就根据索引去创建不同的fragment
             switch (position) {
-//                case 0:
-//                    fragment = new FunnyVideoFragment();
-//                    break;
                 case 0:
-                    fragment = new RandomJokeJokeFragment();
+                    fragment = new FunnyVideoFragment();
                     break;
                 case 1:
-                    fragment = new RandomPicJokeFragment();
+                    fragment = new RandomJokeJokeFragment();
                     break;
                 case 2:
-                    fragment = new NewestJokeJokeFragment();
+                    fragment = new RandomPicJokeFragment();
                     break;
                 case 3:
+                    fragment = new NewestJokeJokeFragment();
+                    break;
+                case 4:
                     fragment = new NewestPicJokeFragment();
                     break;
             }

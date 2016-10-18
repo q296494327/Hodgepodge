@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseActivity;
 import pers.xiemiao.hodgepodge.dialog.QuickOptionDialog;
@@ -144,5 +145,19 @@ public class MainActivity extends BaseActivity {
             bundle.putString("text", mainTab.name);//传值过去
             mTabHost.addTab(tabSpec, mainTab.clz, bundle);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 }

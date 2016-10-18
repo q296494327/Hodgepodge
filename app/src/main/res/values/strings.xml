@@ -5,7 +5,7 @@
 
     <!--轻松一刻相关-->
     <string-array name="joke_titles">
-        <!--<item>搞笑视频</item>-->
+        <item>搞笑视频</item>
         <item>精品笑话</item>
         <item>精品趣图</item>
         <item>最新笑话</item>
