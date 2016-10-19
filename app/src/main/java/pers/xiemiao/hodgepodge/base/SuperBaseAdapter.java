@@ -3,7 +3,11 @@ package pers.xiemiao.hodgepodge.base;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.BaseAdapter;
+
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,14 @@ public abstract class SuperBaseAdapter<T> extends BaseAdapter {
         }
         holder.setDataAndRefreshHolderView(getItem(position));
 
+        //先缩小view
+        ViewHelper.setScaleX(holder.mHolderView, 0.3f);
+        ViewHelper.setScaleY(holder.mHolderView, 0.3f);
+        //以属性动画放大
+        ViewPropertyAnimator.animate(holder.mHolderView).setInterpolator(new
+                OvershootInterpolator(2)).scaleX(1).setDuration(600).start();
+        ViewPropertyAnimator.animate(holder.mHolderView).setInterpolator(new
+                OvershootInterpolator(2)).scaleY(1).setDuration(600).start();
         return holder.mHolderView;
     }
 

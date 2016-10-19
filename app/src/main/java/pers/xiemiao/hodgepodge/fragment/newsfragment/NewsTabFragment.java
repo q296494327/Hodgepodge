@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.fragment.jokefragment;
+package pers.xiemiao.hodgepodge.fragment.newsfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
-import pers.xiemiao.hodgepodge.factory.JokeFragmentFactory;
+import pers.xiemiao.hodgepodge.base.BaseNewsFragment;
+import pers.xiemiao.hodgepodge.factory.NewsFragmentFactory;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
@@ -23,12 +23,12 @@ import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 18:21
- * Desc: 轻松一刻选项卡的fragment
+ * Desc: 新闻5分钟选项卡的fragment
  */
-public class JokeFragment extends Fragment {
+public class NewsTabFragment extends Fragment {
 
-    private PagerSlidingTabStrip mJokeTabs;
-    private ViewPager mJokeViewpager;
+    private PagerSlidingTabStrip mNewsTabs;
+    private ViewPager mNewsViewpager;
     private String[] mTitleArr;
     private View view;
 
@@ -37,11 +37,11 @@ public class JokeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_joke, container, false);
-            mJokeTabs = (PagerSlidingTabStrip) view.findViewById(R.id.joke_tabs);
-            mJokeViewpager = (ViewPager) view.findViewById(R.id.joke_viewpager);
+            view = inflater.inflate(R.layout.fragment_news, container, false);
+            mNewsTabs = (PagerSlidingTabStrip) view.findViewById(R.id.news_tabs);
+            mNewsViewpager = (ViewPager) view.findViewById(R.id.news_viewpager);
             //设置缩放旋转
-            mJokeViewpager.setPageTransformer(true, new ScalePageTransformer());
+            mNewsViewpager.setPageTransformer(true, new ScalePageTransformer());
             initData();
         }
         return view;
@@ -52,16 +52,16 @@ public class JokeFragment extends Fragment {
      */
     private void initData() {
         //1初始化标题数组
-        mTitleArr = UIUtils.getStringArray(R.array.joke_titles);
+        mTitleArr = UIUtils.getStringArray(R.array.news_titles);
         //2创建适配器对象
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter
                 (getFragmentManager());
         //3设置适配器
-        mJokeViewpager.setAdapter(myFragmentPagerAdapter);
+        mNewsViewpager.setAdapter(myFragmentPagerAdapter);
         //4将滑动选项卡与viewpager进行绑定
-        mJokeTabs.setViewPager(mJokeViewpager);
+        mNewsTabs.setViewPager(mNewsViewpager);
         //设置viewpager页面改变监听
-        mJokeTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mNewsTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {
@@ -71,9 +71,8 @@ public class JokeFragment extends Fragment {
             public void onPageSelected(int position) {
                 LogUtils.sf("onPageSelected加载数据");
                 //当viewpager被选中的时候,触发加载数据
-                BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
+                BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
                 fragment.getLoaddingPager().loadData();
-
             }
 
             @Override
@@ -93,9 +92,9 @@ public class JokeFragment extends Fragment {
         }
 
         @Override//返回fragment对象
-        public BaseJokeFragment getItem(int position) {
+        public BaseNewsFragment getItem(int position) {
             //使用fragment工厂实现
-            BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
+            BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
             return fragment;
         }
 

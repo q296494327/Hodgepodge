@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.fragment.beautyfragment;
+package pers.xiemiao.hodgepodge.fragment.jokefragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
-import pers.xiemiao.hodgepodge.factory.BeautyFragmentFactory;
+import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
+import pers.xiemiao.hodgepodge.factory.JokeFragmentFactory;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
@@ -23,12 +23,12 @@ import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 18:21
- * Desc: 美女图片选项卡的fragment
+ * Desc: 轻松一刻选项卡的fragment
  */
-public class BeautyFragment extends Fragment {
+public class JokeTabFragment extends Fragment {
 
-    private PagerSlidingTabStrip mBeautyTabs;
-    private ViewPager mBeautyViewpager;
+    private PagerSlidingTabStrip mJokeTabs;
+    private ViewPager mJokeViewpager;
     private String[] mTitleArr;
     private View view;
 
@@ -37,11 +37,11 @@ public class BeautyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_beauty, container, false);
-            mBeautyTabs = (PagerSlidingTabStrip) view.findViewById(R.id.beauty_tabs);
-            mBeautyViewpager = (ViewPager) view.findViewById(R.id.beauty_viewpager);
+            view = inflater.inflate(R.layout.fragment_joke, container, false);
+            mJokeTabs = (PagerSlidingTabStrip) view.findViewById(R.id.joke_tabs);
+            mJokeViewpager = (ViewPager) view.findViewById(R.id.joke_viewpager);
             //设置缩放旋转
-            mBeautyViewpager.setPageTransformer(true, new ScalePageTransformer());
+            mJokeViewpager.setPageTransformer(true, new ScalePageTransformer());
             initData();
         }
         return view;
@@ -52,16 +52,16 @@ public class BeautyFragment extends Fragment {
      */
     private void initData() {
         //1初始化标题数组
-        mTitleArr = UIUtils.getStringArray(R.array.beauty_titles);
+        mTitleArr = UIUtils.getStringArray(R.array.joke_titles);
         //2创建适配器对象
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter
                 (getFragmentManager());
         //3设置适配器
-        mBeautyViewpager.setAdapter(myFragmentPagerAdapter);
+        mJokeViewpager.setAdapter(myFragmentPagerAdapter);
         //4将滑动选项卡与viewpager进行绑定
-        mBeautyTabs.setViewPager(mBeautyViewpager);
+        mJokeTabs.setViewPager(mJokeViewpager);
         //设置viewpager页面改变监听
-        mBeautyTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mJokeTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {
@@ -71,7 +71,7 @@ public class BeautyFragment extends Fragment {
             public void onPageSelected(int position) {
                 LogUtils.sf("onPageSelected加载数据");
                 //当viewpager被选中的时候,触发加载数据
-                BaseBeautyFragment fragment = BeautyFragmentFactory.getFragment(position);
+                BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
                 fragment.getLoaddingPager().loadData();
 
             }
@@ -93,9 +93,9 @@ public class BeautyFragment extends Fragment {
         }
 
         @Override//返回fragment对象
-        public BaseBeautyFragment getItem(int position) {
+        public BaseJokeFragment getItem(int position) {
             //使用fragment工厂实现
-            BaseBeautyFragment fragment = BeautyFragmentFactory.getFragment(position);
+            BaseJokeFragment fragment = JokeFragmentFactory.getFragment(position);
             return fragment;
         }
 

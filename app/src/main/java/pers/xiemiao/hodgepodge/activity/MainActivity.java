@@ -160,4 +160,5 @@ public class MainActivity extends BaseActivity {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
 }

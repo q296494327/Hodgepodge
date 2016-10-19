@@ -39,6 +39,9 @@
         <activity
             android:name=".activity.BeautyDetailActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".activity.CartoonDetailActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
     </application>
 

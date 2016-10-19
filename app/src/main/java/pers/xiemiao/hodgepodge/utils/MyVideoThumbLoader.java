@@ -8,6 +8,9 @@ import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Hashtable;
 
 /**
@@ -89,9 +92,32 @@ public class MyVideoThumbLoader {
         protected Bitmap doInBackground(String... params) {
             //在子线程去获取缩略图
             Bitmap bitmap = createVideoThumbnail(params[0], MediaStore.Images.Thumbnails.MINI_KIND);
+
+            /*-------------------将bitmap写到SD卡-----begin----------------*/
+            if (bitmap != null) {
+                LogUtils.sf("缩略图写到缓存");
+                //获取到缩略图后将图片存到本地SD卡
+                FileOutputStream fos = null;
+                try {
+                    File cacheFile = getCacheFile(params[0]);//保存的路径
+                    if (cacheFile.exists()) {
+                        cacheFile.delete();
+                    }
+                    fos = new FileOutputStream(cacheFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, fos);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    IOUtils.close(fos);
+                }
+            }
+             /*-------------------将bitmap写到SD卡-------end--------------*/
+
             //加入到缓存中
             if (getVideoThumbToCache(params[0]) == null) {
-                addVideoThumbToCache(path, bitmap);
+                if (bitmap != null) {
+                    addVideoThumbToCache(path, bitmap);
+                }
             }
             return bitmap;
         }
@@ -104,6 +130,15 @@ public class MyVideoThumbLoader {
                 imgView.setImageBitmap(bitmap);
             }
         }
+    }
+
+    /**
+     * 获取缓存文件
+     */
+    private File getCacheFile(String param) {
+        String cacheDir = FileUtils.getDir("thumbPic");
+        String name = param.replace("/", "").replace(":", "") + ".jpg";
+        return new File(cacheDir, name);
     }
 
 
@@ -121,7 +156,7 @@ public class MyVideoThumbLoader {
             } else {
                 retriever.setDataSource(filePath);
             }
-            bitmap = retriever.getFrameAtTime(1000);
+            bitmap = retriever.getFrameAtTime(10000);
         } catch (IllegalArgumentException ex) {
             // Assume this is a corrupt video file
             ex.printStackTrace();

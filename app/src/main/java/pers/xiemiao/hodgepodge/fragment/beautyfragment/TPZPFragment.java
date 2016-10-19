@@ -1,10 +1,10 @@
 package pers.xiemiao.hodgepodge.fragment.beautyfragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.View;
-
-import com.jingchen.pulltorefresh.PullToRefreshLayout;
-import com.jingchen.pulltorefresh.PullableRecyclerView;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import pers.xiemiao.hodgepodge.bean.GirlCategoryBean;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.GirlCategoryProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
+import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
 /**
@@ -24,13 +25,13 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  * Time: 16:00
  * Desc: 自拍艺术
  */
-public class TPZPFragment extends BaseBeautyFragment implements PullToRefreshLayout
-        .OnPullListener {
+public class TPZPFragment extends BaseBeautyFragment implements SwipeRefreshLayout
+        .OnRefreshListener {
 
     private GirlCategoryProtocol mProtocol;
     private List<GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GirlCategoryData> mDatas;
-    private PullToRefreshLayout mRefreshLayout;
-    private PullableRecyclerView mRecycleView;
+    private SwipeRefreshLayout mRefreshLayout;
+    private RecyclerView mRecycleView;
     private RefreshTask mRefreshTask;
     private BeautyRecycleAdapter mBeautyRecycleAdapter;
 
@@ -51,11 +52,14 @@ public class TPZPFragment extends BaseBeautyFragment implements PullToRefreshLay
     public View initSuccessView() {
         View view = View.inflate(UIUtils.getContext(), R.layout.recycleview_qunzhuang, null);
         //获取到recycleview外层的刷新容器布局
-        mRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.refresh_view);
-        //设置下拉上拉监听
-        mRefreshLayout.setOnPullListener(this);
-        //取得刷新容器布局里套着的recycleview
-        mRecycleView = (PullableRecyclerView) mRefreshLayout.getPullableView();
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_view);
+        mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view);
+        //设置刷新的颜色替换数据
+        mRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R
+                .color.holo_red_light, android.R.color.holo_orange_light, android.R.color
+                .holo_green_light);
+        //设置刷新监听
+        mRefreshLayout.setOnRefreshListener(this);
         //确定recycle的瀑布流布局管家,2列
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
@@ -69,17 +73,12 @@ public class TPZPFragment extends BaseBeautyFragment implements PullToRefreshLay
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override
-    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+    public void onRefresh() {
         //下拉刷新的时候将网络协议里的isRefresh改为true
         //开启线程池，进行下拉刷新
         mRefreshTask = new RefreshTask();
         mProtocol.isRefresh = true;
         ThreadPoolFactory.getNormalThreadPool().execute(mRefreshTask);
-    }
-
-    @Override
-    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-
     }
 
     class RefreshTask implements Runnable {
@@ -99,7 +98,8 @@ public class TPZPFragment extends BaseBeautyFragment implements PullToRefreshLay
                     @Override
                     public void run() {
                         mBeautyRecycleAdapter.notifyDataSetChanged();
-                        mRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        mRefreshLayout.setRefreshing(false);
+                        ToastUtils.showSafeToast("刷新成功", Gravity.TOP);
                     }
                 });
             } catch (Exception e) {
@@ -107,7 +107,8 @@ public class TPZPFragment extends BaseBeautyFragment implements PullToRefreshLay
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
-                        mRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                        mRefreshLayout.setRefreshing(false);
+                        ToastUtils.showSafeToast("网络异常,请重试", Gravity.TOP);
                     }
                 });
             }

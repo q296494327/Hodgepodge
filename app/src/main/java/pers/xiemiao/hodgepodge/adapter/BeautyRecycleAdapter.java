@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
+
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.List;
 
@@ -33,6 +37,17 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
     public BeautyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //填充item根部局
         View itemview = View.inflate(UIUtils.getContext(), R.layout.item_beauty_pic, null);
+
+        //设置动画效果
+        //先缩小view
+        ViewHelper.setScaleX(itemview, 0.3f);
+        ViewHelper.setScaleY(itemview, 0.3f);
+        //以属性动画放大
+        ViewPropertyAnimator.animate(itemview).setInterpolator(new
+                OvershootInterpolator(1)).scaleX(1).setDuration(800).start();
+        ViewPropertyAnimator.animate(itemview).setInterpolator(new
+                OvershootInterpolator(1)).scaleY(1).setDuration(800).start();
+
         //将根部局传递给viewholder
         return new BeautyHolder(itemview);
     }
@@ -54,7 +69,10 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        if (mDatas != null) {
+            return mDatas.size();
+        }
+        return 0;
     }
 
 

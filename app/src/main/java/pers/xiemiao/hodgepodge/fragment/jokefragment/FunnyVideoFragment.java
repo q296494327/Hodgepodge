@@ -53,7 +53,8 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
         mXListView = ListViewFactory.createXListView();
         mXListView.setXListViewListener(this);//设置刷新监听
         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
-        mFunnyVideoAdapter = new FunnyVideoAdapter(getActivity(),mDatas);
+        mXListView.setFastScrollEnabled(false);
+        mFunnyVideoAdapter = new FunnyVideoAdapter(getActivity(), mDatas);
         mXListView.setAdapter(mFunnyVideoAdapter);
         return mXListView;
     }

@@ -96,7 +96,7 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
         } else if (lm instanceof LinearLayoutManager) {
             firstVisibleItemPosition = ((LinearLayoutManager) lm).findFirstVisibleItemPosition();
         } else if (lm instanceof StaggeredGridLayoutManager) {
-            int positions[] = new int[5];
+            int positions[] = new int[2];
             ((StaggeredGridLayoutManager) lm).findFirstVisibleItemPositions(positions);
             firstVisibleItemPosition = positions[0];
         }
@@ -116,7 +116,7 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
         } else if (lm instanceof LinearLayoutManager) {
             lastVisibleItemPosition = ((LinearLayoutManager) lm).findLastVisibleItemPosition();
         } else if (lm instanceof StaggeredGridLayoutManager) {
-            int positions[] = new int[5];
+            int positions[] = new int[2];
             ((StaggeredGridLayoutManager) lm).findLastVisibleItemPositions(positions);
             lastVisibleItemPosition = positions[0];
         }

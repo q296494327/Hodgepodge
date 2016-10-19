@@ -1,1 +1,1 @@
-include ':app', ':okhttputils', ':PagerSlidingTabStriplibrary', ':PullToRefresh', ':pullToRefreshAll'
+include ':app', ':okhttputils', ':PagerSlidingTabStriplibrary', ':PullToRefresh'

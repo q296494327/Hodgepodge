@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/PullToRefresh" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/okhttputils" />
-            <option value="$PROJECT_DIR$/pullToRefreshAll" />
           </set>
         </option>
         <option name="myModules">
@@ -23,7 +22,6 @@
             <option value="$PROJECT_DIR$/PullToRefresh" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/okhttputils" />
-            <option value="$PROJECT_DIR$/pullToRefreshAll" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.fragment.newsfragment;
+package pers.xiemiao.hodgepodge.fragment.cartoonfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.base.BaseNewsFragment;
-import pers.xiemiao.hodgepodge.factory.NewsFragmentFactory;
+import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
+import pers.xiemiao.hodgepodge.factory.CartoonFragmentFactory;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
@@ -23,12 +23,12 @@ import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 18:21
- * Desc: 新闻5分钟选项卡的fragment
+ * Desc: 卡通漫画选项卡的fragment
  */
-public class NewsFragment extends Fragment {
+public class CartoonTabFragment extends Fragment {
 
-    private PagerSlidingTabStrip mNewsTabs;
-    private ViewPager mNewsViewpager;
+    private PagerSlidingTabStrip mCartoonyTabs;
+    private ViewPager mCartoonyViewpager;
     private String[] mTitleArr;
     private View view;
 
@@ -37,11 +37,11 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_news, container, false);
-            mNewsTabs = (PagerSlidingTabStrip) view.findViewById(R.id.news_tabs);
-            mNewsViewpager = (ViewPager) view.findViewById(R.id.news_viewpager);
+            view = inflater.inflate(R.layout.fragment_cartoon, container, false);
+            mCartoonyTabs = (PagerSlidingTabStrip) view.findViewById(R.id.cartoon_tabs);
+            mCartoonyViewpager = (ViewPager) view.findViewById(R.id.cartoon_viewpager);
             //设置缩放旋转
-            mNewsViewpager.setPageTransformer(true, new ScalePageTransformer());
+            mCartoonyViewpager.setPageTransformer(true, new ScalePageTransformer());
             initData();
         }
         return view;
@@ -52,16 +52,16 @@ public class NewsFragment extends Fragment {
      */
     private void initData() {
         //1初始化标题数组
-        mTitleArr = UIUtils.getStringArray(R.array.news_titles);
+        mTitleArr = UIUtils.getStringArray(R.array.cartoon_titles);
         //2创建适配器对象
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter
                 (getFragmentManager());
         //3设置适配器
-        mNewsViewpager.setAdapter(myFragmentPagerAdapter);
+        mCartoonyViewpager.setAdapter(myFragmentPagerAdapter);
         //4将滑动选项卡与viewpager进行绑定
-        mNewsTabs.setViewPager(mNewsViewpager);
+        mCartoonyTabs.setViewPager(mCartoonyViewpager);
         //设置viewpager页面改变监听
-        mNewsTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mCartoonyTabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int
                     positionOffsetPixels) {
@@ -71,8 +71,9 @@ public class NewsFragment extends Fragment {
             public void onPageSelected(int position) {
                 LogUtils.sf("onPageSelected加载数据");
                 //当viewpager被选中的时候,触发加载数据
-                BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
+                BaseCartoonFragment fragment = CartoonFragmentFactory.getFragment(position);
                 fragment.getLoaddingPager().loadData();
+
             }
 
             @Override
@@ -92,9 +93,9 @@ public class NewsFragment extends Fragment {
         }
 
         @Override//返回fragment对象
-        public BaseNewsFragment getItem(int position) {
+        public BaseCartoonFragment getItem(int position) {
             //使用fragment工厂实现
-            BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
+            BaseCartoonFragment fragment = CartoonFragmentFactory.getFragment(position);
             return fragment;
         }
 
