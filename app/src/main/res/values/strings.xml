@@ -47,7 +47,7 @@
     <!--动感漫画相关-->
     <string-array name="cartoon_titles">
         <item>恐怖漫画</item>
-        <item>故事漫画</item>
+        <item>内涵漫画</item>
         <item>冷知识</item>
     </string-array>
 

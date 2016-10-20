@@ -45,6 +45,12 @@ public class Constants {
         //卡通漫画详细URL
         public static final String CARTOONDETAILURL = "http://route.showapi.com/958-2?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //内涵漫画分类URL
+        public static final String NEIHANCATEGORYURL = "https://route.showapi.com/978-2?" +
+                "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //内涵漫画详情URL
+        public static final String NEIHANDETAILURL = "https://route.showapi.com/978-1?" +
+                "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
 
     }
 }

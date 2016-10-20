@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
     >
 
-    <ImageView
-        android:id="@+id/iv_cartoon"
+    <pers.xiemiao.hodgepodge.views.MyScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
 
-</ScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.shizhefei.view.largeimage.LongImageView
+                android:id="@+id/iv_cartoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_bug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"
+                android:visibility="gone"
+                android:text="暂时有个BUG,如果第一页未能显示\n请先返回让数据加载一下再进来就可以显示了"/>
+        </RelativeLayout>
+
+    </pers.xiemiao.hodgepodge.views.MyScrollView>
+</RelativeLayout>

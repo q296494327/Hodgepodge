@@ -1,34 +1,32 @@
 package pers.xiemiao.hodgepodge.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
+import com.shizhefei.view.largeimage.LongImageView;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
+import okhttp3.Response;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.CartoonDetailProtocol;
-import pers.xiemiao.hodgepodge.utils.ScreenUtil;
+import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
-import pers.xiemiao.hodgepodge.utils.UIUtils;
-import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
+import pers.xiemiao.hodgepodge.views.MyScrollView;
+import pers.xiemiao.hodgepodge.views.VerticalViewPager;
 
 /**
  * User: xiemiao
@@ -36,13 +34,14 @@ import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
  * Time: 22:44
  * Desc: 卡通漫画详情页
  */
-public class CartoonDetailActivity extends AppCompatActivity implements ViewPager
+public class CartoonDetailActivity extends AppCompatActivity implements VerticalViewPager
         .OnPageChangeListener {
     private String mLinkId;
-    private ViewPager mViewPager;
+    private VerticalViewPager mViewPager;
     private CartoonDetailProtocol mProtocol;
     private TextView mTvCount;
     private List<String> mImgList;
+    private LongImageView mIvCartoon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +49,8 @@ public class CartoonDetailActivity extends AppCompatActivity implements ViewPage
         setContentView(R.layout.activity_cartoon_detail);
         mLinkId = getIntent().getStringExtra("linkid");
         mTvCount = (TextView) findViewById(R.id.tv_count);
-        mViewPager = (ViewPager) findViewById(R.id.cartoon_viewpager);
-        mViewPager.setPageTransformer(true, new ScalePageTransformer());
+        mViewPager = (VerticalViewPager) findViewById(R.id.cartoon_viewpager);
         mViewPager.setOnPageChangeListener(this);
-        //设置viewpager的当前条目为sp里存的位置
         initData();
     }
 
@@ -69,7 +66,7 @@ public class CartoonDetailActivity extends AppCompatActivity implements ViewPage
                     mProtocol = new CartoonDetailProtocol();
                     mImgList = mProtocol.loadData(mLinkId, 0).showapi_res_body.item.imgList;
                     //在获取到图片集合后,到主线程去给viewpager去设置适配器
-                    UIUtils.postSafeTask(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             //在图片集合获取完之后,才去创建适配器
@@ -113,27 +110,27 @@ public class CartoonDetailActivity extends AppCompatActivity implements ViewPage
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
+            String cartoonUrl = mImgList.get(position);
+            //填充布局
             View view = View.inflate(CartoonDetailActivity.this, R.layout.viewpager_cartoon, null);
-            final ImageView ivCartoon = (ImageView) view.findViewById(R.id.iv_cartoon);
+            MyScrollView scrollView = (MyScrollView) view.findViewById(R.id.scrollView);
+            scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);//设置去掉滚动到底时的蓝边阴影
+            mIvCartoon = (LongImageView) view.findViewById(R.id.iv_cartoon);
+            TextView tv_bug = (TextView) view.findViewById(R.id.tv_bug);
+            if (position == 0) {
+                tv_bug.setVisibility(View.VISIBLE);
+            } else {
+                tv_bug.setVisibility(View.GONE);
+            }
 
-            Glide.with(CartoonDetailActivity.this).load(mImgList.get(position)).asBitmap().into
-                    (new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap>
-                                glideAnimation) {
-                            int imageWidth = resource.getWidth();
-                            int imageHeight = resource.getHeight();
-                            int height = ScreenUtil.getScreenWidth(CartoonDetailActivity.this) *
-                                    imageHeight / imageWidth;
-                            ScrollView.LayoutParams para = (ScrollView.LayoutParams) ivCartoon
-                                    .getLayoutParams();
-                            para.height = height;
-                            ivCartoon.setLayoutParams(para);
-                            Glide.with(CartoonDetailActivity.this).load(mImgList.get(position))
-                                    .crossFade(1000).centerCrop().error(R.mipmap.icon_failure).into
-                                    (ivCartoon);
-                        }
-                    });
+            String name = cartoonUrl.replace("/", "").replace(":", "").replace("?", "");
+            final String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
+            File file = new File(manhuaPath);//判断文件存不存在
+            if (file.exists()) {
+                mIvCartoon.setImage(manhuaPath);
+            } else {
+                initCartoon(cartoonUrl);
+            }
             container.addView(view);
             return view;
         }
@@ -142,6 +139,36 @@ public class CartoonDetailActivity extends AppCompatActivity implements ViewPage
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    private void initCartoon(final String cartoonUrl) {
+        ThreadPoolFactory.getNormalThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //获取到图片链接的输入流
+                    Response response = OkHttpUtils.get().url(cartoonUrl).build().execute();
+                    final InputStream is = response.body().byteStream();
+                    //剔除特殊符号作为缓存的文件名
+                    String name = cartoonUrl.replace("/", "").replace(":", "").replace("?", "");
+                    final String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
+                    File file = new File(manhuaPath);//判断文件存不存在,不存在才去写缓存
+                    if (!file.exists()) {
+                        //将得到的输入流写到缓存
+                        FileUtils.writeFile(is, manhuaPath, false);
+                    }
+                    //缓存做好后,到子线程去更新UI
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mIvCartoon.setImage(manhuaPath);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /*-------------------viewpager页面选择状态监听---------------------*/

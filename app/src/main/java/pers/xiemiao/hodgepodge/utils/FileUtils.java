@@ -207,7 +207,7 @@ public class FileUtils {
                 File parentFile = new File(f.getParent());
                 parentFile.mkdirs();
                 int count = -1;
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[10240];
                 fos = new FileOutputStream(f);
                 while ((count = is.read(buffer)) != -1) {
                     fos.write(buffer, 0, count);

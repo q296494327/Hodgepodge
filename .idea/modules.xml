@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/PagerSlidingTabStriplibrary/PagerSlidingTabStriplibrary.iml" filepath="$PROJECT_DIR$/PagerSlidingTabStriplibrary/PagerSlidingTabStriplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" filepath="$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gesture/gesture.iml" filepath="$PROJECT_DIR$/gesture/gesture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/longImglibrary/longImglibrary.iml" filepath="$PROJECT_DIR$/longImglibrary/longImglibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
     </modules>
   </component>

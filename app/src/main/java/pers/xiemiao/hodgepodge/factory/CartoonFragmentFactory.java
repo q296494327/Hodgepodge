@@ -5,7 +5,7 @@ import android.support.v4.util.SparseArrayCompat;
 import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.CoolFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.HorrorFragment;
-import pers.xiemiao.hodgepodge.fragment.cartoonfragment.StoryFragment;
+import pers.xiemiao.hodgepodge.fragment.cartoonfragment.NeiHanFragment;
 
 /**
  * User: xiemiao
@@ -35,7 +35,7 @@ public class CartoonFragmentFactory {
                     fragment = new HorrorFragment();
                     break;
                 case 1:
-                    fragment = new StoryFragment();
+                    fragment = new NeiHanFragment();
                     break;
                 case 2:
                     fragment = new CoolFragment();
