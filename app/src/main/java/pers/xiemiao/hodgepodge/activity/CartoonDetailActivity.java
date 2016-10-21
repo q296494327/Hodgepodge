@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 import com.shizhefei.view.largeimage.LongImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 
-import okhttp3.Response;
+import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
@@ -146,24 +146,15 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
             @Override
             public void run() {
                 try {
-                    //获取到图片链接的输入流
-                    Response response = OkHttpUtils.get().url(cartoonUrl).build().execute();
-                    final InputStream is = response.body().byteStream();
                     //剔除特殊符号作为缓存的文件名
                     String name = cartoonUrl.replace("/", "").replace(":", "").replace("?", "");
                     final String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
-                    File file = new File(manhuaPath);//判断文件存不存在,不存在才去写缓存
+                    File file = new File(manhuaPath);//判断文件存不存在,不存在才去下载
                     if (!file.exists()) {
-                        //将得到的输入流写到缓存
-                        FileUtils.writeFile(is, manhuaPath, false);
+                        //下载漫画到本地SD卡,然后到回调里去更新UI
+                        OkHttpUtils.get().url(cartoonUrl).build().execute(new
+                                DownloadFileCallBack(FileUtils.getDir("manhua"), name + ".jpg"));
                     }
-                    //缓存做好后,到子线程去更新UI
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mIvCartoon.setImage(manhuaPath);
-                        }
-                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -198,6 +189,27 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    /**
+     * 下载漫画文件到本地的回调
+     */
+    class DownloadFileCallBack extends FileCallBack {
+
+        public DownloadFileCallBack(String destFileDir, String destFileName) {
+            super(destFileDir, destFileName);
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+
+        }
+
+        @Override
+        public void onResponse(File response, int id) {
+            mIvCartoon.setImage(response.getAbsolutePath());
+        }
     }
 
 }

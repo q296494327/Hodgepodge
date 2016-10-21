@@ -7,11 +7,11 @@ import android.view.View;
 
 import com.shizhefei.view.largeimage.LongImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
-import java.io.InputStream;
 
-import okhttp3.Response;
+import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.NeiHanDetailBean;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
@@ -62,34 +62,41 @@ public class NeiHanDetailActivity extends AppCompatActivity {
                     NeiHanDetailProtocol mProtocol = new NeiHanDetailProtocol();
                     final NeiHanDetailBean neiHanDetailBean = mProtocol.loadData(mLinkid);
                     String imgUrl = neiHanDetailBean.showapi_res_body.img;
-                    //获取到图片链接的输入流
-                    Response response = OkHttpUtils.get().url(imgUrl).build().execute();
-                    final InputStream is = response.body().byteStream();
                     String name = mLinkid.replace("/", "").replace(":", "").replace("?", "");
                     final String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
                     File file = new File(manhuaPath);
                     if (!file.exists()) {
-                        //将得到的输入流写到缓存
-                        boolean b = FileUtils.writeFile(is, manhuaPath, false);
-//                        if (b) {
-//                            ToastUtils.showSafeToast(UIUtils.getContext(), "写入成功");
-//                        } else {
-//                            ToastUtils.showSafeToast(UIUtils.getContext(), "写入失败");
-//                        }
+                        //如果文件不存在就去下载到指定目录,在回调里去更新UI
+                        OkHttpUtils.get().url(imgUrl).build().execute(new DownloadFileCallBack
+                                (FileUtils.getDir("manhua"), name + ".jpg"));
                     }
-                    //得到了详情bean后,到子线程去更新UI
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mIvNeihan.setImage(manhuaPath);
-                        }
-                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                     ToastUtils.showSafeToast(getApplicationContext(), "网络异常");
                 }
             }
         });
+    }
+
+    /**
+     * 下载漫画文件到本地的回调
+     */
+    class DownloadFileCallBack extends FileCallBack {
+
+        public DownloadFileCallBack(String destFileDir, String destFileName) {
+            super(destFileDir, destFileName);
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+
+        }
+
+        @Override
+        public void onResponse(File response, int id) {
+            
+            mIvNeihan.setImage(response.getAbsolutePath());
+        }
     }
 
 

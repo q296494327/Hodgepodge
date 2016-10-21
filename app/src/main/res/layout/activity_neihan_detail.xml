@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     >
 
     <pers.xiemiao.hodgepodge.views.MyScrollView
@@ -17,12 +18,21 @@
             android:layout_height="wrap_content"
             >
 
+
+            <ProgressBar
+                android:id="@+id/tishi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:indeterminateDrawable="@drawable/custom_progress"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textColor="#000"
-                android:text="彩色图片较大,请耐心等一下下"/>
+                android:layout_below="@id/tishi"
+                android:layout_centerHorizontal="true"
+                android:text="彩色图片较大,请耐心等一下下"
+                android:textColor="#fff"/>
 
             <com.shizhefei.view.largeimage.LongImageView
                 android:id="@+id/iv_neihan"

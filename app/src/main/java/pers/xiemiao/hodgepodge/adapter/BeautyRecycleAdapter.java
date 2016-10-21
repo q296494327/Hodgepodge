@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
@@ -16,6 +17,7 @@ import lib.lhh.fiv.library.FrescoImageView;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.activity.BeautyDetailActivity;
 import pers.xiemiao.hodgepodge.bean.GirlCategoryBean;
+import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
 /**
@@ -53,15 +55,23 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
     }
 
     @Override//数据和holder绑定
-    public void onBindViewHolder(BeautyHolder holder, final int position) {
+    public void onBindViewHolder(BeautyHolder holder, int position) {
+        if (position == 1 ) {
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.mFivBeauty
+                    .getLayoutParams();
+            params.height = DensityUtils.dp2px(UIUtils.getContext(), 220);
+            holder.mFivBeauty.setLayoutParams(params);
+        }
+
         holder.setDataAndRefreshUI(mDatas.get(position));
         //设置图片的点击事件,并将数据传递给activity去展示图片
+        final int tempPosition = position;
         holder.mFivBeauty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UIUtils.getContext(), BeautyDetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("imgurl", mDatas.get(position).link);
+                intent.putExtra("imgurl", mDatas.get(tempPosition).link);
                 UIUtils.getContext().startActivity(intent);
             }
         });

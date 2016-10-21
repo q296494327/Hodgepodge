@@ -102,7 +102,7 @@ public class NeiHanFragment extends BaseCartoonFragment implements AdapterView
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.showToast(UIUtils.getContext(), "随机刷新15篇", Gravity.TOP);
+                        ToastUtils.showToast(UIUtils.getContext(), "随机刷新50篇", Gravity.TOP);
                         mNeiHanCategoryAdapter.notifyDataSetChanged();
                         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
                         mXListView.stopRefresh();
@@ -142,7 +142,7 @@ public class NeiHanFragment extends BaseCartoonFragment implements AdapterView
             try {
                 final List<NeiHanCategoryBean.ShowapiResBodyEntity.PagebeanEntity
                         .NeiHanCategoryData> neiHanCategoryDataList = mProtocol
-                        .loadData(mDatas.size() / 15 + 1).showapi_res_body
+                        .loadData(mDatas.size() / 50 + 1).showapi_res_body
                         .pagebean.contentlist;
                 //然后将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
