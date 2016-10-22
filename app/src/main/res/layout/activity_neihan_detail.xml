@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tishi"
                 android:layout_centerHorizontal="true"
-                android:text="彩色图片较大,请耐心等一下下"
+                android:text="内涵漫画服务器有时加载慢,请耐心等一下下"
                 android:textColor="#fff"/>
 
             <com.shizhefei.view.largeimage.LongImageView

@@ -49,4 +49,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':longImglibrary')
     compile project(':gesture')
+    compile 'cn.qqtheme.framework:WheelPicker:1.1.2'
+    compile files('libs/jpinyin-1.0.jar')
 }

@@ -17,6 +17,7 @@ import pers.xiemiao.hodgepodge.bean.NeiHanDetailBean;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.NeiHanDetailProtocol;
 import pers.xiemiao.hodgepodge.utils.FileUtils;
+import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.views.MyScrollView;
 
@@ -45,9 +46,11 @@ public class NeiHanDetailActivity extends AppCompatActivity {
         String name = mLinkid.replace("/", "");
         String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
         File file = new File(manhuaPath);
-        if (file.exists()) {
+        if (file.exists() && file.length() > 307200) {
+            LogUtils.sf("读取缓存漫画");
             mIvNeihan.setImage(file.getAbsolutePath());
         } else {
+            LogUtils.sf("去网络请求漫画");
             initData();//在子线程去请求网络获取数据
         }
     }
@@ -65,7 +68,7 @@ public class NeiHanDetailActivity extends AppCompatActivity {
                     String name = mLinkid.replace("/", "").replace(":", "").replace("?", "");
                     final String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
                     File file = new File(manhuaPath);
-                    if (!file.exists()) {
+                    if (!file.exists() || file.length() < 307200) {
                         //如果文件不存在就去下载到指定目录,在回调里去更新UI
                         OkHttpUtils.get().url(imgUrl).build().execute(new DownloadFileCallBack
                                 (FileUtils.getDir("manhua"), name + ".jpg"));
@@ -94,7 +97,7 @@ public class NeiHanDetailActivity extends AppCompatActivity {
 
         @Override
         public void onResponse(File response, int id) {
-            
+
             mIvNeihan.setImage(response.getAbsolutePath());
         }
     }

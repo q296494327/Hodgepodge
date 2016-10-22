@@ -1,5 +1,6 @@
 package pers.xiemiao.hodgepodge.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +17,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseActivity;
 import pers.xiemiao.hodgepodge.dialog.QuickOptionDialog;
-import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.MyFragmentTabHost;
 
@@ -95,16 +95,9 @@ public class MainActivity extends BaseActivity {
                     case R.id.iv_close:
                         dialog.dismiss();
                         break;
-                    case R.id.ly_quick_option_text:
-                        ToastUtils.showToast(UIUtils.getContext(), "文字被点击了");
-                        break;
-                    case R.id.ly_quick_option_album:
-                        ToastUtils.showToast(UIUtils.getContext(), "相册被点击了");
-                        break;
-                    case R.id.ly_quick_option_photo:
-                        ToastUtils.showToast(UIUtils.getContext(), "相机被点击了");
-                        break;
-                    default:
+                    case R.id.ly_quick_option_star:
+                        //跳到星座今日运势的activity
+                        startActivity(new Intent(MainActivity.this,StarActivity.class));
                         break;
                 }
             }

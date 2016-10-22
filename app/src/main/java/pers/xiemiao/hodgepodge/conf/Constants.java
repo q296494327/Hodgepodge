@@ -34,10 +34,10 @@ public class Constants {
         public static final String BAISIURL = "http://route.showapi" +
                 ".com/255-1?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
         //美女图片分类URL
-        public static final String GIRLCATEGORYURL = "https://route.showapi" +
+        public static final String GIRLCATEGORYURL = "http://route.showapi" +
                 ".com/959-1?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
         //美女图片组图URL
-        public static final String GIRLDETAILURL = "https://route.showapi" +
+        public static final String GIRLDETAILURL = "http://route.showapi" +
                 ".com/959-2?showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
         //卡通漫画分类URL
         public static final String CARTOONCATEGORYURL = "http://route.showapi.com/958-1?" +
@@ -46,10 +46,13 @@ public class Constants {
         public static final String CARTOONDETAILURL = "http://route.showapi.com/958-2?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
         //内涵漫画分类URL
-        public static final String NEIHANCATEGORYURL = "https://route.showapi.com/978-2?" +
+        public static final String NEIHANCATEGORYURL = "http://route.showapi.com/978-2?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
         //内涵漫画详情URL
-        public static final String NEIHANDETAILURL = "https://route.showapi.com/978-1?" +
+        public static final String NEIHANDETAILURL = "http://route.showapi.com/978-1?" +
+                "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //星座今日运势URL
+        public static final String STARURL = "http://route.showapi.com/872-1?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
 
     }

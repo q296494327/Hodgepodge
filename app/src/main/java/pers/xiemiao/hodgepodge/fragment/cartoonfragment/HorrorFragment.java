@@ -68,6 +68,7 @@ public class HorrorFragment extends BaseCartoonFragment implements AdapterView
         mXListView.setXListViewListener(this);//设置刷新监听
         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
         mXListView.setDividerHeight(0);
+        mXListView.setFastScrollEnabled(false);
         //设置适配器
         mCartoonCategoryAdapter = new CartoonCategoryAdapter(mDatas);
         mXListView.setAdapter(mCartoonCategoryAdapter);

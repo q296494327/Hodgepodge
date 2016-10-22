@@ -22,6 +22,7 @@ import pers.xiemiao.hodgepodge.protocol.CartoonDetailProtocol;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
+import pers.xiemiao.hodgepodge.utils.StringUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
@@ -96,6 +97,7 @@ public class CartoonCategoryHolder extends BaseHolder<CartoonCategoryBean.Showap
             mTvTime.setTextColor(0XFF000000);
         }
 
+        mProgressbar.setTag(data.id);//设置标记,用来防止进度条显示错乱
 
         //刷新下载进度条的UI
         int spCount = SpUtil.getInt(UIUtils.getContext(), data.id + "Count", 0);
@@ -252,9 +254,12 @@ public class CartoonCategoryHolder extends BaseHolder<CartoonCategoryBean.Showap
         @Override
         public void onResponse(File response, int id) {
             count++;
-            mTvProgress.setText(count + "/" + mSize);
-            mProgressbar.setMax(mSize);
-            mProgressbar.setProgress(count);
+            String tag = (String) mProgressbar.getTag();
+            if (StringUtils.isEquals(tag, mLinkId)) {
+                mTvProgress.setText(count + "/" + mSize);
+                mProgressbar.setMax(mSize);
+                mProgressbar.setProgress(count);
+            }
             if (count == mSize) {
                 //当下载完毕后将下载任务置空
                 mDownloadTask = null;

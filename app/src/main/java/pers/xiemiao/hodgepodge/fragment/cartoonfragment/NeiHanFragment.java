@@ -10,19 +10,26 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.markmao.pulltorefresh.widget.XListView;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
+import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.activity.NeiHanDetailActivity;
 import pers.xiemiao.hodgepodge.adapter.NeiHanCategoryAdapter;
 import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.NeiHanCategoryBean;
+import pers.xiemiao.hodgepodge.bean.NeiHanDetailBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.NeiHanCategoryProtocol;
+import pers.xiemiao.hodgepodge.protocol.NeiHanDetailProtocol;
+import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
@@ -51,13 +58,65 @@ public class NeiHanFragment extends BaseCartoonFragment implements AdapterView
     public LoaddingPager.LoadResult initData() {
         try {
             mProtocol = new NeiHanCategoryProtocol();
-            NeiHanCategoryBean neiHanCategoryBean = mProtocol.loadData(1);
+            int neihanpage = SpUtil.getInt(getContext(), "neihanpage", 1);
+            NeiHanCategoryBean neiHanCategoryBean = mProtocol.loadData(neihanpage);
             mAllPages = neiHanCategoryBean.showapi_res_body.pagebean.allPages;//获取所有页数
             mDatas = neiHanCategoryBean.showapi_res_body.pagebean.contentlist;
+
+            downloadNeiHan();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return checkState(mDatas);
+    }
+
+    private void downloadNeiHan() {
+        ThreadPoolFactory.getDownloadThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (NeiHanCategoryBean.ShowapiResBodyEntity.PagebeanEntity
+                            .NeiHanCategoryData data :
+                            mDatas) {
+                        NeiHanDetailProtocol mProtocol = new NeiHanDetailProtocol();
+                        NeiHanDetailBean neiHanDetailBean = mProtocol.loadData(data.id);
+                        String imgUrl = neiHanDetailBean.showapi_res_body.img;
+                        String name = data.id.replace("/", "").replace(":", "").replace("?", "");
+                        String manhuaPath = FileUtils.getDir("manhua") + name + ".jpg";
+                        File file = new File(manhuaPath);
+                        if (!file.exists() || file.length() < 307200) {
+                            //如果文件不存在就去下载到指定目录
+                            OkHttpUtils.get().url(imgUrl).build().execute(new DownloadFileCallBack
+                                    (FileUtils.getDir("manhua"), name + ".jpg"));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 下载漫画文件到本地的回调
+     */
+    class DownloadFileCallBack extends FileCallBack {
+
+        public DownloadFileCallBack(String destFileDir, String destFileName) {
+            super(destFileDir, destFileName);
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+
+        }
+
+        @Override
+        public void onResponse(File response, int id) {
+
+        }
     }
 
     @Override
@@ -91,13 +150,16 @@ public class NeiHanFragment extends BaseCartoonFragment implements AdapterView
             try {
                 //下拉随机加载
                 Random random = new Random();
+                int neihanpage = random.nextInt(Integer.parseInt(mAllPages));
                 final List<NeiHanCategoryBean.ShowapiResBodyEntity.PagebeanEntity
                         .NeiHanCategoryData> neiHanCategoryDataList = mProtocol.loadData
-                        (random.nextInt(Integer.parseInt(mAllPages))).showapi_res_body.pagebean
+                        (neihanpage).showapi_res_body.pagebean
                         .contentlist;
+                SpUtil.putInt(getContext(), "neihanpage", neihanpage);
                 LogUtils.sf("下拉刷新中");
                 mDatas.clear();//清空集合所有数据
                 mDatas.addAll(0, neiHanCategoryDataList);//重新添加
+                downloadNeiHan();
                 //然后将集合原来的数据都清空,再将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
@@ -144,12 +206,14 @@ public class NeiHanFragment extends BaseCartoonFragment implements AdapterView
                         .NeiHanCategoryData> neiHanCategoryDataList = mProtocol
                         .loadData(mDatas.size() / 50 + 1).showapi_res_body
                         .pagebean.contentlist;
+                SpUtil.putInt(getContext(), "neihanpage", mDatas.size() / 50 + 1);
                 //然后将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
                         if (neiHanCategoryDataList.size() > 0) {
                             mDatas.addAll(neiHanCategoryDataList);
+                            downloadNeiHan();
                             mNeiHanCategoryAdapter.notifyDataSetChanged();
                         } else {
                             mXListView.stopLoadMore();//停止加载更多

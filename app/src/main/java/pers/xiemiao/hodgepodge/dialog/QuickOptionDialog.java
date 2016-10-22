@@ -13,7 +13,11 @@ import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import pers.xiemiao.hodgepodge.R;
 
@@ -41,8 +45,11 @@ public class QuickOptionDialog extends Dialog implements
         //2获取布局上的控件
         contentView.findViewById(R.id.ly_quick_option_text).setOnClickListener(
                 this);
-        contentView.findViewById(R.id.ly_quick_option_album)
-                .setOnClickListener(this);
+        View starView = contentView.findViewById(R.id.ly_quick_option_star);
+        starView.setOnClickListener(this);
+        ViewHelper.setTranslationX(starView,-100);
+        ViewPropertyAnimator.animate(starView).translationX(0)
+                .setDuration(1000).setInterpolator(new OvershootInterpolator(3)).start();
         contentView.findViewById(R.id.ly_quick_option_photo)
                 .setOnClickListener(this);
         mClose = (ImageView) contentView.findViewById(R.id.iv_close);
@@ -95,13 +102,13 @@ public class QuickOptionDialog extends Dialog implements
                 dismiss();
                 break;
             case R.id.ly_quick_option_text:
-//                ToastUtils.showToast(getContext(), "文字被点击了");
+                //                ToastUtils.showToast(getContext(), "文字被点击了");
                 break;
-            case R.id.ly_quick_option_album:
-//                ToastUtils.showToast(getContext(), "相册被点击了");
+            case R.id.ly_quick_option_star:
+                //                ToastUtils.showToast(getContext(), "今日运势被点击了");
                 break;
             case R.id.ly_quick_option_photo:
-//                ToastUtils.showToast(getContext(), "相机被点击了");
+                //                ToastUtils.showToast(getContext(), "相机被点击了");
                 break;
             default:
                 break;

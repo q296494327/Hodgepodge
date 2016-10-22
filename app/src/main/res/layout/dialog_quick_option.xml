@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/set_pop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll_option_container"
@@ -23,7 +23,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="12dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ly_quick_option_album"
+                android:id="@+id/ly_quick_option_star"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,12 +51,12 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/quickoption_icon_album_selector"/>
+                    android:src="@drawable/quickoption_icon_star_selector"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="相册"
+                    android:text="今日运势"
                     android:textColor="#000"/>
             </LinearLayout>
 
@@ -67,6 +68,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="12dp"
+                android:visibility="gone"
                 >
 
                 <ImageView

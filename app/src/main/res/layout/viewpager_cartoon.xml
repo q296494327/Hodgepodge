@@ -28,9 +28,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:text="往下拽一页吧"
                 android:textColor="#fff"
-                android:visibility="gone"
-                android:text="暂时有个BUG,如果第一页未能显示\n请先返回让数据加载一下再进来就可以显示了"/>
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </pers.xiemiao.hodgepodge.views.MyScrollView>
