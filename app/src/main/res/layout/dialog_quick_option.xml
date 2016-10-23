@@ -101,8 +101,8 @@
             android:id="@+id/iv_close"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginTop="4dp"
             android:contentDescription="@null"
+            android:layout_marginBottom="2.5dp"
             android:focusable="false"
             android:src="@mipmap/btn_quickoption_route"/>
     </LinearLayout>

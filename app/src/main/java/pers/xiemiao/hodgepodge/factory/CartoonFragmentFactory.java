@@ -6,6 +6,7 @@ import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.CoolFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.HorrorFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.NeiHanFragment;
+import pers.xiemiao.hodgepodge.fragment.cartoonfragment.RandomHorrorFragment;
 
 /**
  * User: xiemiao
@@ -35,9 +36,12 @@ public class CartoonFragmentFactory {
                     fragment = new HorrorFragment();
                     break;
                 case 1:
-                    fragment = new NeiHanFragment();
+                    fragment = new RandomHorrorFragment();
                     break;
                 case 2:
+                    fragment = new NeiHanFragment();
+                    break;
+                case 3:
                     fragment = new CoolFragment();
                     break;
             }

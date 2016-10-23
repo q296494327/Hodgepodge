@@ -146,7 +146,8 @@ public class StarActivity extends AppCompatActivity {
             //获取今日运势数据
             StarBean.ShowapiResBodyEntity.TodayData data = starBean.showapi_res_body.day;
             //刷新UI
-            String time = data.time;
+            String time = "";
+            time = data.time;
             time = time.substring(0, 4) + "-" + time.substring(4, 6) + "-" + time.substring(6, 8);
             mTvTime.setText(time);
             mRbSummary.setRating(data.summary_star);

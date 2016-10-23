@@ -6,8 +6,8 @@
     <!--轻松一刻相关-->
     <string-array name="joke_titles">
         <item>搞笑视频</item>
-        <item>精品笑话</item>
-        <item>精品趣图</item>
+        <item>随机笑话</item>
+        <item>随机趣图</item>
         <item>最新笑话</item>
         <item>最新趣图</item>
     </string-array>
@@ -46,7 +46,8 @@
 
     <!--动感漫画相关-->
     <string-array name="cartoon_titles">
-        <item>恐怖漫画</item>
+        <item>最新惊悚</item>
+        <item>随机惊悚</item>
         <item>内涵漫画</item>
         <item>冷知识</item>
     </string-array>

@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseActivity;
 import pers.xiemiao.hodgepodge.dialog.QuickOptionDialog;
+import pers.xiemiao.hodgepodge.utils.StringUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.MyFragmentTabHost;
 
@@ -28,10 +28,14 @@ public class MainActivity extends BaseActivity {
     private ImageView mQuickOptionIv;
     private FrameLayout mLeftMenu;
     private ActionBarDrawerToggle mToggle;
+    private Toolbar mToolbar;
+    private ImageView mIvMainTitle;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
+        mIvMainTitle = (ImageView) findViewById(R.id.iv_mian_title);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTabHost = (MyFragmentTabHost) findViewById(R.id.tabHost);
         mQuickOptionIv = (ImageView) findViewById(R.id.quick_option_iv);
@@ -44,28 +48,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        //        actionBar.setDisplayShowHomeEnabled(true);
-        //        actionBar.setDisplayUseLogoEnabled(true);
-        //        actionBar.setLogo(R.mipmap.ic_launcher);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);//将toolbar作为actionbar使用
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string
                 .open, R.string.close);
         mDrawerLayout.setDrawerListener(mToggle);//设置拖拽监听给开关
         mToggle.syncState();//同步状态
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mToggle.onOptionsItemSelected(item);
-                break;
-
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -75,6 +63,20 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showQuickDialog();
+            }
+        });
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (StringUtils.isEquals(tabId, "轻松一刻")) {
+                    mIvMainTitle.setBackgroundResource(R.mipmap.qsyk);
+                } else if (StringUtils.isEquals(tabId, "新闻5分钟")) {
+                    mIvMainTitle.setBackgroundResource(R.mipmap.xw);
+                } else if (StringUtils.isEquals(tabId, "动感萌妹")) {
+                    mIvMainTitle.setBackgroundResource(R.mipmap.dgmm);
+                } else if (StringUtils.isEquals(tabId, "动感漫画")) {
+                    mIvMainTitle.setBackgroundResource(R.mipmap.dgmh);
+                }
             }
         });
     }
@@ -97,7 +99,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.ly_quick_option_star:
                         //跳到星座今日运势的activity
-                        startActivity(new Intent(MainActivity.this,StarActivity.class));
+                        startActivity(new Intent(MainActivity.this, StarActivity.class));
                         break;
                 }
             }

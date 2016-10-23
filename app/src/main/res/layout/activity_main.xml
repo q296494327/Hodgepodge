@@ -1,65 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        >
+
+        <!--<TextView
+            android:id="@+id/tv_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="轻松一刻"
+            android:textColor="#fff"
+            android:textSize="20sp"/>-->
+
+        <ImageView
+            android:id="@+id/iv_mian_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/qsyk"/>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        >
 
-        <FrameLayout
-            android:id="@+id/tabContent"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff">
+            <FrameLayout
+                android:id="@+id/tabContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"/>
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dip">
+                android:background="#fff">
 
-                <pers.xiemiao.hodgepodge.views.MyFragmentTabHost
-                    android:id="@+id/tabHost"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dip"/>
+                    android:layout_marginBottom="4dip">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="#D6D6D6"/>
-            </RelativeLayout>
+                    <pers.xiemiao.hodgepodge.views.MyFragmentTabHost
+                        android:id="@+id/tabHost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dip"/>
 
-            <!--中间的快速操作按钮-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#D6D6D6"/>
+                </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/quick_option_iv"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/btn_quickoption_selector"/>
-        </FrameLayout>
-    </LinearLayout>
+                <!--中间的快速操作按钮-->
 
-    <!-- 左侧侧滑菜单 -->
+                <ImageView
+                    android:id="@+id/quick_option_iv"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/btn_quickoption_selector"/>
+            </FrameLayout>
+        </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/left_menu"
-        android:layout_width="150dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#dde4c4"
-        />
+        <!-- 左侧侧滑菜单 -->
 
-</android.support.v4.widget.DrawerLayout>
+        <FrameLayout
+            android:id="@+id/left_menu"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#dde4c4"
+            />
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
