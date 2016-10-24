@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.umeng.analytics.MobclickAgent;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
@@ -111,6 +112,18 @@ public class BeautyTabFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return mTitleArr[position];
         }
+    }
+
+
+    /*-------------------fragment页面统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("BeautyTab"); //统计页面
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("BeautyTab");
     }
 
 

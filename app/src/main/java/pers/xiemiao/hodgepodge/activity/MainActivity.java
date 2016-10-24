@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseActivity;
@@ -150,10 +152,17 @@ public class MainActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("MainActivity"); //统计页面
+        MobclickAgent.onResume(this);
     }
 
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("MainActivity");
+        MobclickAgent.onPause(this);
+        JCVideoPlayer.releaseAllVideos();
+    }
 }

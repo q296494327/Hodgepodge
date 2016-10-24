@@ -2,12 +2,14 @@ package pers.xiemiao.hodgepodge.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.umeng.analytics.MobclickAgent;
 
 import pers.xiemiao.hodgepodge.R;
 
@@ -21,6 +23,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     private String mUrl;
     private WebView mWebView;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     public void initView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebView = (WebView) findViewById(R.id.webView);
         mWebView.loadUrl(mUrl);//加载网页
         WebSettings webSettings = mWebView.getSettings();//获取web设置
@@ -52,11 +56,9 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     private void initActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
-//        actionBar.setDisplayUseLogoEnabled(true);
-//        actionBar.setLogo(R.mipmap.ic_launcher);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -86,5 +88,19 @@ public class NewsDetailActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("NewsDeatilActivity"); //统计页面
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("NewsDeatilActivity");
+        MobclickAgent.onPause(this);
     }
 }

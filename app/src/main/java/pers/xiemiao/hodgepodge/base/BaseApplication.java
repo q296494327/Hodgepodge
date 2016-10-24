@@ -8,6 +8,7 @@ import android.os.Process;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,8 @@ public class BaseApplication extends Application {
 
     @Override
     public void onCreate() {
+        //禁止默认的页面统计方式
+        MobclickAgent.openActivityDurationTrack(false);
         //初始化okhttp
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 //                .addInterceptor(new LoggerInterceptor("TAG"))

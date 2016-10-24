@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.shizhefei.view.largeimage.LongImageView;
+import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -100,6 +101,19 @@ public class NeiHanDetailActivity extends AppCompatActivity {
 
             mIvNeihan.setImage(response.getAbsolutePath());
         }
+    }
+
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("NeiHanDetailActivity"); //统计页面
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("NeiHanDetailActivity");
+        MobclickAgent.onPause(this);
     }
 
 

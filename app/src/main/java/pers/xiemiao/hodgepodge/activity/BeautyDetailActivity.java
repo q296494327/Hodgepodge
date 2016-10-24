@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -134,6 +135,18 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
         }
     }
 
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("BeautyDetailActivity"); //统计页面
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("BeautyDetailActivity");
+        MobclickAgent.onPause(this);
+    }
 
     /*-------------------viewpager页面选择状态监听---------------------*/
 

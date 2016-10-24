@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.shizhefei.view.largeimage.LongImageView;
+import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 
@@ -210,6 +211,19 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
         public void onResponse(File response, int id) {
             mIvCartoon.setImage(response.getAbsolutePath());
         }
+    }
+
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("CartoonDetailActivity"); //统计页面
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("CartoonDetailActivity");
+        MobclickAgent.onPause(this);
     }
 
 }

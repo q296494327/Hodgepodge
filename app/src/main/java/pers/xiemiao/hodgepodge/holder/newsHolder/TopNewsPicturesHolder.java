@@ -82,7 +82,7 @@ public class TopNewsPicturesHolder extends BaseHolder<List<NewsBean.ResultEntity
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
                         task.stop();
                         break;
                     case MotionEvent.ACTION_UP:
@@ -99,6 +99,8 @@ public class TopNewsPicturesHolder extends BaseHolder<List<NewsBean.ResultEntity
      */
     class MyTask implements Runnable {
         void start() {
+            //开始之前先移除掉之前的消息
+            mHandler.removeCallbacksAndMessages(null);
             mHandler.postDelayed(this, 3000);
         }
 

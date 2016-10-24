@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.qqtheme.framework.picker.OptionPicker;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.StarBean;
@@ -201,5 +203,19 @@ public class StarActivity extends AppCompatActivity {
         } else if (starName.equals("shuangyu")) {
             mIvStarpic.setBackgroundResource(R.mipmap.shuangyu);
         }
+    }
+
+
+    /*-------------------友盟统计---------------------*/
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("StarActivity"); //统计页面
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("StarActivity");
+        MobclickAgent.onPause(this);
     }
 }
