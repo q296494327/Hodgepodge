@@ -1,17 +1,26 @@
 package pers.xiemiao.hodgepodge.fragment.jokefragment;
 
+import android.app.Activity;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
+import com.baidu.mobad.feeds.BaiduNative;
+import com.baidu.mobad.feeds.NativeErrorCode;
+import com.baidu.mobad.feeds.NativeResponse;
+import com.baidu.mobad.feeds.RequestParameters;
 import com.markmao.pulltorefresh.widget.XListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pers.xiemiao.hodgepodge.adapter.FunnyVideoAdapter;
 import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.FunnyVideoBean;
+import pers.xiemiao.hodgepodge.bean.NormalAndAdBean;
+import pers.xiemiao.hodgepodge.conf.Constants;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.FunnyVideoProtocol;
@@ -35,17 +44,74 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
     private FunnyVideoAdapter mFunnyVideoAdapter;
     private XListView mXListView;
 
+    /*-------------------百度广告----begin-----------------*/
+    private List<NormalAndAdBean> mVideoAndAdList = new ArrayList<NormalAndAdBean>();
+    List<NativeResponse> nrAdList = new ArrayList<NativeResponse>();
+    private static String YOUR_AD_PLACE_ID = Constants.LISTVIEW_PLACE_ID; // 双引号中填写自己的广告位ID
+    /*-------------------百度广告----end-----------------*/
+
     @Override//初始化数据在子线程,所以可以直接请求网络
     public LoaddingPager.LoadResult initData() {
         try {
             mProtocol = new FunnyVideoProtocol();
             FunnyVideoBean funnyVideoBean = mProtocol.loadData(1);
             mDatas = funnyVideoBean.showapi_res_body.pagebean.contentlist;
+            //将集合的数据添加到总集合
+            for (FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData data : mDatas) {
+                NormalAndAdBean bean = new NormalAndAdBean();
+                bean.vData = data;
+                bean.isAd = false;
+                mVideoAndAdList.add(bean);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return checkState(mDatas);
+        return checkState(mVideoAndAdList);
     }
+
+    /*-------------------百度广告----begin-----------------*/
+    public void fetchAd(Activity activity) {
+        /**
+         * Step 1. 创建BaiduNative对象，参数分别为： 上下文context，广告位ID,
+         * BaiduNativeNetworkListener监听（监听广告请求的成功与失败）
+         * 注意：请将YOUR_AD_PALCE_ID替换为自己的广告位ID
+         */
+        BaiduNative baidu = new BaiduNative(activity, YOUR_AD_PLACE_ID, new
+                BaiduNative.BaiduNativeNetworkListener() {
+                    @Override
+                    public void onNativeFail(NativeErrorCode arg0) {
+                        Log.w("ListViewActivity", "onNativeFail reason:" + arg0.name());
+                    }
+
+                    @Override
+                    public void onNativeLoad(List<NativeResponse> arg0) {
+                        // 一个广告只允许展现一次，多次展现、点击只会计入一次
+                        if (arg0 != null && arg0.size() > 0) {
+                            nrAdList = arg0;
+                            for (NativeResponse ad : nrAdList) {
+                                NormalAndAdBean bean = new NormalAndAdBean();
+                                bean.ad = ad;
+                                bean.isAd = true;
+                                mVideoAndAdList.add(bean);
+                            }
+                        }
+                    }
+
+                });
+
+        /**
+         * Step 2. 创建requestParameters对象，并将其传给baidu.makeRequest来请求广告
+         */
+        // 用户点击下载类广告时，是否弹出提示框让用户选择下载与否
+        RequestParameters requestParameters =
+                new RequestParameters.Builder()
+                        .downloadAppConfirmPolicy(
+                                RequestParameters.DOWNLOAD_APP_CONFIRM_ONLY_MOBILE).build();
+
+        baidu.makeRequest(requestParameters);
+    }
+
+    /*-------------------百度广告----end-----------------*/
 
 
     @Override
@@ -54,7 +120,8 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
         mXListView.setXListViewListener(this);//设置刷新监听
         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
         mXListView.setFastScrollEnabled(false);
-        mFunnyVideoAdapter = new FunnyVideoAdapter(getActivity(), mDatas);
+        fetchAd(getActivity());//初始化百度广告
+        mFunnyVideoAdapter = new FunnyVideoAdapter(getActivity(), mVideoAndAdList);
         mXListView.setAdapter(mFunnyVideoAdapter);
         return mXListView;
     }
@@ -79,8 +146,15 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
                         funnyVideoDataList = mProtocol
                         .loadData(1).showapi_res_body.pagebean.contentlist;
                 LogUtils.sf("下拉刷新中");
-                mDatas.clear();//清空集合所有数据
-                mDatas.addAll(0, funnyVideoDataList);//重新添加
+                mVideoAndAdList.clear();//清空集合所有数据
+                for (FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData data :
+                        funnyVideoDataList) {
+                    NormalAndAdBean bean = new NormalAndAdBean();
+                    bean.vData = data;
+                    bean.isAd = false;
+                    mVideoAndAdList.add(bean);
+                }
+                fetchAd(getActivity());//重新初始化百度广告
                 //然后将集合原来的数据都清空,再将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
@@ -126,13 +200,22 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
             try {
                 final List<FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData>
                         funnyVideoDataList = mProtocol
-                        .loadData(mDatas.size() / 20 + 1).showapi_res_body.pagebean.contentlist;
+                        .loadData(mVideoAndAdList.size() / (20 + nrAdList.size()) + 1)
+                        .showapi_res_body.pagebean.contentlist;
                 //然后将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
                         if (funnyVideoDataList.size() > 0) {
-                            mDatas.addAll(funnyVideoDataList);
+                            for (FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity
+                                    .FunnyVideoData data :
+                                    funnyVideoDataList) {
+                                NormalAndAdBean bean = new NormalAndAdBean();
+                                bean.vData = data;
+                                bean.isAd = false;
+                                mVideoAndAdList.add(bean);
+                            }
+                            fetchAd(getActivity());//重新初始化百度广告
                             mFunnyVideoAdapter.notifyDataSetChanged();
                         } else {
                             mXListView.stopLoadMore();//停止加载更多

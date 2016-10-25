@@ -76,10 +76,10 @@
 
         <FrameLayout
             android:id="@+id/left_menu"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="#dde4c4"
+            android:background="#d6a9ce"
             />
 
     </android.support.v4.widget.DrawerLayout>

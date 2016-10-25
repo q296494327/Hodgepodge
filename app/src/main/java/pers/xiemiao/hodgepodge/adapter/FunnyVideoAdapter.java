@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
+import com.baidu.mobad.feeds.NativeResponse;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -21,6 +23,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.FunnyVideoBean;
+import pers.xiemiao.hodgepodge.bean.NormalAndAdBean;
 import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.MyVideoThumbLoader;
@@ -34,16 +37,18 @@ import pers.xiemiao.hodgepodge.utils.MyVideoThumbLoader;
 public class FunnyVideoAdapter extends BaseAdapter {
 
     private FragmentActivity mActivity;
-    private List<FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData> mDatas;
+    private List<NormalAndAdBean> mDatas;
     private MyVideoThumbLoader mThumbLoader;
+    private static final int AD = 0;
+    private static final int VIDEO = 1;
 
-    public FunnyVideoAdapter(FragmentActivity activity, List<FunnyVideoBean.ShowapiResBodyEntity
-            .PagebeanEntity.FunnyVideoData> datas) {
+    public FunnyVideoAdapter(FragmentActivity activity, List<NormalAndAdBean> datas) {
         mActivity = activity;
         mDatas = datas;
         //初始化缩略图加载类
         mThumbLoader = new MyVideoThumbLoader();
     }
+
 
     @Override
     public int getCount() {
@@ -51,8 +56,23 @@ public class FunnyVideoAdapter extends BaseAdapter {
     }
 
     @Override
-    public FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData getItem(int position) {
+    public NormalAndAdBean getItem(int position) {
         return mDatas.get(position);
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return super.getViewTypeCount() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        NormalAndAdBean bean = mDatas.get(position);
+        if (bean.isAd) {
+            return AD;
+        } else {
+            return VIDEO;
+        }
     }
 
     @Override
@@ -62,56 +82,85 @@ public class FunnyVideoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = View.inflate(mActivity, R.layout.item_funny_video, null);
-            holder = new ViewHolder();
-            holder.jcVideoPlayerStandard = (JCVideoPlayerStandard) convertView.findViewById(R.id
-                    .custom_videoplayer_standard);
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            convertView.setTag(holder);
+        if (getItemViewType(position) == VIDEO) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = View.inflate(mActivity, R.layout.item_funny_video, null);
+                holder = new ViewHolder();
+                holder.jcVideoPlayerStandard = (JCVideoPlayerStandard) convertView.findViewById(R.id
+                        .custom_videoplayer_standard);
+                holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            //获取单个item的数据
+            FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData videoData = getItem
+                    (position).vData;
+            //设置标题
+            holder.tv_title.setText(videoData.text);
+            //给video设置链接
+            holder.jcVideoPlayerStandard.setUp(videoData.video_uri, JCVideoPlayer
+                    .SCREEN_LAYOUT_LIST, "");
+            //先设置默认图片为黑色
+            holder.jcVideoPlayerStandard.thumbImageView.setImageDrawable(new ColorDrawable(0));
+            holder.jcVideoPlayerStandard.thumbImageView.setScaleType(ImageView.ScaleType
+                    .FIT_XY);
+
+            //给缩略图控件设置tag,异步展示图片时通过tag解决图片错乱问题
+            holder.jcVideoPlayerStandard.thumbImageView.setTag(videoData.video_uri);
+            //设置缩略图
+            File cacheFile = getCacheFile(videoData.video_uri);
+            if (cacheFile.exists()) {
+                LogUtils.sf("从缓存读取缩略图");
+                //1从SD卡去获取缓存的缩略图
+                Bitmap bitmap = BitmapFactory.decodeFile(cacheFile.getAbsolutePath());
+                holder.jcVideoPlayerStandard.thumbImageView.setImageBitmap(bitmap);
+            } else {
+                //2SD卡里没有的话,就去异步请求缩略图
+                mThumbLoader.showThumbByAsynctack(videoData.video_uri, holder
+                        .jcVideoPlayerStandard
+                        .thumbImageView);
+            }
+
+            //设置动画效果
+            //先缩小view
+            ViewHelper.setScaleX(convertView, 0.3f);
+            ViewHelper.setScaleY(convertView, 0.3f);
+            //以属性动画放大
+            ViewPropertyAnimator.animate(convertView).setInterpolator(new
+                    OvershootInterpolator(1)).scaleX(1).setDuration(800).start();
+            ViewPropertyAnimator.animate(convertView).setInterpolator(new
+                    OvershootInterpolator(1)).scaleY(1).setDuration(800).start();
+
+            return convertView;
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            final NativeResponse nrAd = getItem(position).ad;
+            if (convertView == null) {
+                convertView = View.inflate(mActivity, R.layout.native_ad_row, null);
+            }
+            AQuery aq = new AQuery(convertView);
+            aq.id(R.id.native_icon_image).image(nrAd.getIconUrl(), false, true);
+            aq.id(R.id.native_main_image).image(nrAd.getImageUrl(), false, true);
+            aq.id(R.id.native_text).text(nrAd.getDesc());
+            aq.id(R.id.native_title).text(nrAd.getTitle());
+            aq.id(R.id.native_brand_name).text(nrAd.getBrandName());
+            aq.id(R.id.native_adlogo).image(nrAd.getAdLogoUrl(), false, true);
+            aq.id(R.id.native_baidulogo).image(nrAd.getBaiduLogoUrl(), false, true);
+            String text = nrAd.isDownloadApp() ? "下载" : "查看";
+            aq.id(R.id.native_cta).text(text);
+            nrAd.recordImpression(convertView);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nrAd.handleClick(v);
+                }
+            });
+            return convertView;
         }
-
-        //获取单个item的数据
-        FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData videoData = getItem
-                (position);
-        //设置标题
-        holder.tv_title.setText(videoData.text);
-        //给video设置链接
-        holder.jcVideoPlayerStandard.setUp(videoData.video_uri, JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "");
-        //先设置默认图片为黑色
-        holder.jcVideoPlayerStandard.thumbImageView.setImageDrawable(new ColorDrawable(0));
-        holder.jcVideoPlayerStandard.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        //给缩略图控件设置tag,异步展示图片时通过tag解决图片错乱问题
-        holder.jcVideoPlayerStandard.thumbImageView.setTag(videoData.video_uri);
-        //设置缩略图
-        File cacheFile = getCacheFile(videoData.video_uri);
-        if (cacheFile.exists()) {
-            LogUtils.sf("从缓存读取缩略图");
-            //1从SD卡去获取缓存的缩略图
-            Bitmap bitmap = BitmapFactory.decodeFile(cacheFile.getAbsolutePath());
-            holder.jcVideoPlayerStandard.thumbImageView.setImageBitmap(bitmap);
-        } else {
-            //2SD卡里没有的话,就去异步请求缩略图
-            mThumbLoader.showThumbByAsynctack(videoData.video_uri, holder.jcVideoPlayerStandard
-                    .thumbImageView);
-        }
-
-        //设置动画效果
-        //先缩小view
-        ViewHelper.setScaleX(convertView, 0.3f);
-        ViewHelper.setScaleY(convertView, 0.3f);
-        //以属性动画放大
-        ViewPropertyAnimator.animate(convertView).setInterpolator(new
-                OvershootInterpolator(1)).scaleX(1).setDuration(800).start();
-        ViewPropertyAnimator.animate(convertView).setInterpolator(new
-                OvershootInterpolator(1)).scaleY(1).setDuration(800).start();
-
-        return convertView;
     }
+
 
     class ViewHolder {
         private JCVideoPlayerStandard jcVideoPlayerStandard;
@@ -126,5 +175,6 @@ public class FunnyVideoAdapter extends BaseAdapter {
         String name = path.replace("/", "").replace(":", "") + ".jpg";
         return new File(cacheDir, name);
     }
+
 
 }

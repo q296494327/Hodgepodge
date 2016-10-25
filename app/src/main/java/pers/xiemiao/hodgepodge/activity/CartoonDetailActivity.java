@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
 import com.shizhefei.view.largeimage.LongImageView;
 import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -22,6 +25,7 @@ import java.util.List;
 import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
+import pers.xiemiao.hodgepodge.conf.Constants;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.CartoonDetailProtocol;
 import pers.xiemiao.hodgepodge.utils.FileUtils;
@@ -43,6 +47,7 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
     private TextView mTvCount;
     private List<String> mImgList;
     private LongImageView mIvCartoon;
+    private InterstitialAd interAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +57,46 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
         mTvCount = (TextView) findViewById(R.id.tv_count);
         mViewPager = (VerticalViewPager) findViewById(R.id.cartoon_viewpager);
         mViewPager.setOnPageChangeListener(this);
+        initInterAd();//初始化百度插屏广告
         initData();
+    }
+
+    /**
+     * 百度插屏广告
+     */
+    private void initInterAd() {
+        String adPlaceId = Constants.VIWEPAGER_PLACE_ID; // 重要：请填上您的广告位ID，代码位错误会导致无法请求到广告
+        interAd = new InterstitialAd(this, adPlaceId);
+        interAd.setListener(new InterstitialAdListener() {
+
+            @Override
+            public void onAdClick(InterstitialAd arg0) {
+                Log.i("InterstitialAd", "onAdClick");
+            }
+
+            @Override
+            public void onAdDismissed() {
+                Log.i("InterstitialAd", "onAdDismissed");
+                interAd.loadAd();
+            }
+
+            @Override
+            public void onAdFailed(String arg0) {
+                Log.i("InterstitialAd", "onAdFailed");
+            }
+
+            @Override
+            public void onAdPresent() {
+                Log.i("InterstitialAd", "onAdPresent");
+            }
+
+            @Override
+            public void onAdReady() {
+                Log.i("InterstitialAd", "onAdReady");
+                interAd.loadAd();
+            }
+
+        });
     }
 
     /**
@@ -185,6 +229,14 @@ public class CartoonDetailActivity extends AppCompatActivity implements Vertical
         MessageEvent event = new MessageEvent();
         event.msg = "refreshmark";
         EventBus.getDefault().post(event);
+
+        if (position == 1 || position == mImgList.size() - 1) {
+            if (interAd.isAdReady()) {
+                interAd.showAd(CartoonDetailActivity.this);
+            } else {
+                interAd.loadAd();
+            }
+        }
     }
 
     @Override

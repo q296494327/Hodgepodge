@@ -85,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //如果是入口,就去执行2秒内按返回键执行销毁
         if (this instanceof MainActivity) {
             if (System.currentTimeMillis() - mPreTimeMillis > 2000) {
-                Toast.makeText(BaseActivity.this, "再按一次,退出大杂烩", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseActivity.this, "再按一次,退出动感大杂汇", Toast.LENGTH_SHORT).show();
                 mPreTimeMillis = System.currentTimeMillis();
                 return;//间隔在2秒之外就直接return,不执行下面的销毁
             } else {

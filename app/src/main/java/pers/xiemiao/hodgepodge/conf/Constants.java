@@ -21,6 +21,12 @@ public class Constants {
     public static final long CACHE_TIME = 30 * 60 * 1000;//30分钟
 
     /**
+     * 广告位ID
+     */
+    public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
+    public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
+
+    /**
      * 请求链接相关
      */
     public static final class URLS {

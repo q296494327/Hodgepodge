@@ -55,7 +55,7 @@ public class RandomHorrorFragment extends BaseCartoonFragment implements Adapter
         try {
             mProtocol = new CartoonCategoryProtocol();
             //从SP里去取要加载的页数
-            int horrorpage = SpUtil.getInt(UIUtils.getContext(), "horrorpage", 1);
+            int horrorpage = SpUtil.getInt(UIUtils.getContext(), "horrorpage", 2);
             CartoonCategoryBean cartoonCategoryBean = mProtocol.loadData("weimanhua/kbmh",
                     horrorpage);
             mDatas = cartoonCategoryBean.showapi_res_body.pagebean.contentlist;

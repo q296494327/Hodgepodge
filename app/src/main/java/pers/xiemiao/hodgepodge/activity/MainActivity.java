@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
     private ImageView mIvMainTitle;
+    private ImageView mImageView;
 
     @Override
     public void initView() {
@@ -55,7 +56,16 @@ public class MainActivity extends BaseActivity {
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string
                 .open, R.string.close);
         mDrawerLayout.setDrawerListener(mToggle);//设置拖拽监听给开关
+        mToggle.setDrawerIndicatorEnabled(true);//暂时隐藏掉控制侧边栏的开关
         mToggle.syncState();//同步状态
+    }
+
+
+    @Override
+    public void initData() {
+        mImageView = new ImageView(this);
+        mImageView.setImageResource(R.mipmap.m2);
+        mLeftMenu.addView(mImageView);
     }
 
     @Override

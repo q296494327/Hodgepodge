@@ -13,6 +13,7 @@
         >
     </android.support.v4.view.ViewPager>
 
+
     <TextView
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
