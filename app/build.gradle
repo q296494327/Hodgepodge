@@ -18,6 +18,19 @@ android {
         }
     }
 
+    productFlavors {
+
+        wandoujia {}
+        baidu {}
+        c360 {}
+        yingyongbao {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
+    }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']

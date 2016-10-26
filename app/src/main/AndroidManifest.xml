@@ -69,7 +69,7 @@
             android:value="580da828f29d9821e7003ab8"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="YINGYONGBAO"/>
+            android:value="${UMENG_CHANNEL_VALUE}"/>
         <!--百度appid-->
         <meta-data
             android:name="BaiduMobAd_APP_ID"
