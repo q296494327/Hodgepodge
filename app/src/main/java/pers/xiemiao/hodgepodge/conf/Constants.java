@@ -23,8 +23,10 @@ public class Constants {
     /**
      * 广告位ID
      */
-    public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
-    public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
+    //    public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
+    //    public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
+    public static final String LISTVIEW_PLACE_ID = "";//广告位ID
+    public static final String VIWEPAGER_PLACE_ID = "";//广告位ID
 
     /**
      * 请求链接相关
@@ -60,6 +62,17 @@ public class Constants {
         //星座今日运势URL
         public static final String STARURL = "http://route.showapi.com/872-1?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+
+        //美女列表URL
+        public static final String BEAUTYCATEGORYURL = "http://www.tngou.net/tnfs/api/list?";
+        //美女列表URL
+        public static final String BEAUTYDETAILURL = "http://www.tngou.net/tnfs/api/show?";
+        //图片前缀
+        public static final String BEAUTYBEFORE = "http://tnfs.tngou.net/img";
+        public static final String BEAUTYBEFORESIZE = "http://tnfs.tngou.net/image";
+        //百度美女图片
+        public static final String BAIDUIMAGEURL = "http://image.baidu" +
+                ".com/channel/listjson?ie=utf8&rn=20";
 
     }
 }

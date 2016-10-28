@@ -1,62 +1,68 @@
 package pers.xiemiao.hodgepodge.fragment.beautyfragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 
+import com.scu.miomin.shswiperefresh.core.SHSwipeRefreshLayout;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.BeautyRecycleAdapter;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
-import pers.xiemiao.hodgepodge.bean.GirlCategoryBean;
+import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
-import pers.xiemiao.hodgepodge.protocol.GirlCategoryProtocol;
+import pers.xiemiao.hodgepodge.protocol.BaiduImageProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
 /**
  * User: xiemiao
- * Date: 2016-10-17
+ * Date: 2016-10-28
  * Time: 16:00
- * Desc: AV女演员
+ * Desc: 校花美女
  */
-public class AVFragment extends BaseBeautyFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class XiaoHuaFragment extends BaseBeautyFragment implements SHSwipeRefreshLayout
+        .SHSOnRefreshListener {
 
-    private GirlCategoryProtocol mProtocol;
-    private List<GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GirlCategoryData> mDatas;
-    private SwipeRefreshLayout mRefreshLayout;
+    private BaiduImageProtocol mProtocol;
+    private List<BaiduBeautyBean.BaiduBeautyData> mDatas = new ArrayList<BaiduBeautyBean
+            .BaiduBeautyData>();
+    private SHSwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecycleView;
     private RefreshTask mRefreshTask;
     private BeautyRecycleAdapter mBeautyRecycleAdapter;
+    private BaiduBeautyBean mBaiduBeautyBean;
 
     @Override//这里在子线程,所以可以直接请求网络
     public LoaddingPager.LoadResult initData() {
         try {
-            mProtocol = new GirlCategoryProtocol();
-            GirlCategoryBean girlCategoryBean = mProtocol.loadData("av");
-            mDatas = girlCategoryBean.showapi_res_body.pagebean.contentlist;
-
+            mProtocol = new BaiduImageProtocol();
+            mBaiduBeautyBean = mProtocol.loadData("美女", "校花", 0);
+            List<BaiduBeautyBean.BaiduBeautyData> datas = mBaiduBeautyBean.data;
+            for (int i = 0; i < datas.size(); i++) {
+                if (i != datas.size() - 1) {
+                    mDatas.add(datas.get(i));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return LoaddingPager.LoadResult.LOADSUCESS;
+        return checkState(mDatas);
     }
 
     @Override
     public View initSuccessView() {
         View view = View.inflate(UIUtils.getContext(), R.layout.recycleview_qunzhuang, null);
         //获取到recycleview外层的刷新容器布局
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_view);
+        mRefreshLayout = (SHSwipeRefreshLayout) view.findViewById(R.id.refresh_view);
         mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view);
-        //设置刷新的颜色替换数据
-        mRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R
-                .color.holo_red_light, android.R.color.holo_orange_light, android.R.color
-                .holo_green_light);
         //设置刷新监听
         mRefreshLayout.setOnRefreshListener(this);
         //确定recycle的瀑布流布局管家,2列
@@ -80,25 +86,51 @@ public class AVFragment extends BaseBeautyFragment implements SwipeRefreshLayout
         ThreadPoolFactory.getNormalThreadPool().execute(mRefreshTask);
     }
 
+    @Override
+    public void onLoading() {
+        mRefreshTask = new RefreshTask();
+        mProtocol.isRefresh = true;
+        ThreadPoolFactory.getNormalThreadPool().execute(mRefreshTask);
+        mRefreshLayout.finishLoadmore();
+        mRecycleView.scrollToPosition(0);
+    }
+
+    @Override
+    public void onRefreshPulStateChange(float percent, int state) {
+
+    }
+
+    @Override
+    public void onLoadmorePullStateChange(float percent, int state) {
+
+    }
+
     class RefreshTask implements Runnable {
         @Override
         public void run() {
             //请求网络，请求最新的数据
             try {
-                final List<GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GirlCategoryData>
-                        girlCategoryDatas = mProtocol.loadData("av").showapi_res_body
-                        .pagebean
-                        .contentlist;
+                //随机取加载一页数据
+                int totalNum = mBaiduBeautyBean.totalNum;
+                int pageNum = totalNum / 20;
+                Random random = new Random();
+                int index = random.nextInt(pageNum + 1);
+                final List<BaiduBeautyBean.BaiduBeautyData>
+                        baiduBeautyDatas = mProtocol.loadData("美女", "校花", index * 20).data;
                 LogUtils.sf("下拉刷新中");
                 mDatas.clear();//清空集合所有数据
-                mDatas.addAll(0, girlCategoryDatas);//重新添加
+                for (int i = 0; i < baiduBeautyDatas.size(); i++) {
+                    if (i != baiduBeautyDatas.size() - 1) {
+                        mDatas.add(baiduBeautyDatas.get(i));
+                    }
+                }
                 //然后将集合原来的数据都清空,再将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
                         mBeautyRecycleAdapter.notifyDataSetChanged();
-                        mRefreshLayout.setRefreshing(false);
-                        ToastUtils.showSafeToast("刷新成功", Gravity.TOP);
+                        mRefreshLayout.finishRefresh();
+                        ToastUtils.showSafeToast("一大波萌妹来袭", Gravity.TOP);
                     }
                 });
             } catch (Exception e) {
@@ -106,7 +138,7 @@ public class AVFragment extends BaseBeautyFragment implements SwipeRefreshLayout
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
-                        mRefreshLayout.setRefreshing(false);
+                        mRefreshLayout.finishRefresh();
                         ToastUtils.showSafeToast("网络异常,请重试", Gravity.TOP);
                     }
                 });

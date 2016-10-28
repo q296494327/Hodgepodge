@@ -21,7 +21,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:background="@drawable/selector_item_jokepic_bg"
-            fresco:actualImageScaleType="fitXY"
+            fresco:actualImageScaleType="centerCrop"
             fresco:fadeDuration="1000"
             fresco:progressBarAutoRotateInterval="5000"
             fresco:progressBarImage="@drawable/spinner_big_inner"

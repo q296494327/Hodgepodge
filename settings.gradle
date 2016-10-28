@@ -1,1 +1,1 @@
-include ':app', ':okhttputils', ':PagerSlidingTabStriplibrary', ':PullToRefresh', ':gesture', ':longImglibrary'
+include ':app', ':okhttputils', ':PagerSlidingTabStriplibrary', ':PullToRefresh', ':gesture', ':longImglibrary', ':shswiperefresh'

@@ -26,6 +26,7 @@ import pers.xiemiao.hodgepodge.holder.newsHolder.TopNewsPicturesHolder;
 import pers.xiemiao.hodgepodge.protocol.TopNewsProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
+import pers.xiemiao.hodgepodge.utils.StringUtils;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
@@ -40,7 +41,8 @@ public class TopFragment extends BaseNewsFragment implements XListView.IXListVie
         AdapterView.OnItemClickListener {
 
     private TopNewsProtocol mProtocol;
-    private List<NewsBean.ResultEntity.NewsData> mDatas;
+    private List<NewsBean.ResultEntity.NewsData> mDatas = new ArrayList<NewsBean.ResultEntity
+            .NewsData>();
     private XListView mXListView;
     private TopNewsAdapter mTopNewsAdapter;
     private RefreshTask mRefreshTask;
@@ -50,7 +52,13 @@ public class TopFragment extends BaseNewsFragment implements XListView.IXListVie
         try {
             mProtocol = new TopNewsProtocol();
             NewsBean newsBean = mProtocol.loadData("top");
-            mDatas = newsBean.result.data;
+            List<NewsBean.ResultEntity.NewsData> datas = newsBean.result.data;
+            //遍历集合,将军事方面的信息给移除
+            for (NewsBean.ResultEntity.NewsData data : datas) {
+                if (!StringUtils.isEquals(data.realtype, "军事")) {
+                    mDatas.add(data);
+                }
+            }
             Collections.sort(mDatas);
         } catch (Exception e) {
             e.printStackTrace();

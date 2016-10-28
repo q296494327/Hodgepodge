@@ -67,4 +67,5 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile files('libs/Baidu_MobAds_SDK.jar')
     compile files('libs/android-query-full.0.26.7.jar')
+    compile project(':shswiperefresh')
 }

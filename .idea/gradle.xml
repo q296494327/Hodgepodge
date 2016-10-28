@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/gesture" />
             <option value="$PROJECT_DIR$/longImglibrary" />
             <option value="$PROJECT_DIR$/okhttputils" />
+            <option value="$PROJECT_DIR$/shswiperefresh" />
           </set>
         </option>
         <option name="myModules">
@@ -26,6 +27,7 @@
             <option value="$PROJECT_DIR$/gesture" />
             <option value="$PROJECT_DIR$/longImglibrary" />
             <option value="$PROJECT_DIR$/okhttputils" />
+            <option value="$PROJECT_DIR$/shswiperefresh" />
           </set>
         </option>
       </GradleProjectSettings>

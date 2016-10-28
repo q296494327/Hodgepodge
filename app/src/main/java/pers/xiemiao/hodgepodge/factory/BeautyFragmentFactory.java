@@ -3,20 +3,18 @@ package pers.xiemiao.hodgepodge.factory;
 import android.support.v4.util.SparseArrayCompat;
 
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.AVFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.BiJiNiFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.MeiNvFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.MeiTunFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.MoteFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.QingQuFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.QunZhuangFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.RuFangFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.SiWaFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.TPZPFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.ChangFaFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.CosplayFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.FeiZhuLiuFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.KeAiFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.LuoLiFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.RiHanFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.WangLuoFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.WeiMeiFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.XiaoHuaFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.XiaoQingXinFragment;
 import pers.xiemiao.hodgepodge.fragment.beautyfragment.XieZhenFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.XingGanFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.XingGeFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.ZhiFuFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.ZhaiNanNvShenFragment;
 
 /**
  * User: xiemiao
@@ -43,46 +41,40 @@ public class BeautyFragmentFactory {
             //2如果集合里取出的是空的，就根据索引去创建不同的fragment
             switch (position) {
                 case 0:
-                    fragment = new QunZhuangFragment();
+                    fragment = new XiaoHuaFragment();
                     break;
                 case 1:
-                    fragment = new XieZhenFragment();
+                    fragment = new XiaoQingXinFragment();
                     break;
                 case 2:
-                    fragment = new XingGeFragment();
+                    fragment = new KeAiFragment();
                     break;
                 case 3:
-                    fragment = new RuFangFragment();
+                    fragment = new XieZhenFragment();
                     break;
                 case 4:
-                    fragment = new TPZPFragment();
+                    fragment = new WangLuoFragment();
                     break;
                 case 5:
-                    fragment = new AVFragment();
+                    fragment = new ZhaiNanNvShenFragment();
                     break;
                 case 6:
-                    fragment = new ZhiFuFragment();
+                    fragment = new WeiMeiFragment();
                     break;
                 case 7:
-                    fragment = new XingGanFragment();
+                    fragment = new ChangFaFragment();
                     break;
                 case 8:
-                    fragment = new QingQuFragment();
+                    fragment = new RiHanFragment();
                     break;
                 case 9:
-                    fragment = new MeiNvFragment();
+                    fragment = new LuoLiFragment();
                     break;
                 case 10:
-                    fragment = new MeiTunFragment();
+                    fragment = new CosplayFragment();
                     break;
                 case 11:
-                    fragment = new MoteFragment();
-                    break;
-                case 12:
-                    fragment = new BiJiNiFragment();
-                    break;
-                case 13:
-                    fragment = new SiWaFragment();
+                    fragment = new FeiZhuLiuFragment();
                     break;
             }
             //3将fragment存进数组

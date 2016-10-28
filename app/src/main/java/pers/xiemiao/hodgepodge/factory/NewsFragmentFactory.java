@@ -6,7 +6,6 @@ import pers.xiemiao.hodgepodge.base.BaseNewsFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.CaiJingFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.GuoJiFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.GuoNeiFragment;
-import pers.xiemiao.hodgepodge.fragment.newsfragment.JunShiFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.KeJiFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.SheHuiFragment;
 import pers.xiemiao.hodgepodge.fragment.newsfragment.ShiShangFragment;
@@ -47,25 +46,25 @@ public class NewsFragmentFactory {
                 case 2:
                     fragment = new YuLeFragment();
                     break;
+//                case 3:
+//                    fragment = new JunShiFragment();
+//                    break;
                 case 3:
-                    fragment = new JunShiFragment();
-                    break;
-                case 4:
                     fragment = new GuoNeiFragment();
                     break;
-                case 5:
+                case 4:
                     fragment = new GuoJiFragment();
                     break;
-                case 6:
+                case 5:
                     fragment = new TiYuFragment();
                     break;
-                case 7:
+                case 6:
                     fragment = new KeJiFragment();
                     break;
-                case 8:
+                case 7:
                     fragment = new CaiJingFragment();
                     break;
-                case 9:
+                case 8:
                     fragment = new ShiShangFragment();
                     break;
             }

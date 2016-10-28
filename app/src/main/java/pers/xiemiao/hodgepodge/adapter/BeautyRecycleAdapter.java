@@ -16,7 +16,7 @@ import java.util.List;
 import lib.lhh.fiv.library.FrescoImageView;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.activity.BeautyDetailActivity;
-import pers.xiemiao.hodgepodge.bean.GirlCategoryBean;
+import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 
@@ -28,10 +28,9 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  */
 public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdapter.BeautyHolder> {
 
-    private List<GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GirlCategoryData> mDatas;
+    private List<BaiduBeautyBean.BaiduBeautyData> mDatas;
 
-    public BeautyRecycleAdapter(List<GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity
-            .GirlCategoryData> datas) {
+    public BeautyRecycleAdapter(List<BaiduBeautyBean.BaiduBeautyData> datas) {
         mDatas = datas;
     }
 
@@ -56,7 +55,7 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
 
     @Override//数据和holder绑定
     public void onBindViewHolder(BeautyHolder holder, int position) {
-        if (position == 1 ) {
+        if (position == 1) {
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) holder.mFivBeauty
                     .getLayoutParams();
             params.height = DensityUtils.dp2px(UIUtils.getContext(), 220);
@@ -71,7 +70,7 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
             public void onClick(View v) {
                 Intent intent = new Intent(UIUtils.getContext(), BeautyDetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("imgurl", mDatas.get(tempPosition).link);
+                intent.putExtra("url", mDatas.get(tempPosition).download_url);
                 UIUtils.getContext().startActivity(intent);
             }
         });
@@ -100,9 +99,8 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
         }
 
         //设置数据和刷新UI
-        public void setDataAndRefreshUI(GirlCategoryBean.ShowapiResBodyEntity.PagebeanEntity
-                                                .GirlCategoryData data) {
-            mFivBeauty.setImageURI(data.img);
+        public void setDataAndRefreshUI(BaiduBeautyBean.BaiduBeautyData data) {
+            mFivBeauty.setImageURI(data.download_url);
         }
     }
 }

@@ -17,7 +17,6 @@
         <item>头条</item>
         <item>社会</item>
         <item>娱乐</item>
-        <item>军事</item>
         <item>国内</item>
         <item>国际</item>
         <item>体育</item>
@@ -28,20 +27,18 @@
 
     <!--动感萌妹子相关-->
     <string-array name="beauty_titles">
-        <item>裙装美女</item>
-        <item>写真艺术</item>
-        <item>性格美女</item>
-        <item>车展美女</item>
-        <item>自拍艺术</item>
-        <item>萌萌哒美女</item>
-        <item>职业美女</item>
-        <item>性感美女</item>
-        <item>情调美女</item>
-        <item>美女照片</item>
-        <item>美女头像</item>
-        <item>美女模特</item>
-        <item>泳装展示</item>
-        <item>袜子美女</item>
+        <item>美女校花</item>
+        <item>小清新</item>
+        <item>可爱美女</item>
+        <item>写真美女</item>
+        <item>网络美女</item>
+        <item>宅男女神</item>
+        <item>唯美女神</item>
+        <item>长发美女</item>
+        <item>日韩美女</item>
+        <item>萝莉美女</item>
+        <item>Cosplay美女</item>
+        <item>非主流美女</item>
     </string-array>
 
     <!--动感漫画相关-->
