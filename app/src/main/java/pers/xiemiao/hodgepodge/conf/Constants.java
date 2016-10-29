@@ -23,8 +23,8 @@ public class Constants {
     /**
      * 广告位ID
      */
-    //    public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
-    //    public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
+//        public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
+//        public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
     public static final String LISTVIEW_PLACE_ID = "";//广告位ID
     public static final String VIWEPAGER_PLACE_ID = "";//广告位ID
 

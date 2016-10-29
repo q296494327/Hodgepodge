@@ -1,11 +1,17 @@
 package pers.xiemiao.hodgepodge.fragment.beautyfragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 
 import com.scu.miomin.shswiperefresh.core.SHSwipeRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +22,7 @@ import pers.xiemiao.hodgepodge.adapter.BeautyRecycleAdapter;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
 import pers.xiemiao.hodgepodge.base.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
+import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.protocol.BaiduImageProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
@@ -144,6 +151,26 @@ public class LuoLiFragment extends BaseBeautyFragment implements SHSwipeRefreshL
                 });
             }
         }
+    }
+
+    /*================在fragment创建和销毁时,注册和注销EventBus=================*/
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /*================接收EventBus传过来的消息,做出相应的操作==(已在基类注册了eventbus)===============*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        mRecycleView.scrollToPosition(event.position);
     }
 
 }

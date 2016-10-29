@@ -1,5 +1,6 @@
 package pers.xiemiao.hodgepodge.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class BaiduBeautyBean {
     public int return_number;
     public String tag2;
 
-    public static class BaiduBeautyData {
+    public static class BaiduBeautyData implements Serializable {
         public String date;
         public int image_height;
         public String download_url;

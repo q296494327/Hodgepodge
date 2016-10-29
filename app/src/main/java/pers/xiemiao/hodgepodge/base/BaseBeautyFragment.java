@@ -74,4 +74,6 @@ public abstract class BaseBeautyFragment extends Fragment {
         }
         return LoaddingPager.LoadResult.LOADERROR;
     }
+
+
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lib.lhh.fiv.library.FrescoImageView;
@@ -70,7 +71,8 @@ public class BeautyRecycleAdapter extends RecyclerView.Adapter<BeautyRecycleAdap
             public void onClick(View v) {
                 Intent intent = new Intent(UIUtils.getContext(), BeautyDetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("url", mDatas.get(tempPosition).download_url);
+                intent.putExtra("position", tempPosition);//传递图片的位置过去
+                intent.putExtra("datalist", (Serializable) mDatas);//将对象集合传递过去
                 UIUtils.getContext().startActivity(intent);
             }
         });
