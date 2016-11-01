@@ -9,13 +9,15 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
+
 /**
  * User: xiemiao
  * Date: 2016-10-05
  * Time: 18:02
- * Desc: 基类新闻fragment，封装共性内容
+ * Desc: 基类鬼故事fragment，封装共性内容
  */
-public abstract class BaseNewsFragment extends Fragment {
+public abstract class BaseGhostFragment extends Fragment {
 
     public LoaddingPager mLoaddingPager;
 
@@ -29,12 +31,12 @@ public abstract class BaseNewsFragment extends Fragment {
             mLoaddingPager = new LoaddingPager(getContext()) {
                 @Override
                 public LoadResult initData() {
-                    return BaseNewsFragment.this.initData();
+                    return BaseGhostFragment.this.initData();
                 }
 
                 @Override
                 public View initSuccessView() {
-                    return BaseNewsFragment.this.initSuccessView();
+                    return BaseGhostFragment.this.initSuccessView();
                 }
             };
         }

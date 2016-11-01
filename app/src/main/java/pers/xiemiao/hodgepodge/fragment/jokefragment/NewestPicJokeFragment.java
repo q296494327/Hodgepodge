@@ -10,7 +10,7 @@ import java.util.List;
 
 import pers.xiemiao.hodgepodge.adapter.NewestPicAdapter;
 import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.NewestPicBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;

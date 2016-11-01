@@ -20,7 +20,7 @@ import java.util.Random;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.BeautyRecycleAdapter;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
@@ -35,7 +35,7 @@ import pers.xiemiao.hodgepodge.utils.UIUtils;
  * Time: 16:00
  * Desc: 校花美女
  */
-public class ZhaiNanNvShenFragment extends BaseBeautyFragment implements SHSwipeRefreshLayout
+public class GuDianFragment extends BaseBeautyFragment implements SHSwipeRefreshLayout
         .SHSOnRefreshListener {
 
     private BaiduImageProtocol mProtocol;
@@ -51,7 +51,7 @@ public class ZhaiNanNvShenFragment extends BaseBeautyFragment implements SHSwipe
     public LoaddingPager.LoadResult initData() {
         try {
             mProtocol = new BaiduImageProtocol();
-            mBaiduBeautyBean = mProtocol.loadData("美女", "宅男女神", 0);
+            mBaiduBeautyBean = mProtocol.loadData("美女", "古典美女", 0);
             List<BaiduBeautyBean.BaiduBeautyData> datas = mBaiduBeautyBean.data;
             for (int i = 0; i < datas.size(); i++) {
                 if (i != datas.size() - 1) {
@@ -123,7 +123,7 @@ public class ZhaiNanNvShenFragment extends BaseBeautyFragment implements SHSwipe
                 Random random = new Random();
                 int index = random.nextInt(pageNum + 1);
                 final List<BaiduBeautyBean.BaiduBeautyData>
-                        baiduBeautyDatas = mProtocol.loadData("美女", "宅男女神", index * 20).data;
+                        baiduBeautyDatas = mProtocol.loadData("美女", "古典美女", index * 20).data;
                 LogUtils.sf("下拉刷新中");
                 mDatas.clear();//清空集合所有数据
                 for (int i = 0; i < baiduBeautyDatas.size(); i++) {

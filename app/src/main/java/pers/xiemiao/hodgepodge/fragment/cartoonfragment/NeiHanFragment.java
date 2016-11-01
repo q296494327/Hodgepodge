@@ -22,7 +22,7 @@ import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.activity.NeiHanDetailActivity;
 import pers.xiemiao.hodgepodge.adapter.NeiHanCategoryAdapter;
 import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.NeiHanCategoryBean;
 import pers.xiemiao.hodgepodge.bean.NeiHanDetailBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;

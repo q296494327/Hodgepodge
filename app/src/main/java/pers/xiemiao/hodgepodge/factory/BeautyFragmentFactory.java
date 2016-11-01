@@ -14,7 +14,7 @@ import pers.xiemiao.hodgepodge.fragment.beautyfragment.WeiMeiFragment;
 import pers.xiemiao.hodgepodge.fragment.beautyfragment.XiaoHuaFragment;
 import pers.xiemiao.hodgepodge.fragment.beautyfragment.XiaoQingXinFragment;
 import pers.xiemiao.hodgepodge.fragment.beautyfragment.SuYanFragment;
-import pers.xiemiao.hodgepodge.fragment.beautyfragment.ZhaiNanNvShenFragment;
+import pers.xiemiao.hodgepodge.fragment.beautyfragment.GuDianFragment;
 
 /**
  * User: xiemiao
@@ -56,7 +56,7 @@ public class BeautyFragmentFactory {
                     fragment = new WangLuoFragment();
                     break;
                 case 5:
-                    fragment = new ZhaiNanNvShenFragment();
+                    fragment = new GuDianFragment();
                     break;
                 case 6:
                     fragment = new WeiMeiFragment();

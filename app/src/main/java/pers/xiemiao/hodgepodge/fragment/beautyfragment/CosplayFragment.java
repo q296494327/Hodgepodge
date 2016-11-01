@@ -20,7 +20,7 @@ import java.util.Random;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.BeautyRecycleAdapter;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;

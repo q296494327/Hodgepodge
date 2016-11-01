@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.base;
+package pers.xiemiao.hodgepodge.views;
 
 import android.content.Context;
 import android.view.View;

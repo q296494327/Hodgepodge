@@ -17,7 +17,7 @@ import java.util.List;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.RandomJokeAdapter;
 import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.RandomJokeBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;

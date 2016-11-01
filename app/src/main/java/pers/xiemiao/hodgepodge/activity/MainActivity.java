@@ -82,8 +82,8 @@ public class MainActivity extends BaseActivity {
             public void onTabChanged(String tabId) {
                 if (StringUtils.isEquals(tabId, "轻松一刻")) {
                     mIvMainTitle.setBackgroundResource(R.mipmap.qsyk);
-                } else if (StringUtils.isEquals(tabId, "新闻5分钟")) {
-                    mIvMainTitle.setBackgroundResource(R.mipmap.xw);
+                } else if (StringUtils.isEquals(tabId, "三更有鬼")) {
+                    mIvMainTitle.setBackgroundResource(R.mipmap.sgyg);
                 } else if (StringUtils.isEquals(tabId, "动感萌妹")) {
                     mIvMainTitle.setBackgroundResource(R.mipmap.dgmm);
                 } else if (StringUtils.isEquals(tabId, "动感漫画")) {

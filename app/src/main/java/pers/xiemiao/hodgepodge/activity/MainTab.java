@@ -5,7 +5,7 @@ import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.fragment.beautyfragment.BeautyTabFragment;
 import pers.xiemiao.hodgepodge.fragment.cartoonfragment.CartoonTabFragment;
 import pers.xiemiao.hodgepodge.fragment.jokefragment.JokeTabFragment;
-import pers.xiemiao.hodgepodge.fragment.newsfragment.NewsTabFragment;
+import pers.xiemiao.hodgepodge.fragment.ghostfragment.GhostTabFragment;
 
 /**
  * 使用枚举的方式初始化tabhost所需标签
@@ -14,7 +14,7 @@ import pers.xiemiao.hodgepodge.fragment.newsfragment.NewsTabFragment;
 public enum MainTab {
 
     JOKE(0, "轻松一刻", R.drawable.selector_maintab_icon_joke, JokeTabFragment.class),
-    News(1, "新闻5分钟", R.drawable.selector_maintab_icon_news, NewsTabFragment.class),
+    News(1, "三更有鬼", R.drawable.selector_maintab_icon_news, GhostTabFragment.class),
     QUICK(2, "快速启动", R.drawable.selector_maintab_icon_joke, null),
     BEAUTY(3, "动感萌妹", R.drawable.selector_maintab_icon_beauty, BeautyTabFragment.class),
     CARTOON(4, "动感漫画", R.drawable.selector_maintab_icon_cartoon, CartoonTabFragment.class);

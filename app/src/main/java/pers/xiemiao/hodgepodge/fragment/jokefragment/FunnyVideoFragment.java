@@ -17,7 +17,7 @@ import java.util.List;
 
 import pers.xiemiao.hodgepodge.adapter.FunnyVideoAdapter;
 import pers.xiemiao.hodgepodge.base.BaseJokeFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.FunnyVideoBean;
 import pers.xiemiao.hodgepodge.bean.NormalAndAdBean;
 import pers.xiemiao.hodgepodge.conf.Constants;

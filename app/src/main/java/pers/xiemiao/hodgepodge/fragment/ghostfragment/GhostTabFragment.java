@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.fragment.newsfragment;
+package pers.xiemiao.hodgepodge.fragment.ghostfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +14,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.umeng.analytics.MobclickAgent;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.base.BaseNewsFragment;
-import pers.xiemiao.hodgepodge.factory.NewsFragmentFactory;
+import pers.xiemiao.hodgepodge.base.BaseGhostFragment;
+import pers.xiemiao.hodgepodge.factory.GhostFragmentFactory;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
@@ -24,9 +24,9 @@ import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
  * User: xiemiao
  * Date: 2016-10-10
  * Time: 18:21
- * Desc: 新闻5分钟选项卡的fragment
+ * Desc: 鬼故事选项卡的fragment
  */
-public class NewsTabFragment extends Fragment {
+public class GhostTabFragment extends Fragment {
 
     private PagerSlidingTabStrip mNewsTabs;
     private ViewPager mNewsViewpager;
@@ -72,7 +72,7 @@ public class NewsTabFragment extends Fragment {
             public void onPageSelected(int position) {
                 LogUtils.sf("onPageSelected加载数据");
                 //当viewpager被选中的时候,触发加载数据
-                BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
+                BaseGhostFragment fragment = GhostFragmentFactory.getFragment(position);
                 fragment.getLoaddingPager().loadData();
             }
 
@@ -93,9 +93,9 @@ public class NewsTabFragment extends Fragment {
         }
 
         @Override//返回fragment对象
-        public BaseNewsFragment getItem(int position) {
+        public BaseGhostFragment getItem(int position) {
             //使用fragment工厂实现
-            BaseNewsFragment fragment = NewsFragmentFactory.getFragment(position);
+            BaseGhostFragment fragment = GhostFragmentFactory.getFragment(position);
             return fragment;
         }
 
@@ -116,12 +116,12 @@ public class NewsTabFragment extends Fragment {
     /*-------------------fragment页面统计---------------------*/
     public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("NewsTab"); //统计页面
+        MobclickAgent.onPageStart("GhostTab"); //统计页面
     }
 
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("NewsTab");
+        MobclickAgent.onPageEnd("GhostTab");
     }
 
 

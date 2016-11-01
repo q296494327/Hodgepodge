@@ -24,6 +24,8 @@ android {
         baidu {}
         c360 {}
         yingyongbao {}
+        xiaomi {}
+        anzhi {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
+
 /**
  * User: xiemiao
  * Date: 2016-10-05

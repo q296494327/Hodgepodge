@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="@drawable/selector_item_jokepic_bg"
+        app:cardBackgroundColor="#fff"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
+        app:contentPadding="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <lib.lhh.fiv.library.FrescoImageView
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/fiv_ghostpic"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                fresco:fadeDuration="1000"
+                fresco:progressBarAutoRotateInterval="5000"
+                fresco:progressBarImage="@drawable/spinner_big_outer"
+                fresco:progressBarImageScaleType="centerInside"
+                fresco:roundedCornerRadius="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="不可说"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="5"
+                    android:text="“阿玲，我喜欢林飞。”莫菲菲带着心事看着邓玲，忐忑不安。那名叫邓玲的女子听到此话，目光暗淡下来，强打着笑容说：“喜欢那就去追吧。”“真的吗？他一定会成为我男朋友的。”莫菲菲欢呼雀跃的牵着邓玲的手，蹦着..."
+                    android:textColor="#000"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

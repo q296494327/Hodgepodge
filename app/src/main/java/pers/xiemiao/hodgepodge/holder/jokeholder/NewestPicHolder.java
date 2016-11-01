@@ -59,8 +59,9 @@ public class NewestPicHolder extends BaseHolder<NewestPicBean.ResultEntity.Newes
     protected void refreshHolderView(NewestPicBean.ResultEntity.NewestPicData data) {
         mTvContent.setText(data.content);
         mTvTime.setText("更新时间: " + data.updatetime);
-        if (data.content.equals("石油管道爆裂") || data.content.equals("小伙子，让开点")) {
-            mFrescoImageView.setImageResource(R.mipmap.m5);
+        if (data.content.equals("石油管道爆裂") || data.content.equals("小伙子，让开点") || data.content
+                .equals("这配合我给98分")) {
+            mFrescoImageView.setImageResource(R.mipmap.m2);
         } else {
             //加载网络图片mSdvPic
             Uri uri = Uri.parse(data.url);

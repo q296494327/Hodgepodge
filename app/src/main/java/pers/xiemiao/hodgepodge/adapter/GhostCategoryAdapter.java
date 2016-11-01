@@ -4,21 +4,23 @@ import java.util.List;
 
 import pers.xiemiao.hodgepodge.base.BaseHolder;
 import pers.xiemiao.hodgepodge.base.SuperBaseAdapter;
-import pers.xiemiao.hodgepodge.bean.NewsBean;
-import pers.xiemiao.hodgepodge.holder.newsHolder.LeftNewsHolder;
-import pers.xiemiao.hodgepodge.holder.newsHolder.RightNewsHolder;
+import pers.xiemiao.hodgepodge.bean.GhostCategoryBean;
+import pers.xiemiao.hodgepodge.holder.GhostHolder.LeftGhostHolder;
+import pers.xiemiao.hodgepodge.holder.GhostHolder.RightGhostHolder;
 
 /**
  * User: xiemiao
  * Date: 2016-10-14
  * Time: 01:23
- * Desc: 头条新闻适配器
+ * Desc: 鬼故事分类适配器
  */
-public class TopNewsAdapter extends SuperBaseAdapter<NewsBean.ResultEntity.NewsData> {
+public class GhostCategoryAdapter extends SuperBaseAdapter<GhostCategoryBean.ShowapiResBodyEntity
+        .PagebeanEntity.GhostCategoryData> {
     public static final int LeftPicType = 0;
     public static final int RightPicType = 1;
 
-    public TopNewsAdapter(List<NewsBean.ResultEntity.NewsData> dataSources) {
+    public GhostCategoryAdapter(List<GhostCategoryBean.ShowapiResBodyEntity
+            .PagebeanEntity.GhostCategoryData> dataSources) {
         super(dataSources);
     }
 
@@ -43,9 +45,9 @@ public class TopNewsAdapter extends SuperBaseAdapter<NewsBean.ResultEntity.NewsD
     @Override
     protected BaseHolder getSpecialHolder(int position) {
         if (getItemViewType(position) == RightPicType) {
-            return new RightNewsHolder();
+            return new RightGhostHolder();
         } else {
-            return new LeftNewsHolder();
+            return new LeftGhostHolder();
         }
     }
 }

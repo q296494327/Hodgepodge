@@ -23,8 +23,8 @@ public class Constants {
     /**
      * 广告位ID
      */
-//        public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
-//        public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
+    //        public static final String LISTVIEW_PLACE_ID = "2058628";//广告位ID
+    //        public static final String VIWEPAGER_PLACE_ID = "2403633";//广告位ID
     public static final String LISTVIEW_PLACE_ID = "";//广告位ID
     public static final String VIWEPAGER_PLACE_ID = "";//广告位ID
 
@@ -73,6 +73,13 @@ public class Constants {
         //百度美女图片
         public static final String BAIDUIMAGEURL = "http://image.baidu" +
                 ".com/channel/listjson?ie=utf8&rn=20";
+
+        //鬼故事列表URL
+        public static final String GHOSTCATEGORYURL = "http://route.showapi.com/955-1?" +
+                "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
+        //鬼故事详情URL
+        public static final String GHOSTDETAILURL = "http://route.showapi.com/955-2?" +
+                "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
 
     }
 }

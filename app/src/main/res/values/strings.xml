@@ -12,17 +12,17 @@
         <item>最新趣图</item>
     </string-array>
 
-    <!--新闻5分钟相关-->
+    <!--三更有鬼相关-->
     <string-array name="news_titles">
-        <item>头条</item>
-        <item>社会</item>
-        <item>娱乐</item>
-        <item>国内</item>
-        <item>国际</item>
-        <item>体育</item>
-        <item>科技</item>
-        <item>财经</item>
-        <item>时尚</item>
+        <item>短篇鬼故事</item>
+        <item>长篇鬼故事</item>
+        <item>校园鬼故事</item>
+        <item>医院鬼故事</item>
+        <item>家里鬼故事</item>
+        <item>民间鬼故事</item>
+        <item>灵异事件</item>
+        <item>原创鬼故事</item>
+        <item>内涵鬼故事</item>
     </string-array>
 
     <!--动感萌妹子相关-->
@@ -32,7 +32,7 @@
         <item>可爱美女</item>
         <item>素颜美女</item>
         <item>网络美女</item>
-        <item>宅男女神</item>
+        <item>古典美女</item>
         <item>唯美女神</item>
         <item>长发美女</item>
         <item>气质美女</item>

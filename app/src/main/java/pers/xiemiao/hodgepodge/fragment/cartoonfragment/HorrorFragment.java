@@ -21,7 +21,7 @@ import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.activity.CartoonDetailActivity;
 import pers.xiemiao.hodgepodge.adapter.CartoonCategoryAdapter;
 import pers.xiemiao.hodgepodge.base.BaseCartoonFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.CartoonCategoryBean;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;

@@ -1,6 +1,5 @@
 package pers.xiemiao.hodgepodge.base;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -20,7 +19,6 @@ import java.util.List;
  */
 public abstract class SuperBaseAdapter<T> extends BaseAdapter {
 
-    private FragmentActivity mActivity;
     public List<T> mDataSources = new ArrayList<T>();
 
     public SuperBaseAdapter(List<T> dataSources) {

@@ -1,4 +1,4 @@
-package pers.xiemiao.hodgepodge.fragment.newsfragment;
+package pers.xiemiao.hodgepodge.fragment.ghostfragment;
 
 import android.content.Intent;
 import android.os.SystemClock;
@@ -9,49 +9,47 @@ import android.widget.TextView;
 
 import com.markmao.pulltorefresh.widget.XListView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 import pers.xiemiao.hodgepodge.R;
-import pers.xiemiao.hodgepodge.activity.NewsDetailActivity;
-import pers.xiemiao.hodgepodge.adapter.TopNewsAdapter;
-import pers.xiemiao.hodgepodge.base.BaseNewsFragment;
-import pers.xiemiao.hodgepodge.base.LoaddingPager;
-import pers.xiemiao.hodgepodge.bean.NewsBean;
+import pers.xiemiao.hodgepodge.activity.GhostDetailActivity;
+import pers.xiemiao.hodgepodge.adapter.GhostCategoryAdapter;
+import pers.xiemiao.hodgepodge.base.BaseGhostFragment;
+import pers.xiemiao.hodgepodge.bean.GhostCategoryBean;
 import pers.xiemiao.hodgepodge.factory.ListViewFactory;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
-import pers.xiemiao.hodgepodge.holder.newsHolder.TopNewsPicturesHolder;
-import pers.xiemiao.hodgepodge.protocol.TopNewsProtocol;
+import pers.xiemiao.hodgepodge.protocol.GhostCategoryProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 
 /**
  * User: xiemiao
  * Date: 2016-10-13
  * Time: 23:43
- * Desc: 头条新闻fragment
+ * Desc: 短篇鬼故事fragment
  */
-public class ShiShangFragment extends BaseNewsFragment  implements XListView.IXListViewListener,
+public class LingYiGhostFragment extends BaseGhostFragment implements XListView
+        .IXListViewListener,
         AdapterView.OnItemClickListener {
 
-    private TopNewsProtocol mProtocol;
-    private List<NewsBean.ResultEntity.NewsData> mDatas;
+    private GhostCategoryProtocol mProtocol;
+    private List<GhostCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GhostCategoryData> mDatas;
     private XListView mXListView;
-    private TopNewsAdapter mTopNewsAdapter;
+    private GhostCategoryAdapter mGhostCategoryAdapter;
     private RefreshTask mRefreshTask;
+    private GhostCategoryBean mGhostCategoryBean;
 
     @Override
     public LoaddingPager.LoadResult initData() {
         try {
-            mProtocol = new TopNewsProtocol();
-            NewsBean newsBean = mProtocol.loadData("shishang");
-            mDatas = newsBean.result.data;
-            Collections.sort(mDatas);
+            mProtocol = new GhostCategoryProtocol();
+            mGhostCategoryBean = mProtocol.loadData("ly", 1);
+            mDatas = mGhostCategoryBean.showapi_res_body.pagebean.contentlist;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,21 +62,9 @@ public class ShiShangFragment extends BaseNewsFragment  implements XListView.IXL
         mXListView.setXListViewListener(this);//设置刷新监听
         mXListView.setAutoLoadEnable(false);
         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
-        //添加一个头布局,用来展示头条轮播图
-        TopNewsPicturesHolder picturesHolder = new TopNewsPicturesHolder();
-        List<NewsBean.ResultEntity.NewsData> topNewsData = new ArrayList<NewsBean.ResultEntity
-                .NewsData>();
-        Random random = new Random();//随机取5个轮播图
-        topNewsData.add(mDatas.get(random.nextInt(mDatas.size())));
-        topNewsData.add(mDatas.get(random.nextInt(mDatas.size())));
-        topNewsData.add(mDatas.get(random.nextInt(mDatas.size())));
-        topNewsData.add(mDatas.get(random.nextInt(mDatas.size())));
-        topNewsData.add(mDatas.get(random.nextInt(mDatas.size())));
-        picturesHolder.setDataAndRefreshHolderView(topNewsData);//设置轮播展示的网络图片及链接数据
-        mXListView.addHeaderView(picturesHolder.getHolderView());
         //设置适配器
-        mTopNewsAdapter = new TopNewsAdapter(mDatas);
-        mXListView.setAdapter(mTopNewsAdapter);
+        mGhostCategoryAdapter = new GhostCategoryAdapter(mDatas);
+        mXListView.setAdapter(mGhostCategoryAdapter);
         mXListView.setOnItemClickListener(this);
         return mXListView;
     }
@@ -99,18 +85,22 @@ public class ShiShangFragment extends BaseNewsFragment  implements XListView.IXL
         public void run() {
             //请求网络，请求最新的数据
             try {
-                final List<NewsBean.ResultEntity.NewsData> newsDataList = mProtocol.loadData
-                        ("shishang").result.data;
+                //刷新随机来一页数据
+                Random random = new Random();
+                int page = 1 + random.nextInt(Integer.parseInt(mGhostCategoryBean.showapi_res_body
+                        .pagebean.allPages) + 1);
+                final List<GhostCategoryBean.ShowapiResBodyEntity.PagebeanEntity
+                        .GhostCategoryData> newsDataList = mProtocol
+                        .loadData("ly", page).showapi_res_body.pagebean.contentlist;
                 LogUtils.sf("下拉刷新中");
                 mDatas.clear();//清空集合所有数据
                 mDatas.addAll(0, newsDataList);//重新添加
-                Collections.sort(mDatas);//对集合进行排序
                 //然后将集合原来的数据都清空,再将数据添加给集合，在UI线程去刷新适配器
                 UIUtils.postSafeTask(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.showToast(UIUtils.getContext(), "数据已是最新", Gravity.TOP);
-                        mTopNewsAdapter.notifyDataSetChanged();
+                        ToastUtils.showToast(UIUtils.getContext(), "随机更新10篇鬼故事", Gravity.TOP);
+                        mGhostCategoryAdapter.notifyDataSetChanged();
                         mXListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
                         mXListView.stopRefresh();
                     }
@@ -146,29 +136,27 @@ public class ShiShangFragment extends BaseNewsFragment  implements XListView.IXL
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //因为有头布局，所以这里的position要减去头布局的位置
         position = position - mXListView.getHeaderViewsCount();
-        NewsBean.ResultEntity.NewsData newsData = mDatas.get(position);
-        //点击记录阅读状态，以url为依据
+        GhostCategoryBean.ShowapiResBodyEntity.PagebeanEntity.GhostCategoryData ghostCategoryData
+                = mDatas.get(position);
+        //点击记录阅读状态，以id为依据
         //1先从sp里取出readState，判断所点击的item的url是否被包含在readState
         String readState = SpUtil.getString(UIUtils.getContext(), "readState", "");
-        String url = newsData.url.replace(":", "").replace("/", "").replace("?", "");
-        if (!readState.contains(url)) {
+        String gId = ghostCategoryData.id.replace(":", "").replace("/", "").replace("?", "");
+        if (!readState.contains(gId)) {
             //2不包含就拼接进去
-            readState += url + ",";
+            readState += gId + ",";
             SpUtil.putString(UIUtils.getContext(), "readState", readState);
         }
         //3然后将文本改为灰色
         TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
-        TextView tv_date = (TextView) view.findViewById(R.id.tv_date);
-        TextView tv_author = (TextView) view.findViewById(R.id.tv_author);
-        TextView tv_timeago = (TextView) view.findViewById(R.id.tv_timeago);
+        TextView tv_desc = (TextView) view.findViewById(R.id.tv_desc);
         tv_title.setTextColor(0XFF787171);
-        tv_date.setTextColor(0XFF787171);
-        tv_author.setTextColor(0XFF787171);
-        tv_timeago.setTextColor(0XFF787171);
+        tv_desc.setTextColor(0XFF787171);
 
-        /*-------------------跳转到新闻详情页---------------------*/
-        Intent intent = new Intent(UIUtils.getContext(), NewsDetailActivity.class);
-        intent.putExtra("url", newsData.url);//将链接地址携带过去
+        /*-------------------跳转到鬼故事详情页---------------------*/
+        Intent intent = new Intent(UIUtils.getContext(), GhostDetailActivity.class);
+        intent.putExtra("id", ghostCategoryData.id);//将id地址携带过去
+        intent.putExtra("title", ghostCategoryData.title);//将title地址携带过去
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         UIUtils.getContext().startActivity(intent);
     }
