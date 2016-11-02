@@ -203,6 +203,7 @@ public class FunnyVideoAdapter extends BaseAdapter {
         oks.setTitleUrl(videoData.weixin_url);
         // text是分享文本，所有平台都需要这个字段
         oks.setText(videoData.text);
+        //从缓存了缩略图的路径去读取作为图片
         File cacheFile = getCacheFile(videoData.video_uri);
         if (cacheFile.exists()) {
             // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
