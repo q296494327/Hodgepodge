@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import cn.sharesdk.framework.ShareSDK;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
+        ShareSDK.initSDK(this);//初始化ShareSDK
         mIvMainTitle = (ImageView) findViewById(R.id.iv_mian_title);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,4 +177,5 @@ public class MainActivity extends BaseActivity {
         MobclickAgent.onPause(this);
         JCVideoPlayer.releaseAllVideos();
     }
+
 }

@@ -43,12 +43,14 @@ public class DuanPianGhostFragment extends BaseGhostFragment implements XListVie
     private GhostCategoryAdapter mGhostCategoryAdapter;
     private RefreshTask mRefreshTask;
     private GhostCategoryBean mGhostCategoryBean;
+    private final String NAMEKEY = getClass().getSimpleName();
 
     @Override
     public LoaddingPager.LoadResult initData() {
         try {
+            int page = SpUtil.getInt(UIUtils.getContext(), NAMEKEY + "page", 1);
             mProtocol = new GhostCategoryProtocol();
-            mGhostCategoryBean = mProtocol.loadData("dp", 1);
+            mGhostCategoryBean = mProtocol.loadData("dp", page);
             mDatas = mGhostCategoryBean.showapi_res_body.pagebean.contentlist;
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,6 +91,8 @@ public class DuanPianGhostFragment extends BaseGhostFragment implements XListVie
                 Random random = new Random();
                 int page = 1 + random.nextInt(Integer.parseInt(mGhostCategoryBean.showapi_res_body
                         .pagebean.allPages) + 1);
+                //将随机数存到sp里，保存下次进来时的位置
+                SpUtil.putInt(UIUtils.getContext(), NAMEKEY + "page", page);
                 final List<GhostCategoryBean.ShowapiResBodyEntity.PagebeanEntity
                         .GhostCategoryData> newsDataList = mProtocol
                         .loadData("dp", page).showapi_res_body.pagebean.contentlist;

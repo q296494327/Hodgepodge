@@ -19,6 +19,8 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import java.io.File;
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import pers.xiemiao.hodgepodge.R;
@@ -90,14 +92,16 @@ public class FunnyVideoAdapter extends BaseAdapter {
                 holder.jcVideoPlayerStandard = (JCVideoPlayerStandard) convertView.findViewById(R.id
                         .custom_videoplayer_standard);
                 holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
+                holder.iv_share = (ImageView) convertView.findViewById(R.id.iv_share);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
             //获取单个item的数据
-            FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData videoData = getItem
-                    (position).vData;
+            final FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData videoData =
+                    getItem
+                            (position).vData;
             //设置标题
             holder.tv_title.setText(videoData.text);
             //给video设置链接
@@ -123,6 +127,14 @@ public class FunnyVideoAdapter extends BaseAdapter {
                         .jcVideoPlayerStandard
                         .thumbImageView);
             }
+
+            //设置分享按钮的点击事件
+            holder.iv_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showShare(videoData);
+                }
+            });
 
             //设置动画效果
             //先缩小view
@@ -165,6 +177,7 @@ public class FunnyVideoAdapter extends BaseAdapter {
     class ViewHolder {
         private JCVideoPlayerStandard jcVideoPlayerStandard;
         private TextView tv_title;
+        private ImageView iv_share;
     }
 
     /**
@@ -174,6 +187,33 @@ public class FunnyVideoAdapter extends BaseAdapter {
         String cacheDir = FileUtils.getDir("thumbPic");
         String name = path.replace("/", "").replace(":", "") + ".jpg";
         return new File(cacheDir, name);
+    }
+
+
+    private void showShare(FunnyVideoBean.ShowapiResBodyEntity.PagebeanEntity.FunnyVideoData
+                                   videoData) {
+        ShareSDK.initSDK(mActivity);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle("分享一段视频请点击");
+        // titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl(videoData.weixin_url);
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(videoData.text);
+        File cacheFile = getCacheFile(videoData.video_uri);
+        if (cacheFile.exists()) {
+            // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+            oks.setImagePath(cacheFile.getAbsolutePath());
+        }
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(mActivity.getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl(videoData.weixin_url);
+        // 启动分享GUI
+        oks.show(mActivity);
     }
 
 

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import lib.lhh.fiv.library.FrescoZoomImageView;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
@@ -45,17 +48,20 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
     private TextView mTvCount;
     private List<BaiduBeautyBean.BaiduBeautyData> mDatalist;
     private InterstitialAd interAd;
+    private ImageView mIvShare;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_detail);
+        ShareSDK.initSDK(this);
         //获取传递过来的位置和数据
         position = getIntent().getIntExtra("position", 0);
         mDatalist = (List<BaiduBeautyBean.BaiduBeautyData>)
                 getIntent().getSerializableExtra("datalist");
         //初始化控件
         mTvCount = (TextView) findViewById(R.id.tv_count);
+        mIvShare = (ImageView) findViewById(R.id.iv_share);
         mViewPager = (ViewPager) findViewById(R.id.pic_viewpager);
         mViewPager.setPageTransformer(true, new ScalePageTransformer());//动画
         mViewPager.setOnPageChangeListener(this);//页面改变监听
@@ -67,6 +73,29 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
         mViewPager.setCurrentItem(position);//设置当前条目为传递过来的位置
         //设置底部翻页文本显示
         mTvCount.setText((position + 1) + "/" + mDatalist.size());
+
+        if (position == 0) {
+            mIvShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showShare(position);
+                }
+            });
+        }
+    }
+
+    /**
+     * 一键分享页面
+     */
+    private void showShare(int position) {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        oks.setImageUrl(mDatalist.get(position).download_url);
+        oks.setSite(getString(R.string.app_name));
+        // 启动分享GUI
+        oks.show(this);
     }
 
 
@@ -198,6 +227,14 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
                 interAd.loadAd();
             }
         }
+
+        final int finalPosition = position;
+        mIvShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShare(finalPosition);
+            }
+        });
     }
 
     @Override
