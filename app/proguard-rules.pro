@@ -87,6 +87,8 @@
 -keep class cn.qqtheme.framework.entity.** { *;}
 -keep class cn.qqtheme.framework.picker.AddressPicker$* { *;}
 
+#sharesdk
+-keep class cn.sharesdk.**{*;}
 
 -dontwarn com.androidquery.auth.**
 #-------------------------------------------------------------------------

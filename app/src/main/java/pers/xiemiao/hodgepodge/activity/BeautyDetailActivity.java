@@ -54,7 +54,7 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_detail);
-        ShareSDK.initSDK(this);
+        ShareSDK.initSDK(this, "89LWJbbzqMR5GvRd");
         //获取传递过来的位置和数据
         position = getIntent().getIntExtra("position", 0);
         mDatalist = (List<BaiduBeautyBean.BaiduBeautyData>)
@@ -88,12 +88,13 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
      * 一键分享页面
      */
     private void showShare(int position) {
-        ShareSDK.initSDK(this);
+        ShareSDK.initSDK(this, "89LWJbbzqMR5GvRd");
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         oks.setImageUrl(mDatalist.get(position).download_url);
         oks.setSite(getString(R.string.app_name));
+        oks.setSiteUrl(Constants.URLS.WEIDOWNLOAD);
         // 启动分享GUI
         oks.show(this);
     }

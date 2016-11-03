@@ -80,6 +80,8 @@ public class Constants {
         //鬼故事详情URL
         public static final String GHOSTDETAILURL = "http://route.showapi.com/955-2?" +
                 "showapi_appid=25623&showapi_sign=4e2d463aa20d47e588d325a13512571f";
-
+        //应用微下载链接
+        public static final String WEIDOWNLOAD = "http://a.app.qq.com/o/simple.jsp?pkgname=pers" +
+                ".xiemiao.hodgepodge";
     }
 }

@@ -57,14 +57,15 @@
                 android:text="脑的东西要和大家分享：用一个高度为1格的梯子，从左下那里爬到顶端旗子处..."
                 android:textColor="#302323"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_content">
+                android:layout_below="@id/tv_content"
+                android:orientation="vertical">
 
                 <lib.lhh.fiv.library.FrescoZoomImageView
                     android:id="@+id/fiv"
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="5dp"
@@ -75,17 +76,13 @@
                     fresco:progressBarImageScaleType="centerInside"
                     fresco:roundedCornerRadius="20dp"/>
 
-                <TextView
-                    android:id="@+id/tv_tishi"
-                    android:layout_width="wrap_content"
+                <cn.sharesdk.socialization.QuickCommentBar
+                    android:id="@+id/qcBar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:background="#8000"
-                    android:padding="10dp"
-                    android:text="↑ 点击图片全屏查看,可手势缩放← →"/>
-            </RelativeLayout>
+                    android:layout_below="@id/fiv"
+                    android:background="#0fff"/>
+            </LinearLayout>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

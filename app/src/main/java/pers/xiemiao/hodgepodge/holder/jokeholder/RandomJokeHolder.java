@@ -14,14 +14,22 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 
+import java.io.File;
 import java.util.Random;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.socialization.QuickCommentBar;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseHolder;
 import pers.xiemiao.hodgepodge.bean.RandomJokeBean;
+import pers.xiemiao.hodgepodge.conf.Constants;
+import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.DrawableUtils;
+import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.SpUtil;
+import pers.xiemiao.hodgepodge.utils.StringUtils;
 import pers.xiemiao.hodgepodge.utils.TimeUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
 import pers.xiemiao.hodgepodge.views.CircleImageView;
@@ -42,10 +50,13 @@ public class RandomJokeHolder extends BaseHolder<RandomJokeBean.RandomJokeData> 
     public AnimationDrawable mAnimAudio;
     public SpeechSynthesizer mTts;
     public RelativeLayout mItemRoot;
+    private QuickCommentBar mQcBar;
+    private OnekeyShare mOks;
 
     @Override
     protected View initHolderView() {
         View view = View.inflate(UIUtils.getContext(), R.layout.item_newest_joke, null);
+        mQcBar = (QuickCommentBar) view.findViewById(R.id.qcBar);
         mItemRoot = (RelativeLayout) view.findViewById(R.id.rl_item_root);
         mTvContent = (TextView) view.findViewById(R.id.tv_content);
         mIvHead = (CircleImageView) view.findViewById(R.id.iv_head);
@@ -73,6 +84,47 @@ public class RandomJokeHolder extends BaseHolder<RandomJokeBean.RandomJokeData> 
         long unixtime = Long.parseLong(data.unixtime);
         mTvTime.setText("更新时间: " + TimeUtils.getTime(unixtime * 1000));
 
+        //底部评论栏的初始化设置
+        initOnekeyShare(data);//初始化一键分享
+        //关闭sso授权
+        mOks.disableSSOWhenAuthorize();
+        mQcBar.setTopic(data.hashId, data.content.trim().substring(0, 10) + "…",
+                TimeUtils.getTime(unixtime * 1000), "佚名");
+        mQcBar.getBackButton().setVisibility(View.GONE);
+        mQcBar.setOnekeyShare(mOks);
+    }
+
+    /**
+     * 初始化一键分享
+     */
+    private void initOnekeyShare(final RandomJokeBean.RandomJokeData data) {
+        ShareSDK.initSDK(UIUtils.getContext());
+        mOks = new OnekeyShare();
+        //关闭sso授权
+        mOks.disableSSOWhenAuthorize();
+
+        //将笑话转换成图片设置为分享
+        final String path = FileUtils.getDir("jokepic") + data.hashId + ".jpg";
+        File file = new File(path);
+        if (!file.exists()) {
+            ThreadPoolFactory.getNormalThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    StringUtils.stringToImage(path, data.content, 10);
+                    UIUtils.postSafeTask(new Runnable() {
+                        @Override
+                        public void run() {
+                            mOks.setImagePath(path);
+                        }
+                    });
+                }
+            });
+        } else {
+            mOks.setImagePath(path);
+        }
+        mOks.setSite(UIUtils.getContext().getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        mOks.setSiteUrl(Constants.URLS.WEIDOWNLOAD);
     }
 
     /**

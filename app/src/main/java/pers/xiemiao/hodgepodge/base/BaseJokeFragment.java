@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.socialization.Socialization;
 import pers.xiemiao.hodgepodge.views.LoaddingPager;
 
 /**
@@ -20,6 +22,14 @@ import pers.xiemiao.hodgepodge.views.LoaddingPager;
 public abstract class BaseJokeFragment extends Fragment {
 
     public LoaddingPager mLoaddingPager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //初始化一键分享与评论赞的服务
+        ShareSDK.initSDK(getActivity());
+        ShareSDK.registerService(Socialization.class);
+    }
 
     @Nullable
     @Override

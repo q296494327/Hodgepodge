@@ -17,10 +17,14 @@ import com.facebook.drawee.interfaces.DraweeController;
 
 import java.util.Random;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.socialization.QuickCommentBar;
 import lib.lhh.fiv.library.FrescoZoomImageView;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.base.BaseHolder;
 import pers.xiemiao.hodgepodge.bean.NewestPicBean;
+import pers.xiemiao.hodgepodge.conf.Constants;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.DrawableUtils;
 import pers.xiemiao.hodgepodge.utils.ScreenUtil;
@@ -40,10 +44,13 @@ public class NewestPicHolder extends BaseHolder<NewestPicBean.ResultEntity.Newes
     private TextView mTvTime;
     private TextView mTvContent;
     private FrescoZoomImageView mFrescoImageView;
+    private QuickCommentBar mQcBar;
+    private OnekeyShare mOks;
 
     @Override
     protected View initHolderView() {
         View view = View.inflate(UIUtils.getContext(), R.layout.item_newest_pic, null);
+        mQcBar = (QuickCommentBar) view.findViewById(R.id.qcBar);
         mRlItemRoot = (RelativeLayout) view.findViewById(R.id.rl_item_root);
         mLlHead = (LinearLayout) view.findViewById(R.id.ll_head);
         mIvHead = (CircleImageView) view.findViewById(R.id.iv_head);
@@ -77,7 +84,33 @@ public class NewestPicHolder extends BaseHolder<NewestPicBean.ResultEntity.Newes
                 }
             });
         }
+
+        //底部评论栏的初始化设置
+        initOnekeyShare(data);//初始化一键分享
+        //关闭sso授权
+        mOks.disableSSOWhenAuthorize();
+        mQcBar.setTopic(data.hashId, data.content + "…",
+                data.updatetime, "佚名");
+        mQcBar.getBackButton().setVisibility(View.GONE);
+        mQcBar.setOnekeyShare(mOks);
     }
+
+    /**
+     * 初始化一键分享
+     *
+     * @param data
+     */
+    private void initOnekeyShare(final NewestPicBean.ResultEntity.NewestPicData data) {
+        ShareSDK.initSDK(UIUtils.getContext());
+        mOks = new OnekeyShare();
+        //关闭sso授权
+        mOks.disableSSOWhenAuthorize();
+        mOks.setImageUrl(data.url);
+        mOks.setSite(UIUtils.getContext().getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        mOks.setSiteUrl(Constants.URLS.WEIDOWNLOAD);
+    }
+
 
     /**
      * 展示完整图片
