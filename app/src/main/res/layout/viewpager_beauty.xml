@@ -17,17 +17,4 @@
         fresco:progressBarAutoRotateInterval="5000"
         fresco:progressBarImage="@mipmap/icon_progress_bar"
         fresco:progressBarImageScaleType="centerInside"/>
-
-    <TextView
-        android:id="@+id/tv_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#88f76bb1"
-        android:padding="5dp"
-        android:text="图片可手势缩放,点我保存图片"
-        android:textColor="#fff"
-        android:textSize="14sp"/>
-
 </RelativeLayout>

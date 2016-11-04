@@ -156,23 +156,25 @@ public class StringUtils {
             data.add(substring);
         }
         try {
-            int height = data.size() * 24;     //图片高
-            Bitmap bitmap = Bitmap.createBitmap(leng * 20, height, Bitmap.Config.ARGB_8888);
+            int height = DensityUtils.dp2px(UIUtils.getContext(), data.size() * 24);     //图片高
+            Bitmap bitmap = Bitmap.createBitmap(DensityUtils.dp2px(UIUtils.getContext(), leng *
+                    20), height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             canvas.drawColor(Color.WHITE);   //背景颜色
 
             Paint p = new Paint();
             p.setAntiAlias(true);//设置抗锯齿
             p.setColor(Color.BLACK);   //画笔颜色
-            p.setTextSize(15);         //画笔粗细
+            p.setTextSize(ScreenUtil.sp2px(UIUtils.getContext(), 15));         //画笔粗细
             for (int i = 0; i < data.size(); i++) {
-                canvas.drawText(data.get(i), 20, (i + 1) * 20, p);
+                canvas.drawText(data.get(i), DensityUtils.dp2px(UIUtils.getContext(), 20),
+                        DensityUtils.dp2px(UIUtils.getContext(), (i + 1) * 20), p);
             }
 
             Log.e("path", path);
             //将Bitmap保存为png图片
             FileOutputStream out = new FileOutputStream(path);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 30, out);
             Log.e("done", "done");
             return bitmap;
         } catch (Exception e) {

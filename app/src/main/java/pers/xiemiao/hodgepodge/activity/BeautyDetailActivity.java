@@ -1,6 +1,9 @@
 package pers.xiemiao.hodgepodge.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,20 +20,26 @@ import com.baidu.mobads.InterstitialAdListener;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.umeng.analytics.MobclickAgent;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.List;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import lib.lhh.fiv.library.FrescoZoomImageView;
+import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.conf.Constants;
+import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.utils.DensityUtils;
 import pers.xiemiao.hodgepodge.utils.ScreenUtil;
+import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.views.ScalePageTransformer;
 
 /**
@@ -90,6 +99,26 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
     private void showShare(int position) {
         ShareSDK.initSDK(this, "89LWJbbzqMR5GvRd");
         OnekeyShare oks = new OnekeyShare();
+        //设置自定义logo
+        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.mipmap.save);
+        final String url = mDatalist.get(position).download_url;
+        oks.setCustomerLogo(logo, "保存", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //请求下载
+                ThreadPoolFactory.getDownloadThreadPool().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        String desFileDir = Environment.getExternalStorageDirectory()
+                                .getAbsolutePath() + "/" + "meinv";
+                        String fileName = url.replace(":", "").replace("?", "").replace("/",
+                                "");
+                        OkHttpUtils.get().url(url).build().execute(new DowmloadCurPicCallback
+                                (desFileDir, fileName));
+                    }
+                });
+            }
+        });
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         oks.setImageUrl(mDatalist.get(position).download_url);
@@ -174,12 +203,11 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
             params.width = width;
             params.height = height - DensityUtils.dp2px(BeautyDetailActivity.this, 30);
             fivPic.setLayoutParams(params);
-            String url = mDatalist.get(position).download_url;
+            final String url = mDatalist.get(position).download_url;
             //创建控制器去下载图片
             DraweeController mDraweeController = Fresco.newDraweeControllerBuilder()
                     .setAutoPlayAnimations(true).setUri(url).build();
             fivPic.setController(mDraweeController);
-
             container.addView(view);
             return view;
         }
@@ -241,5 +269,26 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    /**
+     * 下载当前图片
+     */
+    class DowmloadCurPicCallback extends FileCallBack {
+
+        public DowmloadCurPicCallback(String destFileDir, String destFileName) {
+            super(destFileDir, destFileName);
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            ToastUtils.showToast("保存失败,请检查网络或SD卡挂载状态");
+        }
+
+        @Override
+        public void onResponse(File response, int id) {
+            ToastUtils.showToast("图片已保存至SD卡根目录的\"meinv\"文件夹下");
+        }
     }
 }

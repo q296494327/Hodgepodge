@@ -3,6 +3,7 @@ package pers.xiemiao.hodgepodge.adapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.androidquery.AQuery;
 import com.baidu.mobad.feeds.NativeResponse;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
 import java.util.List;
@@ -24,13 +27,17 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.socialization.QuickCommentBar;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import okhttp3.Call;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.bean.FunnyVideoBean;
 import pers.xiemiao.hodgepodge.bean.NormalAndAdBean;
 import pers.xiemiao.hodgepodge.conf.Constants;
+import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
 import pers.xiemiao.hodgepodge.utils.FileUtils;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.MyVideoThumbLoader;
+import pers.xiemiao.hodgepodge.utils.ToastUtils;
+import pers.xiemiao.hodgepodge.utils.UIUtils;
 
 /**
  * User: xiemiao
@@ -133,7 +140,7 @@ public class FunnyVideoAdapter extends BaseAdapter {
 
             //底部评论栏的初始化设置
             initOnekeyShare(videoData);//初始化一键分享
-            holder.qc_bar.setTopic(videoData.id, videoData.text.trim().substring(0, 10)+"…",
+            holder.qc_bar.setTopic(videoData.id, videoData.text.trim().substring(0, 10) + "…",
                     videoData.create_time, videoData.name);
             holder.qc_bar.getBackButton().setVisibility(View.GONE);
             holder.qc_bar.setOnekeyShare(mOks);
@@ -185,6 +192,27 @@ public class FunnyVideoAdapter extends BaseAdapter {
         //关闭sso授权
         mOks.disableSSOWhenAuthorize();
 
+        //设置一个下载视频的logo
+        Bitmap logo = BitmapFactory.decodeResource(UIUtils.getResources(), R.mipmap.save);
+        final String url = videoData.video_uri;
+        mOks.setCustomerLogo(logo, "保存", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //请求下载
+                ThreadPoolFactory.getDownloadThreadPool().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        String desFileDir = Environment.getExternalStorageDirectory()
+                                .getAbsolutePath() + "/" + "shipin";
+                        String fileName = url.replace(":", "").replace("?", "").replace("/",
+                                "");
+                        OkHttpUtils.get().url(url).build().execute(new DowmloadVideoCallback
+                                (desFileDir, fileName));
+                    }
+                });
+            }
+        });
+
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
         mOks.setTitle("分享一段视频请点击");
         // titleUrl是标题的网络链接，QQ和QQ空间等使用
@@ -217,6 +245,27 @@ public class FunnyVideoAdapter extends BaseAdapter {
         String cacheDir = FileUtils.getDir("thumbPic");
         String name = path.replace("/", "").replace(":", "") + ".jpg";
         return new File(cacheDir, name);
+    }
+
+
+    /**
+     * 下载当前图片
+     */
+    class DowmloadVideoCallback extends FileCallBack {
+
+        public DowmloadVideoCallback(String destFileDir, String destFileName) {
+            super(destFileDir, destFileName);
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            ToastUtils.showToast("保存失败,请检查网络或SD卡挂载状态");
+        }
+
+        @Override
+        public void onResponse(File response, int id) {
+            ToastUtils.showToast("视频已保存至SD卡根目录的\"shipin\"文件夹下");
+        }
     }
 
 }
