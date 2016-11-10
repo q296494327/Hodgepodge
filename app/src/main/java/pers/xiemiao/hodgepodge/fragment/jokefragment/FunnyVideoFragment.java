@@ -126,6 +126,11 @@ public class FunnyVideoFragment extends BaseJokeFragment implements XListView.IX
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "搞笑视频";
+    }
+
     /*================listview的下拉刷新监听=================*/
 
     @Override//下拉刷新

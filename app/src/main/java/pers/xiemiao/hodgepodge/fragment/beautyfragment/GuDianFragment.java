@@ -82,6 +82,11 @@ public class GuDianFragment extends BaseBeautyFragment implements SHSwipeRefresh
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "古典美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

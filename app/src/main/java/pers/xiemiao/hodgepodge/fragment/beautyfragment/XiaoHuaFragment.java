@@ -84,6 +84,11 @@ public class XiaoHuaFragment extends BaseBeautyFragment implements SHSwipeRefres
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "美女校花";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

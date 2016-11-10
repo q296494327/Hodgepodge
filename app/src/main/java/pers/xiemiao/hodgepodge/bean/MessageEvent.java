@@ -8,5 +8,6 @@ package pers.xiemiao.hodgepodge.bean;
  */
 public class MessageEvent {
     public String msg;
+    public String value;
     public int position;
 }

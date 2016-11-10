@@ -70,4 +70,11 @@ public class GhostFragmentFactory {
         }
         return fragment;
     }
+
+    /**
+     * 返回fragment的数量
+     */
+    public static int getFragmentCount() {
+        return 9;
+    }
 }

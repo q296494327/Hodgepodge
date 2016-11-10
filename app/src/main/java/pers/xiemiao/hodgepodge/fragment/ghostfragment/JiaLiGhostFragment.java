@@ -71,6 +71,11 @@ public class JiaLiGhostFragment extends BaseGhostFragment implements XListView
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "家里鬼故事";
+    }
+
     /*================listview的下拉刷新监听=begin================*/
 
     @Override//下拉刷新

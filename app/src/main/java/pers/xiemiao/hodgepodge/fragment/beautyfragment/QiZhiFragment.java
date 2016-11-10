@@ -82,6 +82,11 @@ public class QiZhiFragment extends BaseBeautyFragment implements SHSwipeRefreshL
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "气质美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

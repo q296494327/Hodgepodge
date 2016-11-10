@@ -82,6 +82,11 @@ public class FeiZhuLiuFragment extends BaseBeautyFragment implements SHSwipeRefr
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "非主流美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

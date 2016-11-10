@@ -58,6 +58,11 @@ public class RandomPicJokeFragment extends BaseJokeFragment implements XListView
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "随机趣图";
+    }
+
     /*================listview的下拉刷新监听=================*/
 
     @Override//下拉刷新

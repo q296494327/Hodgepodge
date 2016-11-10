@@ -29,6 +29,27 @@ public class Constants {
     public static final String VIWEPAGER_PLACE_ID = "3036061";//广告位ID
 
     /**
+     * 笑话标题数组KEY
+     */
+    public static final String JOKE_TITLES = "JOKE_TITLES";
+    public static final String JOKE_OTHER_TITLES = "JOKE_OTHER_TITLES";
+    /**
+     * 三更有鬼标题数组KEY
+     */
+    public static final String GHOST_TITLES = "GHOST_TITLES";
+    public static final String GHOST_OTHER_TITLES = "GHOST_OTHER_TITLES";
+    /**
+     * 萌妹标题数组KEY
+     */
+    public static final String GRIL_TITLES = "GRIL_TITLES";
+    public static final String GRIL_OTHER_TITLES = "GRIL_OTHER_TITLES";
+    /**
+     * 卡通标题数组KEY
+     */
+    public static final String CARTOON_TITLES = "CARTOON_TITLES";
+    public static final String CARTOON_OTHER_TITLES = "CARTOON_OTHER_TITLES";
+
+    /**
      * 请求链接相关
      */
     public static final class URLS {

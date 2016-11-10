@@ -82,6 +82,11 @@ public class KeAiFragment extends BaseBeautyFragment implements SHSwipeRefreshLa
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "可爱美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

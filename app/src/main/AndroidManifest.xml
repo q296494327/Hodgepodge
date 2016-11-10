@@ -55,6 +55,9 @@
         <activity
             android:name=".activity.StarActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".activity.ChannelActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <!--百度广告-->
         <activity

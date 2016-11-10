@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -68,6 +69,8 @@ public class BeautyDetailActivity extends AppCompatActivity implements ViewPager
         position = getIntent().getIntExtra("position", 0);
         mDatalist = (List<BaiduBeautyBean.BaiduBeautyData>)
                 getIntent().getSerializableExtra("datalist");
+        LinearLayout ll=new LinearLayout(this);
+        
         //初始化控件
         mTvCount = (TextView) findViewById(R.id.tv_count);
         mIvShare = (ImageView) findViewById(R.id.iv_share);

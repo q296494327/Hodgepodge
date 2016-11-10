@@ -85,6 +85,11 @@ public class RandomJokeJokeFragment extends BaseJokeFragment implements XListVie
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "随机笑话";
+    }
+
     /*================父类的按钮点击事件=================*/
     @Override
     public void onClick(View v) {

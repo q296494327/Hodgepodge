@@ -82,6 +82,11 @@ public class WangLuoFragment extends BaseBeautyFragment implements SHSwipeRefres
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "网络美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

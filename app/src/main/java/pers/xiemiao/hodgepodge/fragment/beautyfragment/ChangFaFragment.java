@@ -82,6 +82,11 @@ public class ChangFaFragment extends BaseBeautyFragment implements SHSwipeRefres
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "长发美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

@@ -20,7 +20,6 @@ import java.util.Random;
 import pers.xiemiao.hodgepodge.R;
 import pers.xiemiao.hodgepodge.adapter.BeautyRecycleAdapter;
 import pers.xiemiao.hodgepodge.base.BaseBeautyFragment;
-import pers.xiemiao.hodgepodge.views.LoaddingPager;
 import pers.xiemiao.hodgepodge.bean.BaiduBeautyBean;
 import pers.xiemiao.hodgepodge.bean.MessageEvent;
 import pers.xiemiao.hodgepodge.factory.ThreadPoolFactory;
@@ -28,6 +27,7 @@ import pers.xiemiao.hodgepodge.protocol.BaiduImageProtocol;
 import pers.xiemiao.hodgepodge.utils.LogUtils;
 import pers.xiemiao.hodgepodge.utils.ToastUtils;
 import pers.xiemiao.hodgepodge.utils.UIUtils;
+import pers.xiemiao.hodgepodge.views.LoaddingPager;
 
 /**
  * User: xiemiao
@@ -80,6 +80,11 @@ public class CosplayFragment extends BaseBeautyFragment implements SHSwipeRefres
         mBeautyRecycleAdapter = new BeautyRecycleAdapter(mDatas);
         mRecycleView.setAdapter(mBeautyRecycleAdapter);//设置适配器
         return view;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Cosplay美女";
     }
 
 

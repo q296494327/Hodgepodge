@@ -75,6 +75,11 @@ public class CoolFragment extends BaseCartoonFragment implements AdapterView
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "冷知识";
+    }
+
      /*================listview的下拉刷新监听=begin================*/
 
     @Override//下拉刷新

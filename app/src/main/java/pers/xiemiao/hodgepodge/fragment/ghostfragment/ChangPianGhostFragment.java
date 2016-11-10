@@ -71,6 +71,11 @@ public class ChangPianGhostFragment extends BaseGhostFragment implements XListVi
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "长篇鬼故事";
+    }
+
     /*================listview的下拉刷新监听=begin================*/
 
     @Override//下拉刷新

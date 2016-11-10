@@ -9,4 +9,9 @@
     <color name="tab_text_normal">#000</color>//tab文本默认颜色
     <color name="tab_text_selected">#f8598e</color>//tab文本被选中颜色
 
+    <!--频道管理颜色相关-->
+    <color name="tip">#ffffff</color>
+    <color name="bg_focus">#DDDDDD</color>
+    <color name="red_500">#f8598e</color>
+
 </resources>

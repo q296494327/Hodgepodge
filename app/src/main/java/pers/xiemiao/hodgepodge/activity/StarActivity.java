@@ -54,6 +54,7 @@ public class StarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
         initView();
+
     }
 
 
@@ -145,32 +146,39 @@ public class StarActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(StarBean starBean) {
-            //获取今日运势数据
-            StarBean.ShowapiResBodyEntity.TodayData data = starBean.showapi_res_body.day;
-            //刷新UI
-            String time = "";
-            time = data.time;
-            time = time.substring(0, 4) + "-" + time.substring(4, 6) + "-" + time.substring(6, 8);
-            mTvTime.setText(time);
-            mRbSummary.setRating(data.summary_star);
-            mRbLove.setRating(data.love_star);
-            mRbMoney.setRating(data.money_star);
-            mRbWork.setRating(data.work_star);
-            mTvLuckyTime.setText(data.lucky_time);
-            mTvDirection.setText(data.lucky_direction);
-            mTvNum.setText(data.lucky_num);
-            mTvColor.setText(data.lucky_color);
-            mTvGrxz.setText(data.grxz);
-            mTvDayNotice.setText("  " + data.day_notice);
-            mTvLoveText.setText("  " + data.love_txt);
-            mTvWorkText.setText("  " + data.work_txt);
-            mTvMoneyText.setText("  " + data.money_txt);
-            mTvGeneralText.setText("  " + data.general_txt);
+            if (starBean != null) {
+                //获取今日运势数据
+                StarBean.ShowapiResBodyEntity.TodayData data = starBean.showapi_res_body.day;
+                if (data != null) {
 
-            //更换星座图片
-            String starName = starBean.showapi_res_body.star;
-            changePic(starName);
-            mTask = null;//UI更新完毕后将任务置空
+
+                    //刷新UI
+                    String time = "";
+                    time = data.time;
+                    time = time.substring(0, 4) + "-" + time.substring(4, 6) + "-" + time.substring
+                            (6, 8);
+                    mTvTime.setText(time);
+                    mRbSummary.setRating(data.summary_star);
+                    mRbLove.setRating(data.love_star);
+                    mRbMoney.setRating(data.money_star);
+                    mRbWork.setRating(data.work_star);
+                    mTvLuckyTime.setText(data.lucky_time);
+                    mTvDirection.setText(data.lucky_direction);
+                    mTvNum.setText(data.lucky_num);
+                    mTvColor.setText(data.lucky_color);
+                    mTvGrxz.setText(data.grxz);
+                    mTvDayNotice.setText("  " + data.day_notice);
+                    mTvLoveText.setText("  " + data.love_txt);
+                    mTvWorkText.setText("  " + data.work_txt);
+                    mTvMoneyText.setText("  " + data.money_txt);
+                    mTvGeneralText.setText("  " + data.general_txt);
+
+                    //更换星座图片
+                    String starName = starBean.showapi_res_body.star;
+                    changePic(starName);
+                    mTask = null;//UI更新完毕后将任务置空
+                }
+            }
         }
     }
 

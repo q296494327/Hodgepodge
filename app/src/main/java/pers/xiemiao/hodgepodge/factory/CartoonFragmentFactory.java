@@ -50,4 +50,11 @@ public class CartoonFragmentFactory {
         }
         return fragment;
     }
+
+    /**
+     * 返回fragment的数量
+     */
+    public static int getFragmentCount() {
+        return 4;
+    }
 }

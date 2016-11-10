@@ -11,21 +11,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity">
-        <!--页签指示-->
-        <com.astuetz.PagerSlidingTabStrip
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cartoon_tabs"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:pstsIndicatorColor="@color/tab_indicator_selected"
-            app:pstsIndicatorHeight="2dp"
-            app:pstsTabSelectedTextColor="@color/tab_text_selected"
-            app:pstsTabSelectedTextSize="16sp"
-            app:pstsUnderlineHeight="1dp"
-            app:pstsTabTextColor="@color/tab_text_normal"
-            app:pstsTabTextSize="12sp"
-            >
-        </com.astuetz.PagerSlidingTabStrip>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--页签指示-->
+            <com.astuetz.PagerSlidingTabStrip
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cartoon_tabs"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                app:pstsIndicatorColor="@color/tab_indicator_selected"
+                app:pstsIndicatorHeight="2dp"
+                app:pstsTabSelectedTextColor="@color/tab_text_selected"
+                app:pstsTabSelectedTextSize="16sp"
+                app:pstsTabTextColor="@color/tab_text_normal"
+                app:pstsTabTextSize="12sp"
+                app:pstsUnderlineHeight="1dp"
+                >
+            </com.astuetz.PagerSlidingTabStrip>
+            <ImageView
+                android:background="@color/tab_indicator_selected"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="3dp"
+                android:layout_height="25dp"/>
+            <ImageView
+                android:id="@+id/more_channel"
+                android:background="@mipmap/more_channel"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_width="22dp"
+                android:layout_height="22dp"/>
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/cartoon_viewpager"

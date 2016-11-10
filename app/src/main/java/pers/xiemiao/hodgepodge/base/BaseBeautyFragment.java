@@ -60,6 +60,11 @@ public abstract class BaseBeautyFragment extends Fragment {
      */
     public abstract View initSuccessView();
 
+    /**
+     * 初始化获取标题的方法，由子类必须实现
+     */
+    public abstract String getTitle();
+
 
     /**
      * 检测网络请求的数据状态

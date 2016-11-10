@@ -82,6 +82,11 @@ public class SuYanFragment extends BaseBeautyFragment implements SHSwipeRefreshL
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "素颜美女";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

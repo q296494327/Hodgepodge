@@ -71,6 +71,11 @@ public class MingJianGhostFragment extends BaseGhostFragment implements XListVie
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "民间鬼故事";
+    }
+
     /*================listview的下拉刷新监听=begin================*/
 
     @Override//下拉刷新

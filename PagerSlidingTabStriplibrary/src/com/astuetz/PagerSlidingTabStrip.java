@@ -203,6 +203,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
     }
 
+    public TextView getTabAt(int i) {
+        View view = tabsContainer.getChildAt(i);
+        if(view instanceof TextView){
+            return (TextView) view;
+        }
+        return null;
+    }
+
     public void setViewPager(ViewPager pager) {
         this.pager = pager;
 

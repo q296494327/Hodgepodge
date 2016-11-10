@@ -8,17 +8,25 @@
 
 package cn.sharesdk.onekeyshare.themes.classic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.mob.tools.gui.MobViewPager;
+import com.mob.tools.utils.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
@@ -26,9 +34,8 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.CustomerLogo;
 import cn.sharesdk.onekeyshare.OnekeySharePage;
 import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
-
-import com.mob.tools.gui.MobViewPager;
-import com.mob.tools.utils.R;
+import pers.xiemiao.hodgepodge.utils.DensityUtils;
+import pers.xiemiao.hodgepodge.utils.ScreenUtil;
 
 /** 九宫格的抽象类 */
 public abstract class PlatformPage extends OnekeySharePage {
@@ -50,11 +57,10 @@ public abstract class PlatformPage extends OnekeySharePage {
 	public void onCreate() {
 		activity.getWindow().setBackgroundDrawable(new ColorDrawable(0x4c000000));
 		initAnims();
-
 		LinearLayout llPage = new LinearLayout(activity);
-		llPage.setOrientation(LinearLayout.VERTICAL);
+//		llPage.setOrientation(LinearLayout.VERTICAL);
+		llPage.setGravity(Gravity.CENTER_VERTICAL);
 		activity.setContentView(llPage);
-
 		TextView vTop = new TextView(activity);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -66,10 +72,18 @@ public abstract class PlatformPage extends OnekeySharePage {
 		});
 		llPage.addView(vTop, lp);
 
+		llPage.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
 		llPanel = new LinearLayout(activity);
 		llPanel.setOrientation(LinearLayout.VERTICAL);
 		lp = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				DensityUtils.dp2px(activity,300), LayoutParams.WRAP_CONTENT);
+		lp.rightMargin=(ScreenUtil.getScreenWidth(activity)-lp.width)/2;
 		llPanel.setAnimation(animShow);
 		llPage.addView(llPanel, lp);
 
@@ -87,6 +101,31 @@ public abstract class PlatformPage extends OnekeySharePage {
 		vInd.onScreenChange(0, 0);
 		adapter.setIndicator(vInd);
 		mvp.setAdapter(adapter);
+
+		///////////////增加取消按钮layout
+		lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,150);
+		lp.setMargins(0,0,0,0);
+		LinearLayout buttonLayout2 = new LinearLayout(activity);
+		buttonLayout2.setBackgroundColor(Color.WHITE);
+
+		LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,110);
+		lp22.setMargins(20, 20, 20, 20);
+		Button button2 = new Button(activity);
+		button2.setText("取消分享");
+		button2.setTextSize(16);
+		button2.setTextColor(Color.BLACK);
+		button2.setBackgroundColor(Color.TRANSPARENT);
+		button2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		buttonLayout2.addView(button2,lp22);
+		llPanel.addView(buttonLayout2,lp);
+
 	}
 
 	protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);
@@ -150,19 +189,32 @@ public abstract class PlatformPage extends OnekeySharePage {
 	}
 
 	private void initAnims() {
+//		animShow = new TranslateAnimation(
+//				Animation.RELATIVE_TO_SELF, 0,
+//				Animation.RELATIVE_TO_SELF, 0,
+//				Animation.RELATIVE_TO_SELF, 1,
+//				Animation.RELATIVE_TO_SELF, 0);
+//		animShow.setDuration(300);
+//
+//		animHide = new TranslateAnimation(
+//				Animation.RELATIVE_TO_SELF, 0,
+//				Animation.RELATIVE_TO_SELF, 0,
+//				Animation.RELATIVE_TO_SELF, 0,
+//				Animation.RELATIVE_TO_SELF, 1);
+//		animHide.setDuration(300);
 		animShow = new TranslateAnimation(
 				Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 1,
+				Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 0);
-		animShow.setDuration(300);
+		animShow.setDuration(0);
 
 		animHide = new TranslateAnimation(
 				Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 1);
-		animHide.setDuration(300);
+				Animation.RELATIVE_TO_SELF, 0);
+		animHide.setDuration(0);
 	}
 
 	public boolean onFinish() {

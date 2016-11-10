@@ -71,6 +71,11 @@ public class YuanChuangGhostFragment extends BaseGhostFragment implements XListV
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "原创鬼故事";
+    }
+
     /*================listview的下拉刷新监听=begin================*/
 
     @Override//下拉刷新

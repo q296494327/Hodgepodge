@@ -82,6 +82,11 @@ public class WeiMeiFragment extends BaseBeautyFragment implements SHSwipeRefresh
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "唯美女神";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override

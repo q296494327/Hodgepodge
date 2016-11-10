@@ -86,6 +86,11 @@ public class NewestJokeJokeFragment extends BaseJokeFragment implements XListVie
         return mXListView;
     }
 
+    @Override
+    public String getTitle() {
+        return "最新笑话";
+    }
+
     /*================父类的按钮点击事件=================*/
     @Override
     public void onClick(View v) {

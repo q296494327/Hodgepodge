@@ -82,6 +82,11 @@ public class XiaoQingXinFragment extends BaseBeautyFragment implements SHSwipeRe
         return view;
     }
 
+    @Override
+    public String getTitle() {
+        return "小清新";
+    }
+
 
     /*-------------------recycle的刷新监听--begin-------------------*/
     @Override
